@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Modules - Upvanta | Tech Interview Preparation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f0ff;
+            --primary-glow: rgba(0, 240, 255, 0.5);
+            --secondary: #0080ff;
+            --accent: #7c3aed;
+            --success: #00ff88;
+            --dark: #0a0e1a;
+            --dark-secondary: #0f172a;
+            --gray: #64748b;
+            --border: rgba(0, 240, 255, 0.2);
+            --glow: 0 0 20px var(--primary-glow);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e1a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
+                linear-gradient(180deg, #0a0e1a 0%, #0f172a 50%, #0a0e1a 100%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Header Section */
+        .header-section {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+
+        /* Search Section */
+        .search-section {
+            margin-bottom: 40px;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 60px 18px 24px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            box-shadow: var(--glow);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .search-box::placeholder {
+            color: #64748b;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary);
+            pointer-events: none;
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            margin-bottom: 50px;
+        }
+
+        .filter-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            background: rgba(0, 240, 255, 0.12);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: transparent;
+            box-shadow: var(--glow);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            padding: 24px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Modules Section */
+        .category-section {
+            margin-bottom: 60px;
+        }
+
+        .category-section.hidden {
+            display: none;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--glow);
+        }
+
+        .category-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .category-count {
+            margin-left: auto;
+            padding: 6px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .module-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-decoration: none;
+            color: #e2e8f0;
+            transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .module-card:hover::before {
+            left: 100%;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 240, 255, 0.3);
+            border-color: var(--primary);
+        }
+
+        .module-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .module-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: var(--glow);
+        }
+
+        .module-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .module-description {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .module-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .module-tag {
+            padding: 4px 12px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--primary);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            display: none;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .no-results-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .no-results-text {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            margin-top: 80px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .nav-link:not(:last-child) {
+                display: none;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .filter-buttons {
+                gap: 8px;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: var(--dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">⚡</div>
+                <span>Upvanta</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="modules.html" class="nav-link" style="color: var(--primary);">All Modules</a>
+                <a href="questions.html" class="nav-link">Start Learning</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <section class="header-section">
+            <h1 class="page-title">All Modules</h1>
+            <p class="page-subtitle">Comprehensive collection of 60+ modules covering every technology you need</p>
+        </section>
+
+        <!-- Search -->
+        <section class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    class="search-box" 
+                    id="searchInput" 
+                    placeholder="Search modules by name, topic, or keyword..."
+                    autocomplete="off"
+                >
+                <span class="search-icon">🔍</span>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-number" id="totalModules">60+</div>
+                <div class="stat-label">Total Modules</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="visibleModules">60+</div>
+                <div class="stat-label">Showing</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">14</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <section class="filter-section">
+            <div class="filter-label">Filter by Category</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All Modules</button>
+                <button class="filter-btn" data-category="database">🗄️ Database</button>
+                <button class="filter-btn" data-category="bigdata">🐘 Big Data</button>
+                <button class="filter-btn" data-category="programming">💻 Programming</button>
+                <button class="filter-btn" data-category="dataprocessing">🔄 Processing</button>
+                <button class="filter-btn" data-category="engineering">⚙️ Engineering</button>
+                <button class="filter-btn" data-category="warehouse">🏢 Warehouse</button>
+                <button class="filter-btn" data-category="cloud">☁️ Cloud</button>
+                <button class="filter-btn" data-category="ml">🤖 ML & AI</button>
+                <button class="filter-btn" data-category="datacollection">🕷️ Collection</button>
+                <button class="filter-btn" data-category="devops">🐳 DevOps</button>
+                <button class="filter-btn" data-category="system">🏗️ System Design</button>
+                <button class="filter-btn" data-category="streaming">🌊 Streaming</button>
+                <button class="filter-btn" data-category="visualization">📊 Visualization</button>
+            </div>
+        </section>
+
+        <!-- Modules Content -->
+        <div id="modulesContent">
+            <!-- Database & Storage -->
+            <div class="category-section" data-category="database">
+                <div class="category-header">
+                    <div class="category-icon">🗄️</div>
+                    <h2 class="category-title">Database & Storage</h2>
+                    <span class="category-count">5 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="rdbms.html" class="module-card" data-keywords="database sql relational normalization acid">
+                        <div class="module-header">
+                            <div class="module-icon">🗄️</div>
+                            <h3 class="module-title">RDBMS Fundamentals</h3>
+                        </div>
+                        <p class="module-description">Normalization, keys, relationships, ACID properties, database design principles</p>
+                        <div class="module-tags">
+                            <span class="module-tag">SQL</span>
+                            <span class="module-tag">Database Design</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=mysql" class="module-card" data-keywords="mysql postgresql sql queries joins indexes optimization">
+                        <div class="module-header">
+                            <div class="module-icon">🐬</div>
+                            <h3 class="module-title">MySQL/PostgreSQL</h3>
+                        </div>
+                        <p class="module-description">SQL queries, JOINs, indexes, optimization, window functions, CTEs</p>
+                        <div class="module-tags">
+                            <span class="module-tag">SQL</span>
+                            <span class="module-tag">Optimization</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=mongodb" class="module-card" data-keywords="mongodb nosql document database aggregation sharding">
+                        <div class="module-header">
+                            <div class="module-icon">🍃</div>
+                            <h3 class="module-title">MongoDB</h3>
+                        </div>
+                        <p class="module-description">NoSQL concepts, CRUD operations, aggregation pipeline, indexing, sharding</p>
+                        <div class="module-tags">
+                            <span class="module-tag">NoSQL</span>
+                            <span class="module-tag">Document DB</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=cassandra" class="module-card" data-keywords="cassandra distributed nosql wide-column consistency">
+                        <div class="module-header">
+                            <div class="module-icon">💎</div>
+                            <h3 class="module-title">Apache Cassandra</h3>
+                        </div>
+                        <p class="module-description">Wide-column store, distributed architecture, consistency levels, data modeling</p>
+                        <div class="module-tags">
+                            <span class="module-tag">NoSQL</span>
+                            <span class="module-tag">Distributed</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=redis" class="module-card" data-keywords="redis cache in-memory data structures pubsub">
+                        <div class="module-header">
+                            <div class="module-icon">⚡</div>
+                            <h3 class="module-title">Redis</h3>
+                        </div>
+                        <p class="module-description">In-memory data structures, caching strategies, pub/sub, persistence</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Cache</span>
+                            <span class="module-tag">In-Memory</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Big Data -->
+            <div class="category-section" data-category="bigdata">
+                <div class="category-header">
+                    <div class="category-icon">🐘</div>
+                    <h2 class="category-title">Big Data Ecosystem</h2>
+                    <span class="category-count">6 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=hadoop" class="module-card" data-keywords="hadoop hdfs mapreduce yarn distributed">
+                        <div class="module-header">
+                            <div class="module-icon">🐘</div>
+                            <h3 class="module-title">Hadoop & HDFS</h3>
+                        </div>
+                        <p class="module-description">Distributed file system, MapReduce, YARN, data replication, fault tolerance</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Big Data</span>
+                            <span class="module-tag">Distributed</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=hive" class="module-card" data-keywords="hive hiveql partitioning bucketing sql hadoop">
+                        <div class="module-header">
+                            <div class="module-icon">🐝</div>
+                            <h3 class="module-title">Apache Hive</h3>
+                        </div>
+                        <p class="module-description">HiveQL, partitioning, bucketing, optimization, external tables</p>
+                        <div class="module-tags">
+                            <span class="module-tag">SQL on Hadoop</span>
+                            <span class="module-tag">Data Warehouse</span>
+                        </div>
+                    </a>
+
+                    <a href="apache-pyspark.html" class="module-card" data-keywords="spark pyspark rdd dataframe transformation action">
+                        <div class="module-header">
+                            <div class="module-icon">✨</div>
+                            <h3 class="module-title">Apache Spark & PySpark</h3>
+                        </div>
+                        <p class="module-description">RDDs, DataFrames, transformations, actions, lazy evaluation, optimization</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Big Data</span>
+                            <span class="module-tag">Processing</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=kafka" class="module-card" data-keywords="kafka streaming events producers consumers topics">
+                        <div class="module-header">
+                            <div class="module-icon">🔄</div>
+                            <h3 class="module-title">Apache Kafka</h3>
+                        </div>
+                        <p class="module-description">Event streaming, producers, consumers, topics, partitions, stream processing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Streaming</span>
+                            <span class="module-tag">Real-time</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=airflow" class="module-card" data-keywords="airflow workflow orchestration dag scheduling">
+                        <div class="module-header">
+                            <div class="module-icon">🌊</div>
+                            <h3 class="module-title">Apache Airflow</h3>
+                        </div>
+                        <p class="module-description">Workflow orchestration, DAGs, task dependencies, scheduling</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Orchestration</span>
+                            <span class="module-tag">Workflow</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=databricks" class="module-card" data-keywords="databricks delta lake spark mlflow notebooks">
+                        <div class="module-header">
+                            <div class="module-icon">🧱</div>
+                            <h3 class="module-title">Databricks</h3>
+                        </div>
+                        <p class="module-description">Unified analytics, Delta Lake, collaborative notebooks, MLflow integration</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Cloud</span>
+                            <span class="module-tag">Analytics</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Programming -->
+            <div class="category-section" data-category="programming">
+                <div class="category-header">
+                    <div class="category-icon">💻</div>
+                    <h2 class="category-title">Programming Languages</h2>
+                    <span class="category-count">4 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=python" class="module-card" data-keywords="python oop decorators generators functions">
+                        <div class="module-header">
+                            <div class="module-icon">🐍</div>
+                            <h3 class="module-title">Python Fundamentals</h3>
+                        </div>
+                        <p class="module-description">Data types, functions, OOP, decorators, generators, error handling</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Python</span>
+                            <span class="module-tag">Programming</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=scala" class="module-card" data-keywords="scala functional programming pattern matching collections">
+                        <div class="module-header">
+                            <div class="module-icon">🎼</div>
+                            <h3 class="module-title">Scala</h3>
+                        </div>
+                        <p class="module-description">Functional programming, case classes, pattern matching, collections</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Functional</span>
+                            <span class="module-tag">JVM</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=sql-advanced" class="module-card" data-keywords="sql advanced queries optimization performance tuning">
+                        <div class="module-header">
+                            <div class="module-icon">📊</div>
+                            <h3 class="module-title">SQL Advanced</h3>
+                        </div>
+                        <p class="module-description">Complex queries, performance tuning, execution plans, stored procedures</p>
+                        <div class="module-tags">
+                            <span class="module-tag">SQL</span>
+                            <span class="module-tag">Optimization</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=java" class="module-card" data-keywords="java oop inheritance polymorphism collections">
+                        <div class="module-header">
+                            <div class="module-icon">☕</div>
+                            <h3 class="module-title">OOP & Java</h3>
+                        </div>
+                        <p class="module-description">Object-oriented principles, inheritance, polymorphism, collections</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Java</span>
+                            <span class="module-tag">OOP</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Processing -->
+            <div class="category-section" data-category="dataprocessing">
+                <div class="category-header">
+                    <div class="category-icon">🔄</div>
+                    <h2 class="category-title">Data Processing & Analysis</h2>
+                    <span class="category-count">4 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=pandas" class="module-card" data-keywords="pandas dataframe python data cleaning groupby">
+                        <div class="module-header">
+                            <div class="module-icon">🐼</div>
+                            <h3 class="module-title">Pandas</h3>
+                        </div>
+                        <p class="module-description">DataFrames, data cleaning, merging, groupby, time series, reshaping</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Python</span>
+                            <span class="module-tag">Data Analysis</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=numpy" class="module-card" data-keywords="numpy arrays vectorization linear algebra statistics">
+                        <div class="module-header">
+                            <div class="module-icon">🔢</div>
+                            <h3 class="module-title">NumPy</h3>
+                        </div>
+                        <p class="module-description">Arrays, vectorization, broadcasting, linear algebra, statistical functions</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Python</span>
+                            <span class="module-tag">Scientific</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=polars" class="module-card" data-keywords="polars dataframe lazy evaluation parallel processing">
+                        <div class="module-header">
+                            <div class="module-icon">🐻‍❄️</div>
+                            <h3 class="module-title">Polars</h3>
+                        </div>
+                        <p class="module-description">High-performance DataFrame library, lazy evaluation, parallel processing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Fast</span>
+                            <span class="module-tag">DataFrame</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=dask" class="module-card" data-keywords="dask parallel distributed dataframe scalable">
+                        <div class="module-header">
+                            <div class="module-icon">📦</div>
+                            <h3 class="module-title">Dask</h3>
+                        </div>
+                        <p class="module-description">Parallel computing, distributed DataFrames, scalable analytics</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Parallel</span>
+                            <span class="module-tag">Distributed</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Engineering -->
+            <div class="category-section" data-category="engineering">
+                <div class="category-header">
+                    <div class="category-icon">⚙️</div>
+                    <h2 class="category-title">Data Engineering Tools</h2>
+                    <span class="category-count">4 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=beam" class="module-card" data-keywords="apache beam pipeline batch stream processing">
+                        <div class="module-header">
+                            <div class="module-icon">🌟</div>
+                            <h3 class="module-title">Apache Beam</h3>
+                        </div>
+                        <p class="module-description">Unified batch/stream processing, pipeline design, portability</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Pipeline</span>
+                            <span class="module-tag">Processing</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=dbt" class="module-card" data-keywords="dbt data transformation testing documentation">
+                        <div class="module-header">
+                            <div class="module-icon">🛠️</div>
+                            <h3 class="module-title">dbt (Data Build Tool)</h3>
+                        </div>
+                        <p class="module-description">Data transformation, testing, documentation, version control</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Transformation</span>
+                            <span class="module-tag">Analytics</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=great-expectations" class="module-card" data-keywords="great expectations data quality validation testing">
+                        <div class="module-header">
+                            <div class="module-icon">✅</div>
+                            <h3 class="module-title">Great Expectations</h3>
+                        </div>
+                        <p class="module-description">Data validation, quality checks, automated testing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Quality</span>
+                            <span class="module-tag">Testing</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=etl" class="module-card" data-keywords="etl elt pipeline transformation cdc">
+                        <div class="module-header">
+                            <div class="module-icon">🔄</div>
+                            <h3 class="module-title">ETL/ELT Concepts</h3>
+                        </div>
+                        <p class="module-description">Data pipelines, transformation patterns, orchestration, CDC</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Pipeline</span>
+                            <span class="module-tag">Integration</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Warehousing -->
+            <div class="category-section" data-category="warehouse">
+                <div class="category-header">
+                    <div class="category-icon">🏢</div>
+                    <h2 class="category-title">Data Warehousing</h2>
+                    <span class="category-count">4 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=dw-fundamentals" class="module-card" data-keywords="data warehouse star schema dimension fact scd">
+                        <div class="module-header">
+                            <div class="module-icon">🏢</div>
+                            <h3 class="module-title">Data Warehouse Fundamentals</h3>
+                        </div>
+                        <p class="module-description">Star schema, snowflake schema, fact/dimension tables, slowly changing dimensions</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Modeling</span>
+                            <span class="module-tag">Design</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=snowflake" class="module-card" data-keywords="snowflake cloud warehouse virtual time travel">
+                        <div class="module-header">
+                            <div class="module-icon">❄️</div>
+                            <h3 class="module-title">Snowflake</h3>
+                        </div>
+                        <p class="module-description">Cloud data warehouse, virtual warehouses, time travel, data sharing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Cloud</span>
+                            <span class="module-tag">Warehouse</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=redshift" class="module-card" data-keywords="redshift aws columnar distribution compression">
+                        <div class="module-header">
+                            <div class="module-icon">🔴</div>
+                            <h3 class="module-title">Amazon Redshift</h3>
+                        </div>
+                        <p class="module-description">Columnar storage, distribution styles, compression, query optimization</p>
+                        <div class="module-tags">
+                            <span class="module-tag">AWS</span>
+                            <span class="module-tag">Warehouse</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=bigquery" class="module-card" data-keywords="bigquery google serverless partitioning clustering">
+                        <div class="module-header">
+                            <div class="module-icon">📈</div>
+                            <h3 class="module-title">Google BigQuery</h3>
+                        </div>
+                        <p class="module-description">Serverless warehouse, partitioning, clustering, nested data</p>
+                        <div class="module-tags">
+                            <span class="module-tag">GCP</span>
+                            <span class="module-tag">Serverless</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cloud Platforms -->
+            <div class="category-section" data-category="cloud">
+                <div class="category-header">
+                    <div class="category-icon">☁️</div>
+                    <h2 class="category-title">Cloud Platforms</h2>
+                    <span class="category-count">4 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=cloud-basics" class="module-card" data-keywords="cloud computing iaas paas saas deployment">
+                        <div class="module-header">
+                            <div class="module-icon">☁️</div>
+                            <h3 class="module-title">Cloud Computing Basics</h3>
+                        </div>
+                        <p class="module-description">IaaS/PaaS/SaaS, deployment models, scalability, cost optimization</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Fundamentals</span>
+                            <span class="module-tag">Cloud</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=aws" class="module-card" data-keywords="aws ec2 s3 lambda glue athena emr">
+                        <div class="module-header">
+                            <div class="module-icon">📦</div>
+                            <h3 class="module-title">AWS Services</h3>
+                        </div>
+                        <p class="module-description">EC2, S3, Lambda, Glue, Athena, EMR, RDS, DynamoDB, Kinesis</p>
+                        <div class="module-tags">
+                            <span class="module-tag">AWS</span>
+                            <span class="module-tag">Cloud</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=azure" class="module-card" data-keywords="azure data factory synapse databricks blob storage">
+                        <div class="module-header">
+                            <div class="module-icon">🔷</div>
+                            <h3 class="module-title">Azure Data Services</h3>
+                        </div>
+                        <p class="module-description">Data Factory, Synapse, Databricks, Blob Storage, Data Lake</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Azure</span>
+                            <span class="module-tag">Cloud</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=gcp" class="module-card" data-keywords="gcp google dataflow dataproc pubsub composer">
+                        <div class="module-header">
+                            <div class="module-icon">🌐</div>
+                            <h3 class="module-title">Google Cloud Platform</h3>
+                        </div>
+                        <p class="module-description">Dataflow, Dataproc, Cloud Storage, Pub/Sub, Composer</p>
+                        <div class="module-tags">
+                            <span class="module-tag">GCP</span>
+                            <span class="module-tag">Cloud</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Machine Learning & AI -->
+            <div class="category-section" data-category="ml">
+                <div class="category-header">
+                    <div class="category-icon">🤖</div>
+                    <h2 class="category-title">Machine Learning & AI</h2>
+                    <span class="category-count">7 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=ml-fundamentals" class="module-card" data-keywords="machine learning supervised unsupervised regression classification">
+                        <div class="module-header">
+                            <div class="module-icon">🤖</div>
+                            <h3 class="module-title">ML Fundamentals</h3>
+                        </div>
+                        <p class="module-description">Supervised/unsupervised learning, regression, classification, clustering</p>
+                        <div class="module-tags">
+                            <span class="module-tag">ML</span>
+                            <span class="module-tag">Algorithms</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=sklearn" class="module-card" data-keywords="scikit-learn sklearn model training preprocessing pipeline">
+                        <div class="module-header">
+                            <div class="module-icon">🔬</div>
+                            <h3 class="module-title">Scikit-learn</h3>
+                        </div>
+                        <p class="module-description">Model training, preprocessing, pipelines, hyperparameter tuning</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Python</span>
+                            <span class="module-tag">ML Library</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=tensorflow" class="module-card" data-keywords="tensorflow keras neural networks deep learning">
+                        <div class="module-header">
+                            <div class="module-icon">🧠</div>
+                            <h3 class="module-title">TensorFlow & Keras</h3>
+                        </div>
+                        <p class="module-description">Neural networks, deep learning, model deployment</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Deep Learning</span>
+                            <span class="module-tag">Neural Networks</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=pytorch" class="module-card" data-keywords="pytorch deep learning neural networks training">
+                        <div class="module-header">
+                            <div class="module-icon">🔥</div>
+                            <h3 class="module-title">PyTorch</h3>
+                        </div>
+                        <p class="module-description">Dynamic computation graphs, model building, training loops</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Deep Learning</span>
+                            <span class="module-tag">Research</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=mlops" class="module-card" data-keywords="mlops deployment monitoring versioning cicd">
+                        <div class="module-header">
+                            <div class="module-icon">🚀</div>
+                            <h3 class="module-title">MLOps</h3>
+                        </div>
+                        <p class="module-description">Model deployment, monitoring, versioning, CI/CD for ML</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Operations</span>
+                            <span class="module-tag">Production</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=feature-engineering" class="module-card" data-keywords="feature engineering selection encoding scaling transformation">
+                        <div class="module-header">
+                            <div class="module-icon">🔧</div>
+                            <h3 class="module-title">Feature Engineering</h3>
+                        </div>
+                        <p class="module-description">Feature selection, encoding, scaling, transformation techniques</p>
+                        <div class="module-tags">
+                            <span class="module-tag">ML</span>
+                            <span class="module-tag">Features</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=model-evaluation" class="module-card" data-keywords="model evaluation metrics cross-validation bias variance">
+                        <div class="module-header">
+                            <div class="module-icon">📊</div>
+                            <h3 class="module-title">Model Evaluation</h3>
+                        </div>
+                        <p class="module-description">Metrics, cross-validation, bias-variance tradeoff, confusion matrix</p>
+                        <div class="module-tags">
+                            <span class="module-tag">ML</span>
+                            <span class="module-tag">Evaluation</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Collection -->
+            <div class="category-section" data-category="datacollection">
+                <div class="category-header">
+                    <div class="category-icon">🕷️</div>
+                    <h2 class="category-title">Data Collection & Processing</h2>
+                    <span class="category-count">3 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=web-scraping" class="module-card" data-keywords="web scraping beautifulsoup scrapy selenium api">
+                        <div class="module-header">
+                            <div class="module-icon">🕷️</div>
+                            <h3 class="module-title">Web Scraping</h3>
+                        </div>
+                        <p class="module-description">BeautifulSoup, Scrapy, Selenium, APIs, requests, data extraction</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Python</span>
+                            <span class="module-tag">Scraping</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=apis" class="module-card" data-keywords="api rest http authentication json xml">
+                        <div class="module-header">
+                            <div class="module-icon">🌐</div>
+                            <h3 class="module-title">APIs & REST</h3>
+                        </div>
+                        <p class="module-description">HTTP methods, authentication, rate limiting, JSON/XML parsing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">REST</span>
+                            <span class="module-tag">API</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=data-formats" class="module-card" data-keywords="data formats json xml parquet avro csv">
+                        <div class="module-header">
+                            <div class="module-icon">📄</div>
+                            <h3 class="module-title">Data Formats</h3>
+                        </div>
+                        <p class="module-description">JSON, XML, Parquet, Avro, CSV, protocol buffers</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Formats</span>
+                            <span class="module-tag">Serialization</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DevOps -->
+            <div class="category-section" data-category="devops">
+                <div class="category-header">
+                    <div class="category-icon">🐳</div>
+                    <h2 class="category-title">DevOps & Tools</h2>
+                    <span class="category-count">4 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=linux" class="module-card" data-keywords="linux shell bash commands scripting unix">
+                        <div class="module-header">
+                            <div class="module-icon">🐧</div>
+                            <h3 class="module-title">Linux & Shell Scripting</h3>
+                        </div>
+                        <p class="module-description">Commands, permissions, processes, bash scripting, cron jobs</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Linux</span>
+                            <span class="module-tag">Shell</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=git" class="module-card" data-keywords="git version control branching merging github">
+                        <div class="module-header">
+                            <div class="module-icon">📝</div>
+                            <h3 class="module-title">Git & Version Control</h3>
+                        </div>
+                        <p class="module-description">Branching, merging, pull requests, collaboration workflows</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Git</span>
+                            <span class="module-tag">Version Control</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=docker" class="module-card" data-keywords="docker containers containerization dockerfile images">
+                        <div class="module-header">
+                            <div class="module-icon">🐳</div>
+                            <h3 class="module-title">Docker</h3>
+                        </div>
+                        <p class="module-description">Containerization, Dockerfile, images, container orchestration</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Containers</span>
+                            <span class="module-tag">DevOps</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=kubernetes" class="module-card" data-keywords="kubernetes k8s pods services deployments orchestration">
+                        <div class="module-header">
+                            <div class="module-icon">☸️</div>
+                            <h3 class="module-title">Kubernetes</h3>
+                        </div>
+                        <p class="module-description">Container orchestration, pods, services, deployments</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Orchestration</span>
+                            <span class="module-tag">K8s</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- System Design -->
+            <div class="category-section" data-category="system">
+                <div class="category-header">
+                    <div class="category-icon">🏗️</div>
+                    <h2 class="category-title">System Design & Architecture</h2>
+                    <span class="category-count">3 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=system-design" class="module-card" data-keywords="system design scalability availability cap theorem">
+                        <div class="module-header">
+                            <div class="module-icon">🏗️</div>
+                            <h3 class="module-title">Data System Design</h3>
+                        </div>
+                        <p class="module-description">Scalability, consistency, availability, CAP theorem, trade-offs</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Architecture</span>
+                            <span class="module-tag">Design</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=distributed-systems" class="module-card" data-keywords="distributed systems partitioning replication consistency">
+                        <div class="module-header">
+                            <div class="module-icon">🌍</div>
+                            <h3 class="module-title">Distributed Systems</h3>
+                        </div>
+                        <p class="module-description">Partitioning, replication, consistency models, fault tolerance</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Distributed</span>
+                            <span class="module-tag">Systems</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=data-modeling" class="module-card" data-keywords="data modeling dimensional vault normalization denormalization">
+                        <div class="module-header">
+                            <div class="module-icon">📐</div>
+                            <h3 class="module-title">Data Modeling</h3>
+                        </div>
+                        <p class="module-description">Dimensional modeling, data vault, normalization vs denormalization</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Modeling</span>
+                            <span class="module-tag">Design</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Streaming -->
+            <div class="category-section" data-category="streaming">
+                <div class="category-header">
+                    <div class="category-icon">🌊</div>
+                    <h2 class="category-title">Streaming & Real-time Processing</h2>
+                    <span class="category-count">3 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=flink" class="module-card" data-keywords="flink stream processing stateful event time">
+                        <div class="module-header">
+                            <div class="module-icon">💫</div>
+                            <h3 class="module-title">Apache Flink</h3>
+                        </div>
+                        <p class="module-description">Stream processing, stateful computations, event time processing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Streaming</span>
+                            <span class="module-tag">Real-time</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=spark-streaming" class="module-card" data-keywords="spark streaming structured micro-batch watermarks">
+                        <div class="module-header">
+                            <div class="module-icon">🌊</div>
+                            <h3 class="module-title">Spark Streaming</h3>
+                        </div>
+                        <p class="module-description">Structured streaming, micro-batches, watermarks, checkpointing</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Spark</span>
+                            <span class="module-tag">Streaming</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=realtime-analytics" class="module-card" data-keywords="real-time analytics lambda kappa architecture">
+                        <div class="module-header">
+                            <div class="module-icon">⚡</div>
+                            <h3 class="module-title">Real-time Analytics</h3>
+                        </div>
+                        <p class="module-description">Lambda architecture, Kappa architecture, real-time pipelines</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Real-time</span>
+                            <span class="module-tag">Analytics</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visualization -->
+            <div class="category-section" data-category="visualization">
+                <div class="category-header">
+                    <div class="category-icon">📊</div>
+                    <h2 class="category-title">Data Visualization & BI</h2>
+                    <span class="category-count">3 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=tableau" class="module-card" data-keywords="tableau dashboards visualization bi analytics">
+                        <div class="module-header">
+                            <div class="module-icon">📊</div>
+                            <h3 class="module-title">Tableau</h3>
+                        </div>
+                        <p class="module-description">Dashboards, calculated fields, parameters, data blending</p>
+                        <div class="module-tags">
+                            <span class="module-tag">BI</span>
+                            <span class="module-tag">Visualization</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=powerbi" class="module-card" data-keywords="power bi dax query modeling visualization">
+                        <div class="module-header">
+                            <div class="module-icon">📈</div>
+                            <h3 class="module-title">Power BI</h3>
+                        </div>
+                        <p class="module-description">DAX, Power Query, data modeling, report design</p>
+                        <div class="module-tags">
+                            <span class="module-tag">BI</span>
+                            <span class="module-tag">Microsoft</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=matplotlib" class="module-card" data-keywords="matplotlib seaborn python visualization plots">
+                        <div class="module-header">
+                            <div class="module-icon">📉</div>
+                            <h3 class="module-title">Matplotlib & Seaborn</h3>
+                        </div>
+                        <p class="module-description">Data visualization in Python, plots, customization</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Python</span>
+                            <span class="module-tag">Visualization</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Topics -->
+            <div class="category-section" data-category="all">
+                <div class="category-header">
+                    <div class="category-icon">⭐</div>
+                    <h2 class="category-title">Additional Essential Topics</h2>
+                    <span class="category-count">6 modules</span>
+                </div>
+                <div class="modules-grid">
+                    <a href="questions.html?module=data-governance" class="module-card" data-keywords="data governance quality metadata lineage privacy">
+                        <div class="module-header">
+                            <div class="module-icon">🔐</div>
+                            <h3 class="module-title">Data Governance</h3>
+                        </div>
+                        <p class="module-description">Data quality, metadata management, data lineage, privacy</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Governance</span>
+                            <span class="module-tag">Quality</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=security" class="module-card" data-keywords="security compliance encryption gdpr data masking">
+                        <div class="module-header">
+                            <div class="module-icon">🛡️</div>
+                            <h3 class="module-title">Security & Compliance</h3>
+                        </div>
+                        <p class="module-description">Encryption, access control, GDPR, data masking</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Security</span>
+                            <span class="module-tag">Compliance</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=optimization" class="module-card" data-keywords="optimization performance query indexing caching">
+                        <div class="module-header">
+                            <div class="module-icon">⚙️</div>
+                            <h3 class="module-title">Performance Optimization</h3>
+                        </div>
+                        <p class="module-description">Query optimization, indexing strategies, caching, partitioning</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Performance</span>
+                            <span class="module-tag">Optimization</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=testing" class="module-card" data-keywords="testing cicd unit integration automated pipelines">
+                        <div class="module-header">
+                            <div class="module-icon">🧪</div>
+                            <h3 class="module-title">Testing & CI/CD</h3>
+                        </div>
+                        <p class="module-description">Unit testing, integration testing, automated pipelines</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Testing</span>
+                            <span class="module-tag">CI/CD</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=statistics" class="module-card" data-keywords="statistics probability hypothesis testing distributions">
+                        <div class="module-header">
+                            <div class="module-icon">📊</div>
+                            <h3 class="module-title">Statistics & Probability</h3>
+                        </div>
+                        <p class="module-description">Hypothesis testing, distributions, A/B testing, statistical inference</p>
+                        <div class="module-tags">
+                            <span class="module-tag">Statistics</span>
+                            <span class="module-tag">Math</span>
+                        </div>
+                    </a>
+
+                    <a href="questions.html?module=cs-fundamentals" class="module-card" data-keywords="computer science algorithms data structures complexity">
+                        <div class="module-header">
+                            <div class="module-icon">💻</div>
+                            <h3 class="module-title">Computer Science Fundamentals</h3>
+                        </div>
+                        <p class="module-description">Data structures, algorithms, complexity analysis, design patterns</p>
+                        <div class="module-tags">
+                            <span class="module-tag">CS</span>
+                            <span class="module-tag">Algorithms</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults">
+            <div class="no-results-icon">🔍</div>
+            <h3 class="no-results-title">No modules found</h3>
+            <p class="no-results-text">Try adjusting your search or filter criteria</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Upvanta. Built with ❤️ for aspiring Data Scientists, Data Engineers & ML Engineers.</p>
+            <p style="margin-top: 12px; font-weight: 600;">Good luck with your interviews! 🚀</p>
+        </div>
+    </footer>
+
+    <script>
+        // Search and Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const categorySections = document.querySelectorAll('.category-section');
+        const moduleCards = document.querySelectorAll('.module-card');
+        const noResults = document.getElementById('noResults');
+        const visibleModulesCount = document.getElementById('visibleModules');
+
+        let currentCategory = 'all';
+        let currentSearchTerm = '';
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value.toLowerCase();
+            filterModules();
+        });
+
+        // Filter functionality
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                filterModules();
+            });
+        });
+
+        function filterModules() {
+            let visibleCount = 0;
+            let hasVisibleCategory = false;
+
+            categorySections.forEach(section => {
+                const category = section.dataset.category;
+                let categoryHasVisibleCards = false;
+
+                // Check if category matches filter
+                const categoryMatches = currentCategory === 'all' || category === currentCategory;
+
+                if (categoryMatches) {
+                    const cards = section.querySelectorAll('.module-card');
+                    
+                    cards.forEach(card => {
+                        const title = card.querySelector('.module-title').textContent.toLowerCase();
+                        const description = card.querySelector('.module-description').textContent.toLowerCase();
+                        const keywords = card.dataset.keywords || '';
+                        const tags = Array.from(card.querySelectorAll('.module-tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+                        
+                        const searchContent = `${title} ${description} ${keywords} ${tags}`;
+                        const matchesSearch = searchContent.includes(currentSearchTerm);
+
+                        if (matchesSearch) {
+                            card.style.display = 'block';
+                            categoryHasVisibleCards = true;
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    if (categoryHasVisibleCards) {
+                        section.classList.remove('hidden');
+                        hasVisibleCategory = true;
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Update visible count
+            visibleModulesCount.textContent = visibleCount;
+
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                noResults.classList.add('show');
+            } else {
+                noResults.classList.remove('show');
+            }
+        }
+
+        // Initial count
+        window.addEventListener('load', () => {
+            const totalCards = document.querySelectorAll('.module-card').length;
+            document.getElementById('totalModules').textContent = totalCards + '+';
+            document.getElementById('visibleModules').textContent = totalCards + '+';
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
