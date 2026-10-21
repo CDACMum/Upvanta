@@ -1,0 +1,11 @@
+{
+ "input": {
+  "kind": "sql",
+  "setup": "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     STRING,\n  course   STRING,\n  centre   STRING,\n  marks    DECIMAL(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, DATE'2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, DATE'2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, DATE'2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, DATE'2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, DATE'2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, DATE'2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, DATE'2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, DATE'2026-02-05');\n",
+  "src": "SELECT * FROM cdac.bda.student;\nSELECT roll_no, course FROM students WHERE roll_no = 2401;",
+  "show": "all",
+  "files": {},
+  "expect_error": true
+ },
+ "output": "cdac.bda> SELECT * FROM cdac.bda.student\n[TABLE_OR_VIEW_NOT_FOUND] The table or view `cdac`.`bda`.`student` cannot be found. Verify the spelling and correctness of the schema and catalog.\nIf you did not qualify the name with a schema, verify the current_schema() output, or qualify the name with the correct schema and catalog.\nTo tolerate the error on drop use DROP VIEW IF EXISTS or DROP TABLE IF EXISTS. SQLSTATE: 42P01\n\ncdac.bda> SELECT roll_no, course FROM students WHERE roll_no = 2401\n+---------+----------+\n| roll_no | course   |\n+---------+----------+\n| 2401    | PGCP-BDA |\n+---------+----------+"
+}

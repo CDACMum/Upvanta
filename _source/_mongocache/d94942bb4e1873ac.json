@@ -1,0 +1,1 @@
+{"output": "[\n  { _id: ISODate('2026-10-12T00:00:00.000Z'), present: 2, total: 3 },\n  { _id: ISODate('2026-10-13T00:00:00.000Z'), present: 2, total: 3 }\n]"}

@@ -1,0 +1,4 @@
+{
+ "src": "marks = np.array([[82, 61, 70],\n                  [91, 88, 79]])\nprint('shape   ', marks.shape)\nprint('ndim    ', marks.ndim)\nprint('size    ', marks.size)\nprint('dtype   ', marks.dtype)\nprint('itemsize', marks.itemsize, 'bytes')\nprint('nbytes  ', marks.nbytes, 'bytes')\nprint('strides ', marks.strides)\nprint()\nprint('per subject (axis=0):', marks.mean(axis=0))\nprint('per student (axis=1):', marks.mean(axis=1))\nprint('transposed strides  :', marks.T.strides, marks.T.shape)",
+ "out": "shape    (2, 3)\nndim     2\nsize     6\ndtype    int64\nitemsize 8 bytes\nnbytes   48 bytes\nstrides  (24, 8)\n\nper subject (axis=0): [86.5 74.5 74.5]\nper student (axis=1): [71. 86.]\ntransposed strides  : (8, 24) (3, 2)"
+}

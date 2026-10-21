@@ -1,0 +1,4 @@
+{
+ "src": "import time\nrng = np.random.default_rng(0)\nm = rng.integers(0, 101, 1_000_000)\n\ndef grade(x):\n    if x >= 85: return 'A'\n    elif x >= 70: return 'B'\n    elif x >= 60: return 'C'\n    return 'F'\n\nt = time.perf_counter(); g1 = np.vectorize(grade)(m); t1 = time.perf_counter() - t\nt = time.perf_counter(); g2 = np.select([m >= 85, m >= 70, m >= 60], ['A', 'B', 'C'], 'F'); t2 = time.perf_counter() - t\nprint(f'np.vectorize: {t1:.3f} s | np.select: {t2:.3f} s | same: {(g1 == g2).all()}')\n\nrows = np.array([[3, 9, 1], [7, 2, 8]])\nprint(np.apply_along_axis(lambda r: r.max() - r.min(), 1, rows), np.ptp(rows, axis=1))",
+ "out": "np.vectorize: 0.163 s | np.select: 0.018 s | same: True\n[8 6] [8 6]"
+}

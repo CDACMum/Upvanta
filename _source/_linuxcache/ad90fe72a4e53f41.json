@@ -1,0 +1,4 @@
+{
+ "src": "pwd\nls -d /home /etc /var/log /tmp /usr/bin /opt /proc /root /dev\ncd ..; pwd\ncd cdac; pwd\ncd /etc && pwd && cd - >/dev/null && pwd\nls ~/cdac/students.csv ./students.csv ../cdac/students.csv\nrealpath ../cdac/./students.csv",
+ "out": "$ pwd\n/home/student/cdac\n$ ls -d /home /etc /var/log /tmp /usr/bin /opt /proc /root /dev\n/dev  /etc  /home  /opt  /proc  /root  /tmp  /usr/bin  /var/log\n$ cd ..; pwd\n/home/student\n$ cd cdac; pwd\n/home/student/cdac\n$ cd /etc && pwd && cd - >/dev/null && pwd\n/etc\n/home/student/cdac\n$ ls ~/cdac/students.csv ./students.csv ../cdac/students.csv\n../cdac/students.csv  ./students.csv  /home/student/cdac/students.csv\n$ realpath ../cdac/./students.csv\n/home/student/cdac/students.csv"
+}

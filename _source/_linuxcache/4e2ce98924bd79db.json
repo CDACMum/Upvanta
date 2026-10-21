@@ -1,0 +1,4 @@
+{
+ "src": "touch empty.csv\nfor f in marks.csv students.csv empty.csv nofile.txt app.log; do bash check.sh \"$f\"; echo \"  exit $?\"; done\n[ 10 -gt 9 ] && echo 'numeric: 10 > 9'\n[[ 10 > 9 ]] || echo 'string compare: \"10\" sorts before \"9\"'\nx=''; [ -z \"$x\" ] && echo 'x is empty'",
+ "out": "$ touch empty.csv\n$ for f in marks.csv students.csv empty.csv nofile.txt app.log; do bash check.sh \"$f\"; echo \"  exit $?\"; done\nmarks.csv: CSV, 10 lines, large\n  -> marks file detected\n  exit 0\nstudents.csv: CSV, 7 lines, large\n  exit 0\nempty.csv: empty\n  exit 2\nnofile.txt: missing\n  exit 1\napp.log: log, 1 lines, small\n  exit 0\n$ [ 10 -gt 9 ] && echo 'numeric: 10 > 9'\nnumeric: 10 > 9\n$ [[ 10 > 9 ]] || echo 'string compare: \"10\" sorts before \"9\"'\nstring compare: \"10\" sorts before \"9\"\n$ x=''; [ -z \"$x\" ] && echo 'x is empty'\nx is empty"
+}

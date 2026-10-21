@@ -1,0 +1,4 @@
+{
+ "src": "import time, sys\nmarks_list = list(range(1_000_000))\nmarks_arr  = np.arange(1_000_000)\n\nt = time.perf_counter(); doubled_list = [m * 2 for m in marks_list]; t_list = time.perf_counter() - t\nt = time.perf_counter(); doubled_arr  = marks_arr * 2;               t_arr  = time.perf_counter() - t\nprint(f'list comprehension: {t_list * 1000:7.1f} ms')\nprint(f'numpy vectorised  : {t_arr * 1000:7.1f} ms  ({t_list / t_arr:.0f}x faster)')\n\nlist_bytes = sys.getsizeof(marks_list) + sum(sys.getsizeof(m) for m in marks_list)\nprint(f'memory: list ~{list_bytes / 1e6:.0f} MB, array {marks_arr.nbytes / 1e6:.0f} MB')\nprint([1, 2, 3] * 2, np.array([1, 2, 3]) * 2)",
+ "out": "list comprehension:    38.0 ms\nnumpy vectorised  :     3.2 ms  (12x faster)\nmemory: list ~36 MB, array 8 MB\n[1, 2, 3, 1, 2, 3] [2 4 6]"
+}

@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "CREATE TABLE attempts (roll_no INT, attempt_no INT, score INT);\nINSERT INTO attempts VALUES (2401,1,55),(2401,2,78),(2402,1,88),(2405,1,90),(2405,2,94);\n\nCREATE TABLE feedback (roll_no INT, attempt_no INT, rating INT);\nINSERT INTO feedback VALUES (2401,1,3),(2401,2,4),(2402,1,5),(2405,1,4),(2405,2,5);\n\n-- wrong: joined on roll_no only → rows multiply\nSELECT COUNT(*) AS rows_out FROM attempts a JOIN feedback f ON a.roll_no = f.roll_no;\n\n-- right: join on the full key\nSELECT COUNT(*) AS rows_out FROM attempts a JOIN feedback f\n  ON a.roll_no = f.roll_no AND a.attempt_no = f.attempt_no;",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT COUNT(*) AS rows_out FROM attempts a JOIN feedback f ON a.roll_no = f.roll_no\n+----------+\n| ROWS_OUT |\n|----------|\n|        9 |\n+----------+\n1 Row(s) produced.\n\nCDAC.BDA> SELECT COUNT(*) AS rows_out FROM attempts a JOIN feedback f ON a.roll_no = f.roll_no AN...\n+----------+\n| ROWS_OUT |\n|----------|\n|        5 |\n+----------+\n1 Row(s) produced."
+}

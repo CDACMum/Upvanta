@@ -1,0 +1,4 @@
+{
+ "src": "m = marks.ravel()\nprint(np.where(m >= 60, 'P', 'F'))\nprint(np.select([m >= 85, m >= 70, m >= 60], ['A', 'B', 'C'], default='F'))\nprint(np.clip(m + 8, 0, 100))\nprint(np.where(m < 60))                   # indices (tuple of arrays)\nprint(np.argwhere(marks < 70))            # (row, col) pairs\nprint(np.where(marks >= 90, marks, 0))    # keep shape, zero the rest",
+ "out": "['P' 'P' 'P' 'F' 'P' 'P' 'P' 'P' 'P' 'P' 'P' 'P']\n['B' 'C' 'B' 'F' 'A' 'A' 'B' 'A' 'B' 'B' 'C' 'A']\n[ 90  69  78  63  99  96  87 100  92  80  74  98]\n(array([3]),)\n[[0 1]\n [0 3]\n [2 2]]\n[[ 0  0  0  0]\n [91  0  0 95]\n [ 0  0  0 90]]"
+}

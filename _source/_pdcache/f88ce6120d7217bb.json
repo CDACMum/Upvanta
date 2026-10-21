@@ -1,0 +1,4 @@
+{
+ "src": "marks = pd.DataFrame({\n    'name':    ['Anuj', 'Vineeta', 'Aarshvi', 'Rohan', 'Meera'],\n    'course':  ['PG-DBDA', 'PG-DBDA', 'PG-DAI', 'PG-DAC', 'PG-DBDA'],\n    'marks':   [82, 91, 84, 58, 75],\n})\n\nprint(marks)\nprint()\nprint(marks[marks['marks'] >= 60])          # filter\nprint()\nprint(marks.groupby('course')['marks'].mean())  # aggregate",
+ "out": "      name   course  marks\n0     Anuj  PG-DBDA     82\n1  Vineeta  PG-DBDA     91\n2  Aarshvi   PG-DAI     84\n3    Rohan   PG-DAC     58\n4    Meera  PG-DBDA     75\n\n      name   course  marks\n0     Anuj  PG-DBDA     82\n1  Vineeta  PG-DBDA     91\n2  Aarshvi   PG-DAI     84\n4    Meera  PG-DBDA     75\n\ncourse\nPG-DAC     58.000000\nPG-DAI     84.000000\nPG-DBDA    82.666667\nName: marks, dtype: float64"
+}

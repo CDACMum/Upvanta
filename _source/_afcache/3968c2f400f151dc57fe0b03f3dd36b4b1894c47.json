@@ -1,0 +1,1 @@
+{"out": "$ airflow config get-value core executor\nLocalExecutor\n\n$ airflow config get-value core parallelism\n32"}

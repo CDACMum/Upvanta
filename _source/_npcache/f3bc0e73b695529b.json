@@ -1,0 +1,4 @@
+{
+ "src": "a = np.array([82, 61, 91, 55, 88, 47])\nprint(a[[2, 0, 5]], a[[1, 1, 1]])\n\nprint(marks[[0, 2], [2, 0]])                 # paired: (0,2), (2,0)\nprint(marks[np.ix_([0, 2], [0, 2])])         # 2x2 sub-matrix\n\ntotals = marks.sum(axis=1)\norder = np.argsort(-totals)                  # descending\nprint(totals, order, marks[order][:, 0])\n\nbest = marks.argmax(axis=1)\nprint('best subject per student:', best, marks[np.arange(len(marks)), best])\n\nsubjects = np.array(['SQL', 'Spark', 'ML', 'Python'])\nprint(subjects[best])",
+ "out": "[91 82 47] [61 61 61]\n[70 84]\n[[82 70]\n [84 66]]\n[268 353 312] [1 2 0] [91 84 82]\nbest subject per student: [0 3 3] [82 95 90]\n['SQL' 'Python' 'Python']"
+}

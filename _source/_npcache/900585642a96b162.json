@@ -1,0 +1,4 @@
+{
+ "src": "m = np.array([55, 61, 70, 75, 82, 88, 91, 99])\nprint(m.mean(), np.median(m), m.std().round(2), m.std(ddof=1).round(2))\nprint(np.percentile(m, [25, 50, 75, 90]))\nprint(np.average([82, 70, 91], weights=[0.5, 0.3, 0.2]))\n\nattendance = np.array([60, 70, 75, 80, 85, 88, 92, 98])\nprint(np.corrcoef(attendance, m).round(3))\ncounts, edges = np.histogram(m, bins=[0, 60, 70, 85, 101])\nprint(counts, edges)\nprint(np.bincount([0, 2, 2, 3, 3, 3]))",
+ "out": "77.625 78.5 14.21 15.19\n[67.75 78.5  88.75 93.4 ]\n80.2\n[[1.    0.992]\n [0.992 1.   ]]\n[1 1 3 3] [  0  60  70  85 101]\n[1 0 2 3]"
+}

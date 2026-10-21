@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "\nCREATE OR REPLACE TABLE contacts (roll_no INT, name VARCHAR, phone VARCHAR, centre VARCHAR);\nINSERT INTO contacts VALUES\n  (2401, 'Anuj',  '98200 12345', 'Kharghar'),\n  (2403, 'Riya',  '98330 54321', 'Kharghar'),\n  (2407, 'Meera', '99870 11111', 'Juhu');\nCREATE OR REPLACE TABLE centre_access (role_name VARCHAR, centre VARCHAR);\nINSERT INTO centre_access VALUES ('KHARGHAR_COORD', 'Kharghar'), ('JUHU_COORD', 'Juhu');\n",
+  "SELECT r.role_name,\n       c.name,\n       IFF(r.role_name = 'HR_ADMIN', c.phone,\n           REGEXP_REPLACE(c.phone, '^[0-9 ]{6}', '*****'))           AS phone_seen\nFROM   contacts c\nCROSS  JOIN (SELECT column1 AS role_name FROM VALUES ('HR_ADMIN'), ('KHARGHAR_COORD')) r\nWHERE  r.role_name = 'HR_ADMIN'\n   OR  EXISTS (SELECT 1 FROM centre_access m\n               WHERE m.centre = c.centre AND m.role_name = r.role_name)\nORDER  BY r.role_name, c.roll_no;",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT r.role_name, c.name, IFF(r.role_name = 'HR_ADMIN', c.phone, REGEXP_REPLACE(c.pho...\n+----------------+-------+-------------+\n| ROLE_NAME      | NAME  | PHONE_SEEN  |\n|----------------+-------+-------------|\n| HR_ADMIN       | Anuj  | 98200 12345 |\n| HR_ADMIN       | Riya  | 98330 54321 |\n| HR_ADMIN       | Meera | 99870 11111 |\n| KHARGHAR_COORD | Anuj  | *****12345  |\n| KHARGHAR_COORD | Riya  | *****54321  |\n+----------------+-------+-------------+\n5 Row(s) produced."
+}

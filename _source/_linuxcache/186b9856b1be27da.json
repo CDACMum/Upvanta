@@ -1,0 +1,4 @@
+{
+ "src": "bash strict.sh; echo \"exit code: $?\"",
+ "out": "$ bash strict.sh; echo \"exit code: $?\"\n23:36:05 [INFO] SQL average: 82\n23:36:05 [WARN] skipping 2406: 'AB'\n23:36:05 [INFO] ML average: 84\n23:36:05 [WARN] no marks for Hadoop\nnext line uses an unset variable\nstrict.sh: line 21: undefined_var: unbound variable\n23:36:05 [INFO] cleaned up\nexit code: 1"
+}

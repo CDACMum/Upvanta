@@ -1,0 +1,4 @@
+{
+ "src": "# marks.csv was written by the example; the file is shown in the first print\nprint(open('marks.csv').read())\n\nnaive = pd.read_csv('marks.csv')\nprint(naive.shape, naive.columns.tolist())      # wrong separator -> 1 column\n\ndf = pd.read_csv('marks.csv',\n                 sep=';',\n                 na_values=['AB'],\n                 parse_dates=['exam_date'],\n                 dtype={'subject': 'category'})\nprint(df)\nprint(df.dtypes)",
+ "out": "roll_no;subject;marks;exam_date\n2401;SQL;82;2026-09-20\n2402;SQL;AB;2026-09-20\n2403;ML;84;2026-09-21\n2404;Java;58;2026-09-22\n\n(4, 1) ['roll_no;subject;marks;exam_date']\n   roll_no subject  marks  exam_date\n0     2401     SQL   82.0 2026-09-20\n1     2402     SQL    NaN 2026-09-20\n2     2403      ML   84.0 2026-09-21\n3     2404    Java   58.0 2026-09-22\nroll_no               int64\nsubject            category\nmarks               float64\nexam_date    datetime64[us]\ndtype: object"
+}

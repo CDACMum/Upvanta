@@ -1,0 +1,4 @@
+{
+ "src": "head -n 3 students.csv\ntail -n 2 marks.csv\ntail -n +2 marks.csv | head -n 3\nwc -l students.csv marks.csv\nnl -b a app.log | tail -n 3\nfile students.csv\nstat -c '%n: %s bytes, owner %U' app.log",
+ "out": "$ head -n 3 students.csv\nroll_no,name,course,centre,city\n2401,Anuj,PG-DBDA,Kharghar,Pune\n2402,Vineeta,PG-DBDA,Kharghar,Navi Mumbai\n$ tail -n 2 marks.csv\n2406,ML,AB\n2406,Python,72\n$ tail -n +2 marks.csv | head -n 3\n2401,SQL,82\n2401,Spark,61\n2402,SQL,91\n$ wc -l students.csv marks.csv\n  7 students.csv\n 10 marks.csv\n 17 total\n$ nl -b a app.log | tail -n 3\n     6\t2026-10-13 09:00:21 INFO  Connected\n     7\t2026-10-13 09:00:40 ERROR Duplicate key 2402-SQL\n     8\t2026-10-13 09:01:02 INFO  Job finished in 61s\n$ file students.csv\nstudents.csv: CSV ASCII text\n$ stat -c '%n: %s bytes, owner %U' app.log\napp.log: 407 bytes, owner student"
+}

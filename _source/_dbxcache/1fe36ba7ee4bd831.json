@@ -1,0 +1,12 @@
+{
+ "input": {
+  "kind": "py",
+  "setup": "",
+  "src": "from pyspark.sql import functions as F\n\ninferred = (spark.read.option(\"header\", True).option(\"inferSchema\", True)\n                 .csv(\"/Volumes/cdac/bda/raw/marks.csv\"))\ninferred.printSchema()\n\nmarks = (spark.read.format(\"csv\").option(\"header\", True)\n              .schema(\"roll_no INT, subject STRING, marks INT\")\n              .load(\"/Volumes/cdac/bda/raw/marks.csv\"))\n\nfeedback = spark.read.json(\"/Volumes/cdac/bda/raw/feedback.json\")\nfeedback.printSchema()\n\n# DataFrame API\nmarks.groupBy(\"subject\").agg(F.avg(\"marks\").alias(\"avg_marks\")).orderBy(\"subject\").show()\n\n# the same question in SQL\nmarks.createOrReplaceTempView(\"marks_raw\")\nspark.sql(\"SELECT subject, avg(marks) AS avg_marks FROM marks_raw GROUP BY subject ORDER BY subject\").show()",
+  "files": {
+   "/Volumes/cdac/bda/raw/marks.csv": "\nroll_no,subject,marks\n2401,SQL,72\n2402,SQL,85\n2401,Python,64\n2402,Python,90\n2403,SQL,91\n",
+   "/Volumes/cdac/bda/raw/feedback.json": "\n{\"roll_no\": 2401, \"rating\": 4, \"comment\": \"Good labs\"}\n{\"roll_no\": 2402, \"rating\": 5, \"comment\": \"Clear explanations\", \"tags\": [\"spark\", \"delta\"]}\n"
+  }
+ },
+ "output": "root\n |-- roll_no: integer (nullable = true)\n |-- subject: string (nullable = true)\n |-- marks: integer (nullable = true)\n\nroot\n |-- comment: string (nullable = true)\n |-- rating: long (nullable = true)\n |-- roll_no: long (nullable = true)\n |-- tags: array (nullable = true)\n |    |-- element: string (containsNull = true)\n\n+-------+-----------------+\n|subject|        avg_marks|\n+-------+-----------------+\n| Python|             77.0|\n|    SQL|82.66666666666667|\n+-------+-----------------+\n\n+-------+-----------------+\n|subject|        avg_marks|\n+-------+-----------------+\n| Python|             77.0|\n|    SQL|82.66666666666667|\n+-------+-----------------+"
+}

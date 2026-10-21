@@ -1,0 +1,1 @@
+{"output": "{ acknowledged: true, insertedId: 'R-1001' }\n{\n  _id: 'R-1001',\n  roll: 2401,\n  amount: Decimal128('45000.50'),\n  paidOn: ISODate('2026-10-13T09:30:00.000Z'),\n  verified: true,\n  remarks: null\n}\n{ acknowledged: true, insertedId: 'R-1002' }\n[ { _id: 'R-1002', roll: 2402, amount: '45000' } ]"}

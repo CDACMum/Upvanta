@@ -1,0 +1,1 @@
+{"output": "switched to db cdac\n{ acknowledged: true, insertedId: 'PG-DBDA' }\n{ acknowledged: true, insertedId: 2401 }\ncourses\nstudents\ncdac\n1\ntrue\nstudents"}

@@ -1,0 +1,4 @@
+{
+ "src": "a = np.array([10, 20, 30, 40, 50])\nv = a[1:4]\nv[0] = 99\nprint(a, '| shares memory:', np.shares_memory(a, v), '| v.base is a:', v.base is a)\n\nc = a[1:4].copy()\nc[0] = -1\nprint(a, '| shares memory:', np.shares_memory(a, c))\n\nf = a[[1, 2, 3]]                 # fancy -> copy\nf[0] = -5\nprint(a, np.shares_memory(a, f))\n\ncol = np.arange(6).reshape(2, 3)[:, 0]\nprint(col.flags['C_CONTIGUOUS'], col.strides)  # views can be non-contiguous",
+ "out": "[10 99 30 40 50] | shares memory: True | v.base is a: True\n[10 99 30 40 50] | shares memory: False\n[10 99 30 40 50] False\nFalse (24,)"
+}

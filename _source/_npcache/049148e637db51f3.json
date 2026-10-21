@@ -1,0 +1,4 @@
+{
+ "src": "import pandas as pd\ndf = pd.DataFrame({'name': ['Anuj', 'Vineeta', 'Rohan'],\n                   'marks': [82, 91, np.nan], 'attendance': [0.92, 0.97, 0.71]})\nX = df[['marks', 'attendance']].to_numpy()\nprint(X, X.dtype, type(X).__name__)\nprint(df.to_numpy().dtype)                         # mixed -> object\n\nprint(np.log(df['marks']))                         # ufunc keeps the index\nprint(np.nanmean(X, axis=0))\ndf['z'] = (X[:, 0] - np.nanmean(X[:, 0])) / np.nanstd(X[:, 0])\nprint(df)\nprint(pd.DataFrame(np.eye(2, dtype=int), columns=['a', 'b']))",
+ "out": "[[82.    0.92]\n [91.    0.97]\n [  nan  0.71]] float64 ndarray\nobject\n0    4.406719\n1    4.510860\n2         NaN\nName: marks, dtype: float64\n[86.5         0.86666667]\n      name  marks  attendance    z\n0     Anuj   82.0        0.92 -1.0\n1  Vineeta   91.0        0.97  1.0\n2    Rohan    NaN        0.71  NaN\n   a  b\n0  1  0\n1  0  1"
+}

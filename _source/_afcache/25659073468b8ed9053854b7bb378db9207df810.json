@@ -1,0 +1,1 @@
+{"out": "$ airflow dags list -o plain\ndag_id           fileloc                                      owners       is_paused    bundle_name    bundle_version\nstudent_results  /home/claude/afhome/dags/student_results.py  ['vineeta']  True         dags-folder\n\n$ airflow tasks list student_results\nextract\ntop_scorer\n\n$ airflow dags list-import-errors\nNo data found"}

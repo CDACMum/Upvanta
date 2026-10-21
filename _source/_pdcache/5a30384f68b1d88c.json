@@ -1,0 +1,4 @@
+{
+ "src": "pd.Series(['82', 'AB']).astype(int)",
+ "out": "ValueError: invalid literal for int() with base 10: 'AB'"
+}

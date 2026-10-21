@@ -1,0 +1,1 @@
+{"output": "$ dbt --quiet run\n\n\n$ dbt --quiet run --target prod\n\n\n$ dbt --quiet show --inline \"select table_schema, table_name from information_schema.tables where table_name = 'student_dim' order by 1\" \n| table_schema | table_name  |\n| ------------ | ----------- |\n| dev_marts    | student_dim |\n| marts        | student_dim |"}

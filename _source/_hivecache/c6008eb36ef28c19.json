@@ -1,0 +1,1 @@
+{"output": "+----------+---------+-------+\n| centre   | course  | total |\n+----------+---------+-------+\n| Juhu     | PG-DAC  | 90    |\n| Juhu     | PG-DAI  | 40    |\n| Juhu     | NULL    | 130   |\n| Kharghar | PG-DAC  | 120   |\n| Kharghar | PG-DBDA | 60    |\n| Kharghar | NULL    | 180   |\n| NULL     | NULL    | 310   |\n+----------+---------+-------+"}

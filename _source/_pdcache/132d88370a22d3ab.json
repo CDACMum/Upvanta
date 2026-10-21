@@ -1,0 +1,4 @@
+{
+ "src": "df = pd.DataFrame({\n    'name':  ['  anuj  sharma', 'VINEETA RAO', 'aarshvi  k'],\n    'email': ['anuj@cdac.in', 'vineeta@gmail.com', None],\n    'batch': ['Aug-2026 / PG-DBDA', 'Aug-2026 / PG-DAC', 'Feb-2026 / PG-DBDA'],\n})\ndf['name']   = df['name'].str.strip().str.replace(r'\\s+', ' ', regex=True).str.title()\ndf['domain'] = df['email'].str.split('@').str[1]\ndf[['month', 'year', 'course']] = df['batch'].str.extract(r'(\\w{3})-(\\d{4}) / (\\S+)')\nprint(df.drop(columns='batch'))\nprint()\nprint(df[df['email'].str.endswith('cdac.in', na=False)]['name'].tolist())",
+ "out": "          name              email     domain month  year   course\n0  Anuj Sharma       anuj@cdac.in    cdac.in   Aug  2026  PG-DBDA\n1  Vineeta Rao  vineeta@gmail.com  gmail.com   Aug  2026   PG-DAC\n2    Aarshvi K                NaN        NaN   Feb  2026  PG-DBDA\n\n['Anuj Sharma']"
+}

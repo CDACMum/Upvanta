@@ -1,0 +1,4 @@
+{
+ "src": "dpkg -l gawk | tail -n 1 | awk '{print $1, $2, $3}'\napt-cache policy gawk | head -n 3\napt list --installed 2>/dev/null | wc -l\ndpkg -L gawk | grep bin/ | head -n 2\npython3 -m venv .venv\nsource .venv/bin/activate; which python pip\npip --version | cut -d' ' -f1-2\ndeactivate; which python3",
+ "out": "$ dpkg -l gawk | tail -n 1 | awk '{print $1, $2, $3}'\nii gawk 1:5.2.1-2ubuntu0.1\n$ apt-cache policy gawk | head -n 3\ngawk:\n  Installed: 1:5.2.1-2ubuntu0.1\n  Candidate: 1:5.2.1-2ubuntu0.1\n$ apt list --installed 2>/dev/null | wc -l\n1037\n$ dpkg -L gawk | grep bin/ | head -n 2\n/usr/bin/gawk\n/usr/bin/gawkbug\n$ python3 -m venv .venv\n$ source .venv/bin/activate; which python pip\n/home/student/cdac/.venv/bin/python\n/home/student/cdac/.venv/bin/pip\n$ pip --version | cut -d' ' -f1-2\npip 26.2.1\n$ deactivate; which python3\n/usr/bin/python3"
+}

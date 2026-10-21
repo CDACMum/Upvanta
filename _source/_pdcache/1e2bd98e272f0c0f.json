@@ -1,0 +1,4 @@
+{
+ "src": "df = students.set_index('roll_no')\n\nprint(df.loc[2402])                              # one row by label -> Series\nprint()\nprint(df.loc[2402:2404, ['name', 'course']])     # label slice: end included\nprint()\nprint(df.iloc[0:2, 0:2])                         # position slice: end excluded\nprint()\nprint(df.loc[df['centre'] == 'Juhu', 'name'])    # mask + column\nprint()\nprint(df.at[2405, 'city'], '|', df.iat[0, 0])    # single cells",
+ "out": "name          Vineeta\ncourse        PG-DBDA\ncentre       Kharghar\ncity      Navi Mumbai\nName: 2402, dtype: str\n\n            name   course\nroll_no                  \n2402     Vineeta  PG-DBDA\n2403     Aarshvi   PG-DAI\n2404       Rohan   PG-DAC\n\n            name   course\nroll_no                  \n2401        Anuj  PG-DBDA\n2402     Vineeta  PG-DBDA\n\nroll_no\n2403    Aarshvi\n2404      Rohan\n2406      Kabir\nName: name, dtype: str\n\nPune | Anuj"
+}

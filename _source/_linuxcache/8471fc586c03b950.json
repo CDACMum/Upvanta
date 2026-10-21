@@ -1,0 +1,4 @@
+{
+ "src": "!set -m\nsleep 30 &\nsleep 40 &\njobs\necho \"last background PID: $!\"\nkill %1; sleep 0.2; jobs\nnohup bash -c 'echo started; sleep 1; echo finished' > long.log 2>&1 &\nwait\ncat long.log\nkill %2 2>/dev/null; wait 2>/dev/null; jobs; echo 'no jobs left'",
+ "out": "$ sleep 30 &\n$ sleep 40 &\n$ jobs\n[1]-  Running                 sleep 30 &\n[2]+  Running                 sleep 40 &\n$ echo \"last background PID: $!\"\nlast background PID: 5334\n$ kill %1; sleep 0.2; jobs\n[1]-  Terminated              sleep 30\n[2]+  Running                 sleep 40 &\n$ nohup bash -c 'echo started; sleep 1; echo finished' > long.log 2>&1 &\n$ wait\n$ cat long.log\nstarted\nfinished\n$ kill %2 2>/dev/null; wait 2>/dev/null; jobs; echo 'no jobs left'\n[3]   Done                    nohup bash -c 'echo started; sleep 1; echo finished' > long.log 2>&1\nno jobs left"
+}

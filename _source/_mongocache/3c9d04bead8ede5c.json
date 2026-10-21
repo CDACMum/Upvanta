@@ -1,0 +1,1 @@
+{"output": "switched to db cdac\n{ acknowledged: true, insertedId: 2401 }\n{ acknowledged: true, insertedId: 2402 }\n[\n  { _id: 2401, name: 'Anuj', course: 'PG-DBDA', skills: [ 'sql', 'spark' ] },\n  {\n    _id: 2402,\n    name: 'Vineeta',\n    course: 'PG-DBDA',\n    address: { city: 'Navi Mumbai' }\n  }\n]"}

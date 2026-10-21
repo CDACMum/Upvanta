@@ -1,0 +1,5 @@
+{
+ "kind": "py",
+ "input": "import snowflake.connector\n\nconn = snowflake.connector.connect(\n    account=\"cdac-mumbai\", user=\"vineeta\", password=\"********\",   # use key-pair auth or SSO in real code\n    warehouse=\"lab_wh\", database=\"CDAC\", schema=\"BDA\",\n)\ncur = conn.cursor()\ncur.execute(\"CREATE OR REPLACE TABLE mock_interviews (roll_no INT, panel VARCHAR, rating INT)\")\n\nrows = [(2401, \"A\", 7), (2401, \"B\", 8), (2402, \"A\", 9), (2405, \"B\", 10)]\ncur.executemany(\"INSERT INTO mock_interviews VALUES (%s, %s, %s)\", rows)   # bound parameters, no string building\nprint(\"rows in table:\", cur.execute(\"SELECT COUNT(*) FROM mock_interviews\").fetchone()[0])\n\ncur.execute(\"\"\"\n    SELECT roll_no, COUNT(*) AS panels, AVG(rating)::NUMBER(4,2) AS avg_rating\n    FROM mock_interviews\n    WHERE rating >= %s\n    GROUP BY roll_no ORDER BY roll_no\n\"\"\", (8,))\nprint([d.name for d in cur.description])\nfor row in cur.fetchall():\n    print(row)\nconn.close()",
+ "output": "rows in table: 4\n['ROLL_NO', 'PANELS', 'AVG_RATING']\n(2401, 1, Decimal('8.00'))\n(2402, 1, Decimal('9.00'))\n(2405, 1, Decimal('10.00'))"
+}

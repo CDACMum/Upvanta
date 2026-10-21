@@ -1,0 +1,4 @@
+{
+ "src": "print(marks[1, 2])            # student 1, subject 2\nprint(marks[1])               # one student\nprint(marks[:, 2])            # one subject, 1-D\nprint(marks[:, 2:3].shape)    # keep 2-D\nprint(marks[:2, 2:])          # block\nprint(marks[-1, ::-1])        # last student, subjects reversed\nprint(marks[..., 0])          # first column via Ellipsis",
+ "out": "79\n[91 88 79 95]\n[70 79 66]\n(3, 1)\n[[70 55]\n [79 95]]\n[90 66 72 84]\n[82 91 84]"
+}

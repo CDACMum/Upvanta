@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     VARCHAR,\n  course   VARCHAR,\n  centre   VARCHAR,\n  marks    NUMBER(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, '2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, '2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, '2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, '2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, '2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, '2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, '2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, '2026-02-05');\n",
+  "-- answered from micro-partition metadata in a real account (no warehouse scan)\nSELECT COUNT(*)    AS total_students,\n       MIN(marks)  AS lowest,\n       MAX(marks)  AS highest,\n       MIN(joined) AS first_join,\n       MAX(joined) AS last_join\nFROM   students;",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT COUNT(*) AS total_students, MIN(marks) AS lowest, MAX(marks) AS highest, MIN(joi...\n+----------------+--------+---------+------------+------------+\n| TOTAL_STUDENTS | LOWEST | HIGHEST | FIRST_JOIN | LAST_JOIN  |\n|----------------+--------+---------+------------+------------|\n|              8 |  59.25 |   93.75 | 2026-02-02 | 2026-02-05 |\n+----------------+--------+---------+------------+------------+\n1 Row(s) produced."
+}

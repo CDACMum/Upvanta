@@ -1,0 +1,4 @@
+{
+ "src": "touch mine.csv\nchown root mine.csv\ncat /etc/shadow\ngroups",
+ "out": "$ touch mine.csv\n$ chown root mine.csv\nchown: changing ownership of 'mine.csv': Operation not permitted\n$ cat /etc/shadow\ncat: /etc/shadow: Permission denied\n$ groups\nstudent"
+}

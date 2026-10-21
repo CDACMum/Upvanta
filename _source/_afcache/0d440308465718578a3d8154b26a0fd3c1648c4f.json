@@ -1,0 +1,1 @@
+{"out": "Python accepted the definition", "rc": 1, "last": "airflow.sdk.exceptions.AirflowDagCycleException: Cycle detected in Dag: cycle_demo. Faulty task: C"}

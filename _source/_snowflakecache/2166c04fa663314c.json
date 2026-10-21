@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "CREATE OR REPLACE TABLE exam_log AS\nSELECT n,\n       DATEADD(day, MOD(n * 7919, 365), '2026-01-01'::DATE) AS exam_date,\n       FLOOR(n / 365)                                      AS mp_load_order\nFROM (SELECT ROW_NUMBER() OVER (ORDER BY SEQ4()) - 1 AS n\n      FROM TABLE(GENERATOR(ROWCOUNT => 3650)));\n\n-- simulate micro-partitions of 365 rows and ask: which could hold 15 May 2026?\n-- 1) in load order (scrambled dates)\nSELECT COUNT(*) AS partitions_total,\n       COUNT_IF('2026-05-15'::DATE BETWEEN min_d AND max_d) AS partitions_to_scan\nFROM (SELECT mp_load_order, MIN(exam_date) AS min_d, MAX(exam_date) AS max_d\n      FROM exam_log GROUP BY mp_load_order);\n\n-- 2) after clustering by exam_date (rows re-grouped in date order)\nSELECT COUNT(*) AS partitions_total,\n       COUNT_IF('2026-05-15'::DATE BETWEEN min_d AND max_d) AS partitions_to_scan\nFROM (SELECT mp, MIN(exam_date) AS min_d, MAX(exam_date) AS max_d\n      FROM (SELECT exam_date,\n                   FLOOR((ROW_NUMBER() OVER (ORDER BY exam_date, n) - 1) / 365) AS mp\n            FROM exam_log)\n      GROUP BY mp);",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT COUNT(*) AS partitions_total, COUNT_IF('2026-05-15'::DATE BETWEEN min_d AND max_...\n+------------------+--------------------+\n| PARTITIONS_TOTAL | PARTITIONS_TO_SCAN |\n|------------------+--------------------|\n|               10 |                 10 |\n+------------------+--------------------+\n1 Row(s) produced.\n\nCDAC.BDA> SELECT COUNT(*) AS partitions_total, COUNT_IF('2026-05-15'::DATE BETWEEN min_d AND max_...\n+------------------+--------------------+\n| PARTITIONS_TOTAL | PARTITIONS_TO_SCAN |\n|------------------+--------------------|\n|               10 |                  1 |\n+------------------+--------------------+\n1 Row(s) produced."
+}

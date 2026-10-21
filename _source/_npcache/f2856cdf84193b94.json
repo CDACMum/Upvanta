@@ -1,0 +1,4 @@
+{
+ "src": "import time\nc = np.ones((3000, 3000))\nf = np.asfortranarray(c)\nprint(c.flags['C_CONTIGUOUS'], f.flags['F_CONTIGUOUS'], c.strides, f.strides)\nprint(c.T.flags['C_CONTIGUOUS'], c.T.flags['F_CONTIGUOUS'])   # transpose flips layout\nprint(c[:, ::2].flags['C_CONTIGUOUS'])                         # stepped slice: gaps\n\ndef timed(fn):\n    t = time.perf_counter()\n    for _ in range(5): fn()\n    return (time.perf_counter() - t) / 5 * 1000\nprint(f'copy C-array     : {timed(lambda: c.copy()):6.1f} ms')\nprint(f'copy as F-order  : {timed(lambda: np.asfortranarray(c)):6.1f} ms  (must reorder memory)')\nprint(np.arange(6).reshape(2, 3, order='F'))",
+ "out": "True True (24000, 8) (8, 24000)\nFalse True\nFalse\ncopy C-array     :   20.3 ms\ncopy as F-order  :   27.2 ms  (must reorder memory)\n[[0 2 4]\n [1 3 5]]"
+}

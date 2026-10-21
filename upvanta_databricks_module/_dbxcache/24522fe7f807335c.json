@@ -1,0 +1,11 @@
+{
+ "input": {
+  "kind": "sql",
+  "setup": "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     STRING,\n  course   STRING,\n  centre   STRING,\n  marks    DECIMAL(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, DATE'2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, DATE'2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, DATE'2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, DATE'2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, DATE'2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, DATE'2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, DATE'2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, DATE'2026-02-05');\nUPDATE students SET marks = 70 WHERE roll_no = 2404;",
+  "src": "SELECT * FROM table_changes('students', 1);",
+  "show": "all",
+  "files": {},
+  "expect_error": true
+ },
+ "output": "cdac.bda> SELECT * FROM table_changes('students', 1)\n[DELTA_MISSING_CHANGE_DATA] Error getting change data for range [1 , 2] as change data was not\nrecorded for version [1]. If you've enabled change data feed on this table,\nuse `DESCRIBE HISTORY` to see when it was first enabled.\nOtherwise, to start recording change data, use `ALTER TABLE table_name SET TBLPROPERTIES\n(delta.enableChangeDataFeed=true)`."
+}

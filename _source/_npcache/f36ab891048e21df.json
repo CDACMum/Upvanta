@@ -1,0 +1,4 @@
+{
+ "src": "a = np.arange(6)\nm = a.reshape(2, 3)\nprint(m)\nprint(a.reshape(3, -1).shape, a.reshape(-1, 1).shape)\nprint(m.T)\nprint(m.ravel(), m.flatten())\n\nr = m.ravel(); r[0] = 100          # view: changes m\nf = m.flatten(); f[1] = 200        # copy: m unchanged\nprint(m)\nprint(np.shares_memory(m, r), np.shares_memory(m, f))\ntry:\n    a.reshape(4, 2)\nexcept ValueError as e:\n    print('ValueError:', e)",
+ "out": "[[0 1 2]\n [3 4 5]]\n(3, 2) (6, 1)\n[[0 3]\n [1 4]\n [2 5]]\n[0 1 2 3 4 5] [0 1 2 3 4 5]\n[[100   1   2]\n [  3   4   5]]\nTrue False\nValueError: cannot reshape array of size 6 into shape (4,2)"
+}

@@ -1,0 +1,4 @@
+{
+ "src": "names  = np.array(['Anuj', 'Vineeta', 'Aarshvi', 'Rohan', 'Meera'])\ntotals = np.array([213, 258, 222, 160, 222])\n\norder = np.argsort(-totals, kind='stable')\nprint(names[order], totals[order])\n\ncourses = np.array(['DBDA', 'DAC', 'DBDA', 'DAI', 'DBDA'])\nvalues, counts = np.unique(courses, return_counts=True)\nprint(dict(zip(values.tolist(), counts.tolist())))\n\nmarks = np.array([82, 61, 91, 55, 70])\nbands = np.searchsorted([60, 70, 85], marks, side='right')\nprint(bands, np.array(['F', 'C', 'B', 'A'])[bands])\n\ntop2 = np.argpartition(-totals, 2)[:2]\nprint('top 2 (unordered):', names[top2])",
+ "out": "['Vineeta' 'Aarshvi' 'Meera' 'Anuj' 'Rohan'] [258 222 222 213 160]\n{'DAC': 1, 'DAI': 1, 'DBDA': 3}\n[2 1 3 0 2] ['B' 'C' 'A' 'F' 'B']\ntop 2 (unordered): ['Vineeta' 'Aarshvi']"
+}

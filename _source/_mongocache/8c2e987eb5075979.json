@@ -1,0 +1,1 @@
+{"output": "[\n  { _id: 2401, name: 'Anuj', subjects: 2, total: 159 },\n  { _id: 2402, name: 'Vineeta', subjects: 1, total: 91 },\n  { _id: 2404, name: 'Rohit', subjects: 0, total: 0 }\n]\n[\n  { name: 'Anuj', sqlMarks: 82 },\n  { name: 'Vineeta', sqlMarks: 91 },\n  { name: 'Meera', sqlMarks: 75 }\n]"}

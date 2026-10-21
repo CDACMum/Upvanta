@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "-- planned monthly credits for each warehouse (hours/day × days × credits/hour × avg clusters)\nSELECT warehouse, size, credits_per_hour, hours_per_day, days, avg_clusters,\n       credits_per_hour * hours_per_day * days * avg_clusters AS monthly_credits\nFROM VALUES ('ETL_WH', 'Medium',  4, 1.5, 30, 1.0),\n            ('BI_WH',  'Small',   2, 6.0, 22, 1.5),\n            ('LAB_WH', 'X-Small', 1, 4.0, 22, 2.0)\n     AS t(warehouse, size, credits_per_hour, hours_per_day, days, avg_clusters)\nORDER BY monthly_credits DESC;",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT warehouse, size, credits_per_hour, hours_per_day, days, avg_clusters, credits_pe...\n+-----------+---------+------------------+---------------+------+--------------+-----------------+\n| WAREHOUSE | SIZE    | CREDITS_PER_HOUR | HOURS_PER_DAY | DAYS | AVG_CLUSTERS | MONTHLY_CREDITS |\n|-----------+---------+------------------+---------------+------+--------------+-----------------|\n| BI_WH     | Small   |                2 |           6.0 |   22 |          1.5 |          396.00 |\n| ETL_WH    | Medium  |                4 |           1.5 |   30 |          1.0 |          180.00 |\n| LAB_WH    | X-Small |                1 |           4.0 |   22 |          2.0 |          176.00 |\n+-----------+---------+------------------+---------------+------+--------------+-----------------+\n3 Row(s) produced."
+}

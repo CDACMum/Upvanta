@@ -1,0 +1,4 @@
+{
+ "src": "enrolled = np.array([2401, 2402, 2403, 2405])\nattended = np.array([2403, 2402, 2404, 2402])     # scanned, with a duplicate\n\nprint('both          :', np.intersect1d(enrolled, attended))\nprint('absent        :', np.setdiff1d(enrolled, attended))\nprint('not enrolled  :', np.setdiff1d(attended, enrolled))\nprint('either        :', np.union1d(enrolled, attended))\nprint('present mask  :', np.isin(enrolled, attended))\nvals, counts = np.unique(attended, return_counts=True)\nprint('scanned twice :', vals[counts > 1])\nprint(hasattr(np, 'in1d'))",
+ "out": "both          : [2402 2403]\nabsent        : [2401 2405]\nnot enrolled  : [2404]\neither        : [2401 2402 2403 2404 2405]\npresent mask  : [False  True  True False]\nscanned twice : [2402]\nFalse"
+}

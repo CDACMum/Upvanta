@@ -1,0 +1,4 @@
+{
+ "src": "A = np.array([[2, 3], [1, 4]]); b = np.array([23, 24])\nx = np.linalg.solve(A, b)\nprint(x, np.allclose(A @ x, b))\nprint(np.linalg.inv(A) @ b, round(np.linalg.det(A), 6), np.linalg.matrix_rank(A))\n\nS = np.array([[2.0, 1.0], [1.0, 2.0]])          # symmetric\nvals, vecs = np.linalg.eigh(S)\nprint(vals, np.allclose(S @ vecs, vecs * vals))\n\nX = np.c_[np.ones(4), [1, 2, 3, 4]]             # intercept + feature\ny = np.array([52, 61, 69, 80])\ncoef, *_ = np.linalg.lstsq(X, y)\nprint('intercept, slope:', coef.round(2))\ntry:\n    np.linalg.solve([[1, 2], [2, 4]], [1, 2])\nexcept np.linalg.LinAlgError as e:\n    print('LinAlgError:', e)",
+ "out": "[4. 5.] True\n[4. 5.] 5.0 2\n[1. 3.] True\nintercept, slope: [42.5  9.2]\nLinAlgError: Singular matrix"
+}

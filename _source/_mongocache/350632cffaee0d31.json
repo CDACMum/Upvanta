@@ -1,0 +1,1 @@
+{"output": "marks_1\ncourse_marks\n[\n  { v: 2, key: { _id: 1 }, name: '_id_' },\n  { v: 2, key: { marks: 1 }, name: 'marks_1' },\n  { v: 2, key: { course: 1, marks: -1 }, name: 'course_marks' }\n]\n[\n  { name: 'Vineeta', marks: 91 },\n  { name: 'Anuj', marks: 78 },\n  { name: 'Meera', marks: 78 }\n]\n{ nIndexesWas: 3, ok: 1 }"}

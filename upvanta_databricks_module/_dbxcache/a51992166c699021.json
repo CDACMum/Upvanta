@@ -1,0 +1,11 @@
+{
+ "input": {
+  "kind": "sql",
+  "setup": "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     STRING,\n  course   STRING,\n  centre   STRING,\n  marks    DECIMAL(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, DATE'2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, DATE'2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, DATE'2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, DATE'2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, DATE'2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, DATE'2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, DATE'2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, DATE'2026-02-05');\n\nCREATE TABLE marks_updates AS SELECT * FROM VALUES\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     90.00, DATE'2026-02-02'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 70.00, DATE'2026-02-03'),\n  (2409, 'Zoya',    'PGCP-AI',  'Kharghar', 81.00, DATE'2026-02-06')\n  AS u(roll_no, name, course, centre, marks, joined);\n",
+  "src": "INSERT INTO marks_updates VALUES (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu', 91.00, DATE'2026-02-02');\n\nMERGE INTO students AS t\nUSING marks_updates AS s\nON t.roll_no = s.roll_no\nWHEN MATCHED THEN UPDATE SET *;",
+  "show": "all",
+  "files": {},
+  "expect_error": true
+ },
+ "output": "cdac.bda> INSERT INTO marks_updates VALUES (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu', 91.00, DATE'2026...\n+-------------------+-------------------+\n| num_affected_rows | num_inserted_rows |\n+-------------------+-------------------+\n| 1                 | 1                 |\n+-------------------+-------------------+\n\ncdac.bda> MERGE INTO students AS t USING marks_updates AS s ON t.roll_no = s.roll_no WHEN MATCHED...\n[DELTA_MULTIPLE_SOURCE_ROW_MATCHING_TARGET_ROW_IN_MERGE] Cannot perform Merge as multiple source rows matched and attempted to modify the same\ntarget row in the Delta table in possibly conflicting ways. By SQL semantics of Merge,\nwhen multiple source rows match on the same target row, the result may be ambiguous\nas it is unclear which source row should be used to update or delete the matching\ntarget row. You can preprocess the source table to eliminate the possibility of\nmultiple matches. SQLSTATE: 21506"
+}

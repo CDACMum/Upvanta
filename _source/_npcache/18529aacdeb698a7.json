@@ -1,0 +1,4 @@
+{
+ "src": "from numpy.lib.stride_tricks import sliding_window_view\nx = np.array([52, 55, 49, 58, 60, 57])\nprint(np.cumsum(x), np.diff(x), np.diff(x, prepend=x[0]))\nprint(np.convolve(x, np.ones(3) / 3, mode='valid').round(1))\nprint(sliding_window_view(x, 3))\nprint(sliding_window_view(x, 3).mean(axis=1).round(1))\nc = np.cumsum(np.insert(x, 0, 0))\nprint(((c[3:] - c[:-3]) / 3).round(1))           # O(n) moving average\nprint('drops:', np.where(np.diff(x) < -5)[0] + 1)",
+ "out": "[ 52 107 156 214 274 331] [ 3 -6  9  2 -3] [ 0  3 -6  9  2 -3]\n[52.  54.  55.7 58.3]\n[[52 55 49]\n [55 49 58]\n [49 58 60]\n [58 60 57]]\n[52.  54.  55.7 58.3]\n[52.  54.  55.7 58.3]\ndrops: [2]"
+}

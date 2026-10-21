@@ -1,0 +1,4 @@
+{
+ "src": "bash arrays.sh\nbash arrays.sh -c PG-DAC -m 50 -v\nbash arrays.sh -x",
+ "out": "$ bash arrays.sh\nsubjects: SQL Spark ML Python (count 4, second Spark)\nfee for PG-DBDA: 95000\nmarks_2026 | 2026.csv | 14 | MARKS_2026.CSV | marks_2027.csv\ntotal=234 integer avg=78 bc avg=78.00\n$ bash arrays.sh -c PG-DAC -m 50 -v\nsubjects: SQL Spark ML Python (count 4, second Spark)\nfee for PG-DAC: 90000\nmarks_2026 | 2026.csv | 14 | MARKS_2026.CSV | marks_2027.csv\ntotal=234 integer avg=78 bc avg=78.00\ncourse=PG-DAC min=50\n$ bash arrays.sh -x\narrays.sh: illegal option -- x\nusage: arrays.sh [-c course] [-m min] [-v]"
+}

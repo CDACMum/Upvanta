@@ -1,0 +1,1 @@
+{"out": "task_id=start  operator=EmptyOperator  downstream=['greet']\ntask_id=greet  operator=BashOperator   downstream=[]", "rc": 0, "last": ""}

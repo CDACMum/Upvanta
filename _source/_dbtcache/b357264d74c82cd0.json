@@ -1,0 +1,1 @@
+{"output": "$ dbt --quiet show --select whoami\n| target_name | target_schema |\n| ----------- | ------------- |\n| dev         | dev           |\n\n$ dbt --quiet show --select whoami --target prod\n| target_name | target_schema |\n| ----------- | ------------- |\n| prod        | prod          |"}

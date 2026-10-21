@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "-- 10 short queries (5 s each) spread over an hour, at two AUTO_SUSPEND settings\n-- each gap is longer than the setting, so every query causes a resume\nSELECT setting,\n       resumes,\n       resumes * GREATEST(5 + idle_before_suspend, 60)      AS billed_seconds,\n       (billed_seconds * 1 / 3600)::NUMBER(6,4)              AS xs_credits\nFROM VALUES ('AUTO_SUSPEND = 60',  10, 60),\n            ('AUTO_SUSPEND = 600', 10, 600)\n     AS t(setting, resumes, idle_before_suspend);",
+  "dml"
+ ],
+ "output": "CDAC.BDA> SELECT setting, resumes, resumes * GREATEST(5 + idle_before_suspend, 60) AS billed_seco...\n+--------------------+---------+----------------+------------+\n| SETTING            | RESUMES | BILLED_SECONDS | XS_CREDITS |\n|--------------------+---------+----------------+------------|\n| AUTO_SUSPEND = 60  |      10 |            650 |     0.1806 |\n| AUTO_SUSPEND = 600 |      10 |           6050 |     1.6806 |\n+--------------------+---------+----------------+------------+\n2 Row(s) produced."
+}

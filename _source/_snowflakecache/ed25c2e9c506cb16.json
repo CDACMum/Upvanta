@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     VARCHAR,\n  course   VARCHAR,\n  centre   VARCHAR,\n  marks    NUMBER(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, '2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, '2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, '2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, '2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, '2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, '2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, '2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, '2026-02-05');\n",
+  "-- function-wrapped column: harder to prune\nSELECT COUNT(*) AS feb_joiners\nFROM   students\nWHERE  YEAR(joined) = 2026 AND MONTH(joined) = 2;\n\n-- plain range on the column: prunes on min/max\nSELECT COUNT(*) AS feb_joiners\nFROM   students\nWHERE  joined >= '2026-02-01' AND joined < '2026-03-01';",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT COUNT(*) AS feb_joiners FROM students WHERE YEAR(joined) = 2026 AND MONTH(joined...\n+-------------+\n| FEB_JOINERS |\n|-------------|\n|           8 |\n+-------------+\n1 Row(s) produced.\n\nCDAC.BDA> SELECT COUNT(*) AS feb_joiners FROM students WHERE joined >= '2026-02-01' AND joined < ...\n+-------------+\n| FEB_JOINERS |\n|-------------|\n|           8 |\n+-------------+\n1 Row(s) produced."
+}

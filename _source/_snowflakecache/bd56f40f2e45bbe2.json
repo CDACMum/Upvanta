@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "-- credits = credits_per_hour × billed seconds / 3600, minimum 60 s per resume\nSELECT size,\n       credits_per_hour,\n       run_seconds,\n       (GREATEST(run_seconds, 60) * credits_per_hour / 3600)::NUMBER(8,4) AS credits_billed\nFROM VALUES ('X-Small', 1,   45),\n            ('X-Small', 1,  600),\n            ('Medium',  4, 2400),\n            ('Large',   8, 1200)\n     AS t(size, credits_per_hour, run_seconds);",
+  "dml"
+ ],
+ "output": "CDAC.BDA> SELECT size, credits_per_hour, run_seconds, (GREATEST(run_seconds, 60) * credits_per_ho...\n+---------+------------------+-------------+----------------+\n| SIZE    | CREDITS_PER_HOUR | RUN_SECONDS | CREDITS_BILLED |\n|---------+------------------+-------------+----------------|\n| X-Small |                1 |          45 |         0.0167 |\n| X-Small |                1 |         600 |         0.1667 |\n| Medium  |                4 |        2400 |         2.6667 |\n| Large   |                8 |        1200 |         2.6667 |\n+---------+------------------+-------------+----------------+\n4 Row(s) produced."
+}

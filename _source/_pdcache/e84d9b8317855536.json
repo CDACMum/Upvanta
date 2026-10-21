@@ -1,0 +1,4 @@
+{
+ "src": "def add_grade(df, col='avg'):\n    return df.assign(grade=np.select([df[col] >= 85, df[col] >= 70], ['A', 'B'], default='C'))\n\ndef top_n(df, n):\n    return df.nlargest(n, 'avg')\n\nreport = (\n    marks\n    .dropna(subset=['marks'])\n    .merge(students, on='roll_no')\n    .query(\"centre == 'Kharghar'\")\n    .groupby('name', as_index=False)\n    .agg(avg=('marks', 'mean'), subjects=('subject', 'count'))\n    .pipe(add_grade)\n    .pipe(top_n, n=3)\n    .reset_index(drop=True)\n)\nprint(report)",
+ "out": "      name   avg  subjects grade\n0  Vineeta  89.5         2     A\n1    Meera  75.0         1     B\n2     Anuj  71.5         2     B"
+}

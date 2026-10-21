@@ -1,0 +1,4 @@
+{
+ "src": "df = pd.DataFrame({'name': ['Anuj', 'Vineeta', 'Rohan'], 'marks': [82, 91, 58]})\n\ndf[df['marks'] < 60]['marks'] = 60        # chained assignment\nprint(df)\nprint()\n\nlow = df[df['marks'] < 60]\nlow['marks'] = 60                         # changes only `low`\nprint(low)\nprint(df)\nprint()\n\ndf.loc[df['marks'] < 60, 'marks'] = 60    # the correct way\nprint(df)\nprint(pd.__version__)",
+ "out": "ChainedAssignmentError: A value is being set on a copy of a DataFrame or Series through chained assignment.\n      name  marks\n0     Anuj     82\n1  Vineeta     91\n2    Rohan     58\n\n    name  marks\n2  Rohan     60\n      name  marks\n0     Anuj     82\n1  Vineeta     91\n2    Rohan     58\n\n      name  marks\n0     Anuj     82\n1  Vineeta     91\n2    Rohan     60\n3.0.5"
+}

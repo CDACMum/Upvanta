@@ -1,0 +1,11 @@
+{
+ "input": {
+  "kind": "sql",
+  "setup": "\nCREATE TABLE silver_ccee (roll_no INT NOT NULL, name STRING, course STRING, centre STRING, subject STRING NOT NULL, marks INT,\n  CONSTRAINT valid_marks CHECK (marks BETWEEN 0 AND 100));\nINSERT INTO silver_ccee VALUES\n  (2401, 'Anuj', 'PGCP-BDA', 'Kharghar', 'SQL', 72), (2401, 'Anuj', 'PGCP-BDA', 'Kharghar', 'Python', 64),\n  (2405, 'Sana', 'PGCP-BDA', 'Kharghar', 'SQL', 95), (2405, 'Sana', 'PGCP-BDA', 'Kharghar', 'Python', 89),\n  (2403, 'Riya', 'PGCP-AI', 'Kharghar', 'ML', 91),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu', 'SQL', 88), (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu', 'Python', 90),\n  (2408, 'Tejas', 'PGCP-BDA', 'Juhu', 'SQL', 38), (2408, 'Tejas', 'PGCP-BDA', 'Juhu', 'Python', 61),\n  (2406, 'Omkar', 'PGCP-AI', 'Juhu', 'ML', 77), (2406, 'Omkar', 'PGCP-AI', 'Juhu', 'Python', 81);\n",
+  "src": "-- the job runs again after a corrected file arrives: idempotent MERGE, nothing duplicated\nMERGE INTO silver_ccee AS t\nUSING (SELECT * FROM VALUES (2403, 'Riya', 'PGCP-AI', 'Kharghar', 'Python', 92)\n       AS s(roll_no, name, course, centre, subject, marks)) AS s\nON t.roll_no = s.roll_no AND t.subject = s.subject\nWHEN MATCHED THEN UPDATE SET *\nWHEN NOT MATCHED THEN INSERT *;\n\nSELECT course, COUNT(*) AS rows, COUNT(DISTINCT roll_no) AS students FROM silver_ccee GROUP BY course ORDER BY course;",
+  "show": "dml",
+  "files": {},
+  "expect_error": false
+ },
+ "output": "cdac.bda> MERGE INTO silver_ccee AS t USING (SELECT * FROM VALUES (2403, 'Riya', 'PGCP-AI', 'Khar...\n+-------------------+------------------+------------------+-------------------+\n| num_affected_rows | num_updated_rows | num_deleted_rows | num_inserted_rows |\n+-------------------+------------------+------------------+-------------------+\n| 1                 | 0                | 0                | 1                 |\n+-------------------+------------------+------------------+-------------------+\n\ncdac.bda> SELECT course, COUNT(*) AS rows, COUNT(DISTINCT roll_no) AS students FROM silver_ccee G...\n+----------+------+----------+\n| course   | rows | students |\n+----------+------+----------+\n| PGCP-AI  | 4    | 2        |\n| PGCP-BDA | 8    | 4        |\n+----------+------+----------+"
+}

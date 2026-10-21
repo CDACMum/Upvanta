@@ -1,0 +1,4 @@
+{
+ "src": "m = np.array([[82, np.nan, 70],\n              [91, 88, np.nan]])\nprint(np.mean(m, axis=0))\nprint(np.nanmean(m, axis=0), np.nansum(m), np.nanmax(m, axis=1))\nprint(np.isnan(m).sum(), np.nan == np.nan)\nprint(np.nan_to_num(m, nan=0))\n\npresent = np.array([18, 0, 21.0]); total = np.array([20, 0, 22.0])\nwith np.errstate(divide='ignore', invalid='ignore'):\n    print(present / total)\nprint(np.divide(present, total, out=np.zeros_like(present), where=total > 0))\nprint(np.array([1.0]) / 0)\ntry:\n    np.array([1, 2]).astype(int)[0] = np.nan\nexcept ValueError as e:\n    print('ValueError:', e)",
+ "out": "[86.5  nan  nan]\n[86.5 88.  70. ] 331.0 [82. 91.]\n2 False\n[[82.  0. 70.]\n [91. 88.  0.]]\n[0.9               nan 0.95454545]\n[0.9        0.         0.95454545]\nRuntimeWarning: divide by zero encountered in divide\n[inf]\nValueError: cannot convert float NaN to integer"
+}

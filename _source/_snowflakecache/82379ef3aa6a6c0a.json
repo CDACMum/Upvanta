@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "CREATE OR REPLACE TABLE exam_log AS\nSELECT n,\n       DATEADD(day, MOD(n * 7919, 365), '2026-01-01'::DATE) AS exam_date,\n       FLOOR(n / 365)                                      AS mp_load_order\nFROM (SELECT ROW_NUMBER() OVER (ORDER BY SEQ4()) - 1 AS n\n      FROM TABLE(GENERATOR(ROWCOUNT => 3650)));\n\nSELECT COUNT(*)                 AS exam_rows,\n       MIN(exam_date)           AS first_date,\n       MAX(exam_date)           AS last_date,\n       COUNT(DISTINCT exam_date) AS distinct_days\nFROM   exam_log;",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT COUNT(*) AS exam_rows, MIN(exam_date) AS first_date, MAX(exam_date) AS last_date...\n+-----------+------------+------------+---------------+\n| EXAM_ROWS | FIRST_DATE | LAST_DATE  | DISTINCT_DAYS |\n|-----------+------------+------------+---------------|\n|      3650 | 2026-01-01 | 2026-12-31 |           365 |\n+-----------+------------+------------+---------------+\n1 Row(s) produced."
+}

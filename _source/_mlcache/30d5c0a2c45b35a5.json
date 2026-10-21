@@ -1,0 +1,4 @@
+{
+ "src": "from sklearn.svm import SVC\nfrom sklearn.model_selection import cross_val_score\nprint('C       gamma   CV acc   support vectors')\nfor C, gamma in [(0.1, 'scale'), (1, 'scale'), (10, 'scale'), (1, 0.01), (1, 1.0), (100, 1.0)]:\n    pipe = Pipeline([('pre', pre), ('svm', SVC(C=C, gamma=gamma))])\n    acc = cross_val_score(pipe, X_train, y_train, cv=5).mean()\n    n_sv = pipe.fit(X_train, y_train).named_steps['svm'].n_support_.sum()\n    print(f'{C:<6} {str(gamma):<7} {acc:.3f}    {n_sv}')\nlin = Pipeline([('pre', pre), ('svm', SVC(kernel='linear', C=1))])\nprint('linear kernel CV acc', round(cross_val_score(lin, X_train, y_train, cv=5).mean(), 3))",
+ "out": "C       gamma   CV acc   support vectors\n0.1    scale   0.809    325\n1      scale   0.789    248\n10     scale   0.736    243\n1      0.01    0.800    268\n1      1.0     0.729    410\n100    1.0     0.678    375\nlinear kernel CV acc 0.787"
+}

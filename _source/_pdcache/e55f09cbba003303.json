@@ -1,0 +1,4 @@
+{
+ "src": "sql   = pd.Series({'Anuj': 82, 'Vineeta': 91, 'Rohan': 58})\nspark = pd.Series({'Vineeta': 88, 'Anuj': 61, 'Meera': 70})\n\nprint(sql + spark)                       # aligned by label\nprint()\nprint(sql.add(spark, fill_value=0))      # treat missing as 0\nprint()\n\ndf = pd.DataFrame({'roll_no': [2401, 2402, 2403], 'name': ['Anuj', 'Vineeta', 'Aarshvi']})\ndf = df.set_index('roll_no')             # column -> index\nprint(df.loc[2402])                      # lookup by label\nprint(df.index)\nprint(df.reset_index().columns.tolist()) # index -> column again",
+ "out": "Anuj       143.0\nMeera        NaN\nRohan        NaN\nVineeta    179.0\ndtype: float64\n\nAnuj       143.0\nMeera       70.0\nRohan       58.0\nVineeta    179.0\ndtype: float64\n\nname    Vineeta\nName: 2402, dtype: str\nRangeIndex(start=2401, stop=2404, step=1, name='roll_no')\n['roll_no', 'name']"
+}

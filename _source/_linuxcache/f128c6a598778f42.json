@@ -1,0 +1,4 @@
+{
+ "src": "id\ngrep '^student:' /etc/passwd\ncut -d: -f1,3,7 /etc/passwd | head -n 3\nls -l /etc/passwd /etc/shadow\nhead -n 1 /etc/shadow\nsudo -n true",
+ "out": "$ id\nuid=30033(student) gid=30033(student) groups=30033(student)\n$ grep '^student:' /etc/passwd\nstudent:x:30033:30033::/home/student:/bin/bash\n$ cut -d: -f1,3,7 /etc/passwd | head -n 3\nroot:0:/bin/bash\ndaemon:1:/usr/sbin/nologin\nbin:2:/usr/sbin/nologin\n$ ls -l /etc/passwd /etc/shadow\n-rw-r--r-- 1 root root   3421 Oct 13 23:36 /etc/passwd\n-rw-r----- 1 root shadow 1434 Oct 13 23:36 /etc/shadow\n$ head -n 1 /etc/shadow\nhead: cannot open '/etc/shadow' for reading: Permission denied\n$ sudo -n true\nsudo: a password is required"
+}

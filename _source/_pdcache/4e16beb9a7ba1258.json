@@ -1,0 +1,4 @@
+{
+ "src": "print(m.groupby('course')['marks'].mean())\nprint()\nprint(m.groupby('course').size())                 # rows per group\nprint(m.groupby('course')['marks'].count())       # non-missing marks per group\nprint()\nprint(m.groupby(['course', 'subject'], as_index=False)['marks'].max())\nprint()\nfor course, grp in m.groupby('course'):           # iterate over groups\n    print(course, grp['name'].unique().tolist())",
+ "out": "course\nPG-DAC     58.0\nPG-DAI     78.0\nPG-DBDA    79.4\nName: marks, dtype: float64\n\ncourse\nPG-DAC     1\nPG-DAI     3\nPG-DBDA    5\ndtype: int64\ncourse\nPG-DAC     1\nPG-DAI     2\nPG-DBDA    5\nName: marks, dtype: int64\n\n    course subject  marks\n0   PG-DAC    Java   58.0\n1   PG-DAI      ML   84.0\n2   PG-DAI  Python   72.0\n3  PG-DBDA     SQL   91.0\n4  PG-DBDA   Spark   88.0\n\nPG-DAC ['Rohan']\nPG-DAI ['Aarshvi', 'Kabir']\nPG-DBDA ['Anuj', 'Vineeta', 'Meera']"
+}

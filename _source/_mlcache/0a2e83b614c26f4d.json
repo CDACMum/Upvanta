@@ -1,0 +1,4 @@
+{
+ "src": "import sklearn\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.tree import DecisionTreeClassifier\n\nX, y = load_iris(return_X_y=True)\nprint(sklearn.__version__, X.shape, y.shape, np.unique(y))\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)\nmodel = DecisionTreeClassifier(max_depth=3, random_state=0).fit(X_train, y_train)\nprint('predictions:', model.predict(X_test[:5]), 'actual:', y_test[:5])\nprint('test accuracy:', round(model.score(X_test, y_test), 3))",
+ "out": "1.9.1 (150, 4) (150,) [0 1 2]\npredictions: [2 1 0 2 0] actual: [2 1 0 2 0]\ntest accuracy: 0.974"
+}

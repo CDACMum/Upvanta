@@ -1,0 +1,4 @@
+{
+ "src": "tail -n +2 students.csv | cut -d, -f5 | sort | uniq -c | sort -rn | head -n 3\ncut -d, -f2 marks.csv | tail -n +2 | sort -u | wc -l\ntail -n +2 marks.csv | sort -t, -k3,3nr | head -n 3\ncut -d, -f1 marks.csv | tail -n +2 | sort | uniq -d\necho 'PG-DBDA Kharghar' | tr 'a-z' 'A-Z'\ntr -d '\\r' < students.csv | head -n 1 | tr ',' '\\n'",
+ "out": "$ tail -n +2 students.csv | cut -d, -f5 | sort | uniq -c | sort -rn | head -n 3\n      2 Pune\n      2 Mumbai\n      1 Thane\n$ cut -d, -f2 marks.csv | tail -n +2 | sort -u | wc -l\n5\n$ tail -n +2 marks.csv | sort -t, -k3,3nr | head -n 3\n2402,SQL,91\n2402,Spark,88\n2403,ML,84\n$ cut -d, -f1 marks.csv | tail -n +2 | sort | uniq -d\n2401\n2402\n2406\n$ echo 'PG-DBDA Kharghar' | tr 'a-z' 'A-Z'\nPG-DBDA KHARGHAR\n$ tr -d '\\r' < students.csv | head -n 1 | tr ',' '\\n'\nroll_no\nname\ncourse\ncentre\ncity"
+}

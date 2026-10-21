@@ -1,0 +1,4 @@
+{
+ "src": "print(marks.sum(), marks.sum(axis=0), marks.sum(axis=1))\nprint(marks.mean(axis=0), marks.max(axis=1))\nprint('topper per subject:', marks.argmax(axis=0))\nprint('range per subject :', np.ptp(marks, axis=0))\nprint(marks.sum(axis=1, keepdims=True).shape)\nprint(marks.cumsum(axis=1))\ncube = np.arange(24).reshape(2, 3, 4)\nprint(cube.sum(axis=(1, 2)))       # reduce two axes at once",
+ "out": "471 [173 149 149] [213 258]\n[86.5 74.5 74.5] [82 91]\ntopper per subject: [1 1 1]\nrange per subject : [ 9 27  9]\n(2, 1)\n[[ 82 143 213]\n [ 91 179 258]]\n[ 66 210]"
+}

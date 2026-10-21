@@ -1,0 +1,4 @@
+{
+ "src": "!userdel -r anuj 2>/dev/null; groupdel dbda 2>/dev/null; true\nuseradd -m -s /bin/bash anuj\ngroupadd dbda\nusermod -aG dbda anuj\nid anuj\ngrep -E '^(anuj|student):' /etc/passwd\ngrep '^dbda:' /etc/group\ntouch report.csv; ls -l report.csv\nchown anuj:dbda report.csv; ls -l report.csv\nls -l /etc/shadow",
+ "out": "$ useradd -m -s /bin/bash anuj\n$ groupadd dbda\n$ usermod -aG dbda anuj\n$ id anuj\nuid=30034(anuj) gid=30034(anuj) groups=30034(anuj),30035(dbda)\n$ grep -E '^(anuj|student):' /etc/passwd\nstudent:x:30033:30033::/home/student:/bin/bash\nanuj:x:30034:30034::/home/anuj:/bin/bash\n$ grep '^dbda:' /etc/group\ndbda:x:30035:anuj\n$ touch report.csv; ls -l report.csv\n-rw-r--r-- 1 root root 0 Oct 13 23:36 report.csv\n$ chown anuj:dbda report.csv; ls -l report.csv\n-rw-r--r-- 1 anuj dbda 0 Oct 13 23:36 report.csv\n$ ls -l /etc/shadow\n-rw-r----- 1 root shadow 1434 Oct 13 23:36 /etc/shadow"
+}

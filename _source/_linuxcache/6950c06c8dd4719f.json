@@ -1,0 +1,4 @@
+{
+ "src": "umask; umask -S\ntouch a.txt; mkdir dir_a\numask 027; touch b.txt; mkdir dir_b\numask 077; touch c.txt; mkdir dir_c\nstat -c '%a %A %n' a.txt b.txt c.txt dir_a dir_b dir_c",
+ "out": "$ umask; umask -S\n0022\nu=rwx,g=rx,o=rx\n$ touch a.txt; mkdir dir_a\n$ umask 027; touch b.txt; mkdir dir_b\n$ umask 077; touch c.txt; mkdir dir_c\n$ stat -c '%a %A %n' a.txt b.txt c.txt dir_a dir_b dir_c\n644 -rw-r--r-- a.txt\n640 -rw-r----- b.txt\n600 -rw------- c.txt\n755 drwxr-xr-x dir_a\n750 drwxr-x--- dir_b\n700 drwx------ dir_c"
+}

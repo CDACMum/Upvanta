@@ -1,0 +1,4 @@
+{
+ "src": "systemctl is-system-running\nls /var/log | head -n 8\ntail -n 3 /var/log/dpkg.log | cut -c1-70\nls /etc/logrotate.d | head -n 5",
+ "out": "$ systemctl is-system-running\noffline\n$ ls /var/log | head -n 8\nREADME\nalternatives.log\napt\nbootstrap.log\nbtmp\ndpkg.log\nfaillog\nfontconfig.log\n$ tail -n 3 /var/log/dpkg.log | cut -c1-70\n2026-10-13 18:01:52 trigproc libc-bin:amd64 2.39-0ubuntu8.9 <none>\n2026-10-13 18:01:52 status half-configured libc-bin:amd64 2.39-0ubuntu\n2026-10-13 18:01:52 status installed libc-bin:amd64 2.39-0ubuntu8.9\n$ ls /etc/logrotate.d | head -n 5\nalternatives\napt\ndpkg\npostgresql-common\nredis-server"
+}

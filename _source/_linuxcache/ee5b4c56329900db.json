@@ -1,0 +1,4 @@
+{
+ "src": "bash loops.sh\nn=0; tail -n +2 students.csv | while read -r line; do n=$((n + 1)); done; echo \"after pipe-while: n=$n\"",
+ "out": "$ bash loops.sh\nmarks.csv       10 lines\nstudents.csv     7 lines\nround 1 round 2 round 3 \n1. Anuj (2401) from Pune\n2. Vineeta (2402) from Navi Mumbai\n3. Meera (2405) from Pune\nwaiting for ready.flag (try 1)\nwaiting for ready.flag (try 2)\ndone after 2 tries\n$ n=0; tail -n +2 students.csv | while read -r line; do n=$((n + 1)); done; echo \"after pipe-while: n=$n\"\nafter pipe-while: n=0"
+}

@@ -1,0 +1,11 @@
+{
+ "input": {
+  "kind": "sql",
+  "setup": "",
+  "src": "CREATE TABLE marks_by_subject\nPARTITIONED BY (subject)\nAS SELECT * FROM VALUES\n  (2401, 'SQL', 72), (2402, 'SQL', 85), (2403, 'SQL', 91),\n  (2401, 'Python', 64), (2402, 'Python', 90)\n  AS t(roll_no, subject, marks);\n\nDESCRIBE DETAIL marks_by_subject;\n\nEXPLAIN SELECT roll_no, marks FROM marks_by_subject WHERE subject = 'SQL' AND marks > 80;",
+  "show": "dml",
+  "files": {},
+  "expect_error": false
+ },
+ "output": "cdac.bda> DESCRIBE DETAIL marks_by_subject\n-RECORD 0-----------------\n format            | delta\n id                | 1d32…\n name              | cdac.bda.marks_by_subject\n location          | s3://cdac-lakehouse/cdac/bda/marks_by_subject\n createdAt         | 2026-10-21 14:06:50\n lastModified      | 2026-10-21 14:06:50\n partitionColumns  | [subject]\n clusteringColumns | []\n numFiles          | 2\n sizeInBytes       | 1514\n properties        | {}\n minReaderVersion  | 1\n minWriterVersion  | 2\n tableFeatures     | []\n\ncdac.bda> EXPLAIN SELECT roll_no, marks FROM marks_by_subject WHERE subject = 'SQL' AND marks > 80\n== Physical Plan ==\n*(1) Project [roll_no, marks]\n+- *(1) Filter (isnotnull(marks) AND (marks > 80))\n   +- *(1) ColumnarToRow\n      +- FileScan parquet [roll_no,marks,subject] Batched: true, DataFilters: [isnotnull(marks), (marks > 80)], Format: Parquet, Location: PreparedDeltaFileIndex(1 paths)[s3://cdac-lakehouse/cdac/bda/marks_by_subject], PartitionFilters: [isnotnull(subject), (subject = SQL)], PushedFilters: [IsNotNull(marks), GreaterThan(marks,80)], ReadSchema: struct<roll_no:int,marks:int>"
+}

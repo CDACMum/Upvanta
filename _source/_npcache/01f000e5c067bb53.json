@@ -1,0 +1,4 @@
+{
+ "src": "print(0.1 + 0.2 == 0.3, np.isclose(0.1 + 0.2, 0.3))\nprint(np.float32(16_777_216) + np.float32(1) == np.float32(16_777_216))\nprint(np.finfo(np.float64).eps, np.finfo(np.float32).eps)\n\nx = np.full(10_000_000, 0.1)\ntotal = 0.0\nfor v in x.tolist():                                  # naive left-to-right loop\n    total += v\nprint(repr(x.sum()), repr(total))                     # pairwise vs naive\n\nprint(np.array([-7, 7]) // 2, np.array([-7, 7]) % 2)\nprint(np.array([2**62], dtype=np.int64) * 4)         # silent wrap\nfees = np.array([45000.10, 45000.20, 33456.30])\nprint(fees.sum(), (np.round(fees * 100).astype(np.int64)).sum() / 100)\nprint(np.allclose([1.0, 2.0], [1.0 + 1e-10, 2.0]))",
+ "out": "False True\nTrue\n2.220446049250313e-16 1.1920929e-07\nnp.float64(1000000.0) 999999.9998389754\n[-4  3] [1 1]\n[0]\n123456.59999999999 123456.6\nTrue"
+}

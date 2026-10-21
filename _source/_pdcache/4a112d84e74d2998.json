@@ -1,0 +1,4 @@
+{
+ "src": "print(pd.__version__)\ns = pd.Series(['PG-DBDA', None, 'PG-DAC'])\nprint(s.dtype, '|', s.isna().tolist())                 # str dtype, missing = NaN\n\nobj = pd.Series(['PG-DBDA', None, 'PG-DAC'], dtype=object)\nbig = pd.concat([s] * 100_000)\nbig_obj = pd.concat([obj] * 100_000)\nprint('str dtype :', round(big.memory_usage(deep=True) / 1e6, 1), 'MB')\nprint('object    :', round(big_obj.memory_usage(deep=True) / 1e6, 1), 'MB')\n\narrow = pd.Series([82, None, 91], dtype='int64[pyarrow]')\nprint(arrow.dtype, arrow.tolist())                     # integer with a real missing value\n\nprint(pd.to_datetime(['2026-10-13 10:00']).dtype)        # microsecond resolution in 3.0\nprint([name for name in ['append', 'applymap', 'iteritems'] if hasattr(pd.DataFrame, name)])",
+ "out": "3.0.5\nstr | [False, True, False]\nstr dtype : 6.2 MB\nobject    : 15.9 MB\nint64[pyarrow] [82, <NA>, 91]\ndatetime64[us]\n[]"
+}

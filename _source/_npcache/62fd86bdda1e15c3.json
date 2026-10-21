@@ -1,0 +1,4 @@
+{
+ "src": "rng = np.random.default_rng(2026)\nprint(rng.integers(0, 101, 5), rng.random(3).round(3))\nprint(rng.normal(70, 10, 5).round(1))\n\nrolls = np.arange(2401, 2413)\nbatches = np.random.default_rng(7).permutation(rolls).reshape(3, 4)\nprint(batches)\nprint(np.random.default_rng(7).permutation(rolls).reshape(3, 4)[0])   # same seed, same batch 1\n\nprint(rng.choice(['Anuj', 'Vineeta', 'Aarshvi', 'Rohan'], size=2, replace=False))\nsample = rng.normal(70, 10, 100_000)\nprint(sample.mean().round(2), sample.std().round(2))",
+ "out": "[86 18  2 64 36] [0.371 0.355 0.791]\n[66.9 73.  67.3 67.7 77.2]\n[[2405 2407 2411 2401]\n [2402 2404 2409 2408]\n [2403 2406 2410 2412]]\n[2405 2407 2411 2401]\n['Vineeta' 'Aarshvi']\n70.0 9.97"
+}

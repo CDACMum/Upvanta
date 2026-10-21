@@ -1,0 +1,1 @@
+{"out": "$ airflow dags report -o plain\nfile         duration          dag_num    task_num  dags\nslow_dag.py  0:00:02.015285          1           1  ['slow_dag']\nfast_dag.py  0:00:00.002747          1           1  ['fast_dag']"}

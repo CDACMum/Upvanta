@@ -1,0 +1,4 @@
+{
+ "src": "a = np.array([[1, 2], [3, 4]]); b = np.array([[5, 6], [7, 8]])\nprint(np.concatenate([a, b], axis=0).shape, np.vstack([a, b]).shape)\nprint(np.hstack([a, b]))\nprint(np.stack([a, b]).shape, np.stack([a, b], axis=-1).shape)\nprint(np.column_stack([[1, 2, 3], [70, 80, 90]]))\n\nx = np.arange(10)\ntrain, val, test = np.split(x, [7, 9])\nprint(train, val, test)\nprint([p.tolist() for p in np.array_split(x, 3)])\ntry:\n    np.split(x, 3)\nexcept ValueError as e:\n    print('ValueError:', e)",
+ "out": "(4, 2) (4, 2)\n[[1 2 5 6]\n [3 4 7 8]]\n(2, 2, 2) (2, 2, 2)\n[[ 1 70]\n [ 2 80]\n [ 3 90]]\n[0 1 2 3 4 5 6] [7 8] [9]\n[[0, 1, 2, 3], [4, 5, 6], [7, 8, 9]]\nValueError: array split does not result in an equal division"
+}

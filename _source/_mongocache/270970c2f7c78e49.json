@@ -1,0 +1,1 @@
+{"output": "{\n  _id: 2401,\n  name: 'Anuj',\n  skills: [ 'sql', 'spark' ],\n  scores: [ { sub: 'SQL', m: 82 }, { sub: 'Spark', m: 61 } ]\n}"}

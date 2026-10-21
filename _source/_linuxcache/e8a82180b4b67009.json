@@ -1,0 +1,4 @@
+{
+ "src": "./report.sh PG-DBDA\nchmod +x report.sh\n./report.sh PG-DBDA 50; echo \"exit code: $?\"\nbash report.sh PG-DAI\n./report.sh \"PG DBDA\" extra args",
+ "out": "$ ./report.sh PG-DBDA\nbash: ./report.sh: Permission denied\n$ chmod +x report.sh\n$ ./report.sh PG-DBDA 50; echo \"exit code: $?\"\nscript: ./report.sh | args: 2 | all: PG-DBDA 50\ncourse=PG-DBDA, min=50\n3\nexit code: 3\n$ bash report.sh PG-DAI\nscript: report.sh | args: 1 | all: PG-DAI\ncourse=PG-DAI, min=60\n2\n$ ./report.sh \"PG DBDA\" extra args\nscript: ./report.sh | args: 3 | all: PG DBDA extra args\ncourse=PG DBDA, min=extra\n0"
+}

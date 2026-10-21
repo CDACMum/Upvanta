@@ -1,0 +1,4 @@
+{
+ "src": "git --version\ngit init lab-manual\ncd lab-manual\nls -a\nls .git\necho \"# PG-DBDA Lab Manual\" > README.md\ngit add README.md\ngit commit -m \"Start the lab manual\"\ngit log --oneline\ndu -sh .git",
+ "out": "$ git --version\ngit version 2.43.0\n$ git init lab-manual\nInitialized empty Git repository in /home/student/cdac/lab-manual/.git/\n$ cd lab-manual\n$ ls -a\n.  ..  .git\n$ ls .git\nHEAD  branches  config  description  hooks  info  objects  refs\n$ echo \"# PG-DBDA Lab Manual\" > README.md\n$ git add README.md\n$ git commit -m \"Start the lab manual\"\n[main (root-commit) 1408405] Start the lab manual\n 1 file changed, 1 insertion(+)\n create mode 100644 README.md\n$ git log --oneline\n1408405 Start the lab manual\n$ du -sh .git\n176K\t.git"
+}

@@ -1,0 +1,1 @@
+{"output": "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 1,\n  modifiedCount: 1,\n  upsertedCount: 0\n}\n{\n  _id: 2401,\n  name: 'Anuj',\n  feesPaid: 45000,\n  receipts: [ { no: 'R-1001', amount: 45000 } ]\n}"}

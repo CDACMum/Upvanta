@@ -1,0 +1,1 @@
+{"output": "$ dbt --version\nCore:\n  - installed: 1.12.5\n  - latest:    1.12.5 - Up to date!\n\nPlugins:\n  - duckdb: 1.11.0 - Up to date!"}

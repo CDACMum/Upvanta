@@ -1,0 +1,4 @@
+{
+ "src": "s = m.groupby(['course', 'subject'])['marks'].mean()\nprint(s)\nprint(s.index.nlevels, s.index.names)\nprint()\nprint(s.loc['PG-DBDA'])\nprint(s.loc[('PG-DAI', 'ML')])\nprint(s.xs('SQL', level='subject'))\nprint()\n\nstats = m.groupby('course').agg({'marks': ['mean', 'max']})\nprint(stats.columns.tolist())\nstats.columns = ['_'.join(c) for c in stats.columns]\nprint(stats.reset_index())",
+ "out": "course   subject\nPG-DAC   Java       58.000000\nPG-DAI   ML         84.000000\n         Python     72.000000\nPG-DBDA  SQL        82.666667\n         Spark      74.500000\nName: marks, dtype: float64\n2 ['course', 'subject']\n\nsubject\nSQL      82.666667\nSpark    74.500000\nName: marks, dtype: float64\n84.0\ncourse\nPG-DBDA    82.666667\nName: marks, dtype: float64\n\n[('marks', 'mean'), ('marks', 'max')]\n    course  marks_mean  marks_max\n0   PG-DAC        58.0       58.0\n1   PG-DAI        78.0       84.0\n2  PG-DBDA        79.4       91.0"
+}

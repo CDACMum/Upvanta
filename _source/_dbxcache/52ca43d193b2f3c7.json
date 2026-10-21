@@ -1,0 +1,9 @@
+{
+ "input": {
+  "kind": "py",
+  "setup": "\nCREATE TABLE marks_log (roll_no INT, subject STRING, marks INT, exam_date DATE)\nTBLPROPERTIES ('delta.enableChangeDataFeed' = 'true');\nINSERT INTO marks_log VALUES (2401, 'SQL', 72, DATE'2026-03-01'), (2402, 'SQL', 85, DATE'2026-03-01');\nINSERT INTO marks_log VALUES (2401, 'Python', 64, DATE'2026-03-02'), (2402, 'Python', 90, DATE'2026-03-02');\n",
+  "src": "v1 = spark.read.option(\"versionAsOf\", 1).table(\"marks_log\")\nnow = spark.table(\"marks_log\")\nprint(v1.count(), now.count())\nnow.exceptAll(v1).orderBy(\"roll_no\").show()          # rows added since version 1",
+  "files": {}
+ },
+ "output": "2 4\n+-------+-------+-----+----------+\n|roll_no|subject|marks| exam_date|\n+-------+-------+-----+----------+\n|   2401| Python|   64|2026-03-02|\n|   2402| Python|   90|2026-03-02|\n+-------+-------+-----+----------+"
+}

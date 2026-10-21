@@ -1,0 +1,4 @@
+{
+ "src": "a = np.array([100, 120], dtype=np.int8)\nprint(a + a)                                    # wraps around, no warning for arrays\n\nimg = np.array([230, 100, 10], dtype=np.uint8)\nprint(img + 50)                                 # 230 + 50 -> 24\nprint(np.clip(img.astype(np.int16) + 50, 0, 255).astype(np.uint8))\n\nprint(np.array([1, 2.5]).dtype, np.array([1, 'x']).dtype, np.array([1, None]).dtype)\nprint(np.array([2.9, -2.9]).astype(int))        # truncates toward zero\nprint(np.iinfo(np.int32).max, np.finfo(np.float32).eps)\n\nx = np.array([1, 2], dtype=np.float32)\nprint((x * 3.0).dtype)                          # NumPy 2: stays float32\ntry:\n    np.int8(100) + 200\nexcept OverflowError as e:\n    print('OverflowError:', e)",
+ "out": "[-56 -16]\n[ 24 150  60]\n[255 150  60]\nfloat64 <U21 object\n[ 2 -2]\n2147483647 1.1920929e-07\nfloat32\nOverflowError: Python integer 200 out of bounds for int8"
+}

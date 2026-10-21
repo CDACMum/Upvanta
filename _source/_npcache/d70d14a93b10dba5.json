@@ -1,0 +1,4 @@
+{
+ "src": "marks = np.array([[82, 61, 70],\n                  [91, 88, 79],\n                  [84, 72, 66],\n                  [20, 66, 74],\n                  [78, 59, 81]], dtype=float)\nsubjects = np.array(['SQL', 'Spark', 'ML'])\n\nz = (marks - marks.mean(axis=0)) / marks.std(axis=0)\nprint(z.round(2))\nr, c = np.nonzero(np.abs(z) > 1.5)\nprint('flag:', [(int(i), str(subjects[j]), float(marks[i, j])) for i, j in zip(r, c)])\n\nmed = np.median(marks, axis=0)\nmad = np.median(np.abs(marks - med), axis=0)\nrobust = 0.6745 * (marks - med) / mad\nprint(robust.round(2)[:, 0])\nprint('student strength (mean z):', z.mean(axis=1).round(2))",
+ "out": "[[ 0.43 -0.79 -0.72]\n [ 0.77  1.8   0.9 ]\n [ 0.5   0.27 -1.44]\n [-1.97 -0.31  0.  ]\n [ 0.27 -0.98  1.26]]\nflag: [(1, 'Spark', 88.0), (3, 'SQL', 20.0)]\n[  0.     1.52   0.34 -10.45  -0.67]\nstudent strength (mean z): [-0.36  1.16 -0.22 -0.76  0.18]"
+}

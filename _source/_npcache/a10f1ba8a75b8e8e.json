@@ -1,0 +1,4 @@
+{
+ "src": "internal = np.array([70, 85, 40, 90])\nexam     = np.array([65, 92, 55, 81])\nreexam   = np.array([0, 0, 68, 0])\n\nfinal = 0.4 * internal + 0.6 * exam\nprint(final)\nprint(np.maximum(final, 0.4 * internal + 0.6 * reexam))\nprint(np.sqrt(np.array([16, 25])), np.exp(1).round(4), np.log10(1000))\n\nprint(np.add.reduce(exam), np.add.accumulate(exam))\nprint(np.multiply.outer([1, 2, 3], [1, 2, 3]))\n\nout = np.empty(4)\nnp.multiply(exam, 0.6, out=out)            # no new allocation\nprint(out)\nprint(isinstance(np.add, np.ufunc), np.add.nin, np.add.nout)",
+ "out": "[67.  89.2 49.  84.6]\n[67.  89.2 56.8 84.6]\n[4. 5.] 2.7183 3.0\n293 [ 65 157 212 293]\n[[1 2 3]\n [2 4 6]\n [3 6 9]]\n[39.  55.2 33.  48.6]\nTrue 2 1"
+}

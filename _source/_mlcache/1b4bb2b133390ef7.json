@@ -1,0 +1,4 @@
+{
+ "src": "from sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\ncols_ok = ['attendance', 'study_hours']\ncols_leak = cols_ok + ['final_score']          # final exam is AFTER the mid-course prediction\nfor cols in [cols_ok, cols_leak]:\n    X_tr, X_te, y_tr, y_te = train_test_split(df[cols], df['placed'], test_size=0.25, random_state=0, stratify=df['placed'])\n    acc = RandomForestClassifier(random_state=0).fit(X_tr, y_tr).score(X_te, y_te)\n    print(f'{len(cols)} features {cols[-1]:12} test accuracy {acc:.3f}')",
+ "out": "2 features study_hours  test accuracy 0.660\n3 features final_score  test accuracy 0.693"
+}

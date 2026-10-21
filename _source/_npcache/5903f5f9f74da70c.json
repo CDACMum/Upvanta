@@ -1,0 +1,4 @@
+{
+ "src": "import os\nmarks = np.array([[82, 61, 70], [91, 88, 79]])\nnp.save('marks.npy', marks)\nnp.savez_compressed('batch.npz', marks=marks, rolls=np.array([2401, 2402]))\nnp.savetxt('marks.csv', marks, delimiter=',', fmt='%d', header='sql,spark,ml', comments='')\n\nprint(np.load('marks.npy'))\nwith np.load('batch.npz') as z:\n    print(z.files, z['rolls'])\nprint(open('marks.csv').read().strip())\nprint(np.loadtxt('marks.csv', delimiter=',', skiprows=1, dtype=int).sum())\n\nbig = np.lib.format.open_memmap('big.npy', mode='w+', dtype=np.float32, shape=(1_000_000, 10))\nbig[:] = 1.0; big.flush(); del big\nm = np.load('big.npy', mmap_mode='r')\nprint(type(m).__name__, m.shape, m[500_000:500_002, :3])\nprint(os.path.getsize('big.npy') // 2**20, 'MiB on disk')",
+ "out": "[[82 61 70]\n [91 88 79]]\n['marks', 'rolls'] [2401 2402]\nsql,spark,ml\n82,61,70\n91,88,79\n471\nmemmap (1000000, 10) [[1. 1. 1.]\n [1. 1. 1.]]\n38 MiB on disk"
+}

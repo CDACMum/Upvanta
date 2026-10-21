@@ -1,0 +1,4 @@
+{
+ "src": "mask = marks >= 60\nprint(mask)\nprint(marks[mask])                           # passing marks, 1-D\nprint('passes:', mask.sum(), '| pass rate:', mask.mean().round(2))\nprint('any fail per student:', (~mask).any(axis=1))\nprint('all pass per subject:', mask.all(axis=0))\n\nm = marks.copy()\nm[(m >= 55) & (m < 60)] = 60                 # grace marks, in place\nprint(m)\nprint(np.count_nonzero(m >= 90))",
+ "out": "[[ True  True  True False]\n [ True  True  True  True]\n [ True  True  True  True]]\n[82 61 70 91 88 79 95 84 72 66 90]\npasses: 11 | pass rate: 0.92\nany fail per student: [ True False False]\nall pass per subject: [ True  True  True False]\n[[82 61 70 60]\n [91 88 79 95]\n [84 72 66 90]]\n3"
+}

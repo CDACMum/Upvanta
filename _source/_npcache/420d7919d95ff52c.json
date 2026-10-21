@@ -1,0 +1,4 @@
+{
+ "src": "print(marks + 5)                                   # scalar\nprint(marks - marks.mean(axis=0))                  # (2,3) - (3,)\nprint(marks - marks.mean(axis=1, keepdims=True))   # (2,3) - (2,1)\n\nweights = np.array([0.5, 0.3, 0.2])\nprint((marks * weights).sum(axis=1))               # weighted total per student\n\ncol = np.array([[1], [2], [3]]); row = np.array([10, 20, 30, 40])\nprint((col + row).shape)                           # (3,1) + (4,) -> (3,4)\ntry:\n    marks - marks.mean(axis=1)                     # (2,3) - (2,)\nexcept ValueError as e:\n    print('ValueError:', e)",
+ "out": "[[87 66 75]\n [96 93 84]]\n[[ -4.5 -13.5  -4.5]\n [  4.5  13.5   4.5]]\n[[ 11. -10.  -1.]\n [  5.   2.  -7.]]\n[73.3 87.7]\n(3, 4)\nValueError: operands could not be broadcast together with shapes (2,3) (2,) "
+}

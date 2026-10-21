@@ -1,0 +1,9 @@
+{
+ "input": {
+  "kind": "py",
+  "setup": "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     STRING,\n  course   STRING,\n  centre   STRING,\n  marks    DECIMAL(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, DATE'2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, DATE'2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, DATE'2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, DATE'2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, DATE'2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, DATE'2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, DATE'2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, DATE'2026-02-05');\n",
+  "src": "spark.sql(\"CREATE TABLE results AS SELECT roll_no, marks FROM students WHERE course = 'PGCP-BDA'\")\nspark.sql(\"UPDATE results SET marks = marks + 2 WHERE marks < 60\")\n\nloc = spark.sql(\"DESCRIBE DETAIL results\").first()[\"location\"]\nfor f in dbutils.fs.ls(loc):\n    print(f.name)\nprint(\"--- _delta_log ---\")\nfor f in dbutils.fs.ls(loc + \"/_delta_log\"):\n    print(f.name)",
+  "files": {}
+ },
+ "output": "_delta_log/\npart-00000-f76c…-c000.snappy.parquet\npart-00000-ffdc…-c000.snappy.parquet\n--- _delta_log ---\n00000000000000000000.json\n00000000000000000001.json"
+}

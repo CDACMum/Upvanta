@@ -1,0 +1,9 @@
+{
+ "kind": "sql",
+ "input": [
+  "",
+  "CREATE OR REPLACE TABLE submissions (v VARIANT, src_file VARCHAR);\nINSERT INTO submissions\nSELECT PARSE_JSON(column1), column2 FROM VALUES\n ('{\"roll\":2401,\"name\":\"Anuj\",\"centre\":\"Kharghar\",\"contact\":{\"city\":\"Panvel\",\"phone\":null},\n    \"exams\":[{\"sub\":\"SQL\",\"m\":78},{\"sub\":\"Spark\",\"m\":82}],\"submitted\":\"2026-02-15T10:42:00\"}', 'sub_0215_kh.json'),\n ('{\"roll\":2402,\"name\":\"Aarshvi\",\"centre\":\"Juhu\",\"contact\":{\"city\":\"Andheri\",\"phone\":\"98200 12345\"},\n    \"exams\":[{\"sub\":\"SQL\",\"m\":91},{\"sub\":\"Spark\",\"m\":88},{\"sub\":\"Python\",\"m\":95}],\"submitted\":\"2026-02-15T11:05:00\"}', 'sub_0215_ju.json'),\n ('{\"roll\":2403,\"name\":\"Riya\",\"centre\":\"Kharghar\",\"contact\":{\"city\":\"Vashi\"},\n    \"exams\":[{\"sub\":\"SQL\",\"m\":84}],\"submitted\":\"2026-02-15T11:30:00\"}', 'sub_0215_kh.json');\n\n-- promote frequently used fields to a typed, flattened table\nCREATE OR REPLACE TABLE exam_marks AS\nSELECT s.v:roll::INT                AS roll_no,\n       s.v:centre::STRING           AS centre,\n       e.value:sub::STRING          AS subject,\n       e.value:m::INT               AS marks,\n       s.v:submitted::TIMESTAMP_NTZ AS submitted_at,\n       s.src_file\nFROM   submissions s, LATERAL FLATTEN(input => s.v:exams) e;\n\nSELECT centre, subject, COUNT(*) AS n, MAX(marks) AS best\nFROM   exam_marks\nGROUP  BY ALL\nORDER  BY centre, subject;",
+  "queries"
+ ],
+ "output": "CDAC.BDA> SELECT centre, subject, COUNT(*) AS n, MAX(marks) AS best FROM exam_marks GROUP BY ALL ...\n+----------+---------+---+------+\n| CENTRE   | SUBJECT | N | BEST |\n|----------+---------+---+------|\n| Juhu     | Python  | 1 |   95 |\n| Juhu     | SQL     | 1 |   91 |\n| Juhu     | Spark   | 1 |   88 |\n| Kharghar | SQL     | 2 |   84 |\n| Kharghar | Spark   | 1 |   82 |\n+----------+---------+---+------+\n5 Row(s) produced."
+}

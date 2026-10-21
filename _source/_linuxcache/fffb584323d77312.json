@@ -1,0 +1,4 @@
+{
+ "src": "ls --help | head -n 3\ntype cd echo grep\nwhich grep awk\nalias ll='ls -la'\ntype ll\nunalias ll\nhelp cd | head -n 2",
+ "out": "$ ls --help | head -n 3\nUsage: ls [OPTION]... [FILE]...\nList information about the FILEs (the current directory by default).\nSort entries alphabetically if none of -cftuvSUX nor --sort is specified.\n$ type cd echo grep\ncd is a shell builtin\necho is a shell builtin\ngrep is /usr/bin/grep\n$ which grep awk\n/usr/bin/grep\n/usr/bin/awk\n$ alias ll='ls -la'\n$ type ll\nll is aliased to `ls -la'\n$ unalias ll\n$ help cd | head -n 2\ncd: cd [-L|[-P [-e]] [-@]] [dir]\n    Change the shell working directory."
+}

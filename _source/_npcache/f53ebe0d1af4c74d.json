@@ -1,0 +1,4 @@
+{
+ "src": "marks   = np.array([[82, 61, 70], [91, 88, 79]])\nweights = np.array([0.5, 0.3, 0.2])\n\nprint(marks * weights)               # element-wise (broadcast)\nprint(marks @ weights)               # weighted total per student\nprint(np.dot(marks, weights), (marks * weights).sum(axis=1))\n\nA = np.arange(6).reshape(2, 3); B = np.arange(6).reshape(3, 2)\nprint(A @ B)\nprint((np.ones((64, 3, 4)) @ np.ones((4, 2))).shape)     # batched\nprint(np.array([1, 2, 3]) @ np.array([4, 5, 6]))\ntry:\n    A @ A\nexcept ValueError as e:\n    print('ValueError:', e)",
+ "out": "[[41.  18.3 14. ]\n [45.5 26.4 15.8]]\n[73.3 87.7]\n[73.3 87.7] [73.3 87.7]\n[[10 13]\n [28 40]]\n(64, 3, 2)\n32\nValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 2 is different from 3)"
+}

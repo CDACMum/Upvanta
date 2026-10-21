@@ -1,0 +1,11 @@
+{
+ "input": {
+  "kind": "sql",
+  "setup": "\nCREATE OR REPLACE TABLE students (\n  roll_no  INT,\n  name     STRING,\n  course   STRING,\n  centre   STRING,\n  marks    DECIMAL(5,2),\n  joined   DATE\n);\nINSERT INTO students VALUES\n  (2401, 'Anuj',    'PGCP-BDA', 'Kharghar', 78.50, DATE'2026-02-02'),\n  (2402, 'Aarshvi', 'PGCP-BDA', 'Juhu',     88.00, DATE'2026-02-02'),\n  (2403, 'Riya',    'PGCP-AI',  'Kharghar', 91.25, DATE'2026-02-03'),\n  (2404, 'Kabir',   'PGCP-AC',  'Kharghar', 67.00, DATE'2026-02-03'),\n  (2405, 'Sana',    'PGCP-BDA', 'Kharghar', 93.75, DATE'2026-02-04'),\n  (2406, 'Omkar',   'PGCP-AI',  'Juhu',     72.50, DATE'2026-02-04'),\n  (2407, 'Meera',   'PGCP-AC',  'Juhu',     84.00, DATE'2026-02-05'),\n  (2408, 'Tejas',   'PGCP-BDA', 'Juhu',     59.25, DATE'2026-02-05');\n",
+  "src": "SELECT * FROM students ORDER BY roll_no;\n\nSELECT course,\n       COUNT(*)                         AS total,\n       CAST(AVG(marks) AS DECIMAL(5,2)) AS avg_marks\nFROM   students\nGROUP  BY course\nORDER  BY avg_marks DESC;",
+  "show": "dml",
+  "files": {},
+  "expect_error": false
+ },
+ "output": "cdac.bda> SELECT * FROM students ORDER BY roll_no\n+---------+---------+----------+----------+-------+------------+\n| roll_no | name    | course   | centre   | marks | joined     |\n+---------+---------+----------+----------+-------+------------+\n| 2401    | Anuj    | PGCP-BDA | Kharghar | 78.50 | 2026-02-02 |\n| 2402    | Aarshvi | PGCP-BDA | Juhu     | 88.00 | 2026-02-02 |\n| 2403    | Riya    | PGCP-AI  | Kharghar | 91.25 | 2026-02-03 |\n| 2404    | Kabir   | PGCP-AC  | Kharghar | 67.00 | 2026-02-03 |\n| 2405    | Sana    | PGCP-BDA | Kharghar | 93.75 | 2026-02-04 |\n| 2406    | Omkar   | PGCP-AI  | Juhu     | 72.50 | 2026-02-04 |\n| 2407    | Meera   | PGCP-AC  | Juhu     | 84.00 | 2026-02-05 |\n| 2408    | Tejas   | PGCP-BDA | Juhu     | 59.25 | 2026-02-05 |\n+---------+---------+----------+----------+-------+------------+\n\ncdac.bda> SELECT course, COUNT(*) AS total, CAST(AVG(marks) AS DECIMAL(5,2)) AS avg_marks FROM st...\n+----------+-------+-----------+\n| course   | total | avg_marks |\n+----------+-------+-----------+\n| PGCP-AI  | 2     | 81.88     |\n| PGCP-BDA | 4     | 79.88     |\n| PGCP-AC  | 2     | 75.50     |\n+----------+-------+-----------+"
+}

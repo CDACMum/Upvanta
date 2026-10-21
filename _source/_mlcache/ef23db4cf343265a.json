@@ -1,0 +1,4 @@
+{
+ "src": "from sklearn.linear_model import LinearRegression\nlr = LinearRegression().fit(Xr_train, yr_train)\nprint('intercept:', round(lr.intercept_, 2))\nprint(pd.Series(lr.coef_, index=Xr.columns).round(3))\nprint('test R\u00b2:', round(lr.score(Xr_test, yr_test), 3))\n\nstudent = pd.DataFrame({'attendance': [85], 'study_hours': [10], 'mock_test': [70]})\npred = lr.predict(student)[0]\nmanual = lr.intercept_ + (lr.coef_ * student.iloc[0].to_numpy()).sum()\nprint(f'prediction {pred:.2f} = intercept + \u03a3 coef\u00b7x = {manual:.2f}')\nmore = student.assign(study_hours=11)\nprint('one more study hour adds', round(lr.predict(more)[0] - pred, 3), 'marks')",
+ "out": "intercept: 1.97\nattendance     0.301\nstudy_hours    1.568\nmock_test      0.337\ndtype: float64\ntest R\u00b2: 0.797\nprediction 66.85 = intercept + \u03a3 coef\u00b7x = 66.85\none more study hour adds 1.568 marks"
+}

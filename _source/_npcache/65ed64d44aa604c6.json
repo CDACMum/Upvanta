@@ -1,0 +1,4 @@
+{
+ "src": "marks = np.array([[82, 61, 70, 55],\n                  [91, 88, 79, 95],\n                  [84, 72, 66, 90]])\nsubjects = np.array(['SQL', 'Spark', 'ML', 'Python'])\nk = 2\n\nidx = np.argpartition(-marks, k - 1, axis=1)[:, :k]          # top-k positions, unordered\nvals = np.take_along_axis(marks, idx, axis=1)\norder = np.argsort(-vals, axis=1)                           # sort only k values\nidx = np.take_along_axis(idx, order, axis=1)\nprint(subjects[idx])\nprint(np.take_along_axis(marks, idx, axis=1))\n\ncheck = np.argsort(-marks, axis=1, kind='stable')[:, :k]    # full sort, for comparison\nprint('same as full sort:', (np.sort(idx, 1) == np.sort(check, 1)).all())",
+ "out": "[['SQL' 'ML']\n ['Python' 'SQL']\n ['Python' 'SQL']]\n[[82 70]\n [95 91]\n [90 84]]\nsame as full sort: True"
+}

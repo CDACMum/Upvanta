@@ -1,0 +1,4 @@
+{
+ "src": "rng = np.random.default_rng(42)\nn = 10\nmarks = rng.integers(45, 100, n).astype(float)\nattendance = rng.uniform(0.6, 1.0, n).round(2)\ncourse = np.array(['DBDA', 'DAC', 'DBDA', 'DAI', 'DAC', 'DBDA', 'DAI', 'DBDA', 'DAC', 'DBDA'])\nX = np.column_stack([marks, attendance])\n\nidx = rng.permutation(n); train, test = idx[:8], idx[8:]\nmu, sigma = X[train].mean(axis=0), X[train].std(axis=0)      # fit on train only\nX_train = (X[train] - mu) / sigma\nX_test = (X[test] - mu) / sigma\nprint(X_train.mean(axis=0).round(6) + 0.0, X_train.std(axis=0).round(6))\nprint(X_test.round(2))\n\ncats, codes = np.unique(course, return_inverse=True)\nonehot = np.eye(len(cats), dtype=int)[codes]\nprint(cats, onehot[:4], sep='\\n')\nmm = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))\nprint(mm.min(axis=0), mm.max(axis=0))",
+ "out": "[0. 0.] [1. 1.]\n[[ 0.13 -2.55]\n [ 0.83  0.46]]\n['DAC' 'DAI' 'DBDA']\n[[0 0 1]\n [1 0 0]\n [0 0 1]\n [0 1 0]]\n[0. 0.] [1. 1.]"
+}
