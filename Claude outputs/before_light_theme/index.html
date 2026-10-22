@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F7F9FC">
+<title>Upvanta | Data Engineering Interview Prep</title>
+<meta name="description" content="Real data engineering interview questions with worked answers: SQL, NoSQL, Spark, Kafka, Airflow, dbt, Snowflake and machine learning.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230F766E'/%3E%3Cpath d='M9 9v8a7 7 0 0 0 14 0V9' fill='none' stroke='%23FFFFFF' stroke-width='3.4' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='9' r='3' fill='%23A5B4FC'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F9FC;
+  --bg-2:#EEF2F7;
+  --surface:#FFFFFF;
+  --surface-2:#F8FAFC;
+  --line:#E2E8F0;
+  --text:#0F172A;
+  --muted:#475569;
+  --faint:#64748B;
+  --mint:#0F766E;
+  --blue:#4F46E5;
+  --amber:#4F46E5;
+  --on-c:#FFFFFF;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px -12px rgba(15,23,42,.10);
+  --display:'Unbounded', 'Segoe UI', sans-serif;
+  --body:'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --wrap:1240px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+#modules,#questions{scroll-margin-top:72px}
+body{font-family:var(--body);font-size:16px;line-height:1.55;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* background: dot grid + two soft lights behind the hero */
+.sky{position:absolute;inset:0 0 auto 0;height:980px;z-index:-1;overflow:hidden;pointer-events:none}
+.sky::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(15,23,42,.10) 1px,transparent 1.2px);background-size:26px 26px;mask-image:linear-gradient(#000 30%,transparent 95%);-webkit-mask-image:linear-gradient(#000 30%,transparent 95%)}
+.sky i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.6}
+.sky i:nth-child(1){width:520px;height:520px;right:-80px;top:40px;background:#C7D2FE}
+.sky i:nth-child(2){width:380px;height:380px;right:340px;top:300px;background:#99F6E4;opacity:.55}
+@media (prefers-reduced-motion:no-preference){
+  .sky i:nth-child(1){animation:drift 18s ease-in-out infinite alternate}
+  .sky i:nth-child(2){animation:drift 22s ease-in-out infinite alternate-reverse}
+  @keyframes drift{to{transform:translate(-60px,40px) scale(1.08)}}
+}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.is-stuck{background:rgba(247,249,252,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+.brand svg{width:34px;height:34px}
+.nav-r{display:flex;align-items:center;gap:26px}
+.nav-r a.lnk{color:var(--muted);font-weight:600;font-size:.95rem}
+.nav-r a.lnk:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:14px;font-weight:700;font-size:.98rem;transition:transform .2s var(--ease),background .2s,box-shadow .2s,border-color .2s}
+.btn:active{transform:scale(.97)}
+.btn-main{background:var(--mint);color:#fff;box-shadow:0 8px 24px -10px rgba(15,118,110,.7)}
+.btn-main:hover{background:#115E59;box-shadow:0 10px 28px -8px rgba(15,118,110,.8)}
+.btn-line{border:1px solid #CBD5E1;background:#fff}
+.btn-line:hover{border-color:var(--blue);color:var(--blue)}
+.btn-sm{height:40px;padding:0 16px;border-radius:11px;font-size:.9rem}
+.btn svg{width:18px;height:18px}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:40px;align-items:center;padding:56px 0 40px;min-height:calc(100vh - 160px)}
+.live{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 12px;border-radius:30px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:.88rem;font-weight:600;box-shadow:var(--shadow)}
+.live b{color:var(--text)}
+.pulse{width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 0 0 rgba(16,185,129,.5)}
+@media (prefers-reduced-motion:no-preference){.pulse{animation:pulse 2s infinite}@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.5rem,5.6vw,4.9rem);line-height:1.02;letter-spacing:-.045em;margin:24px 0 22px}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+h1 .ln span{display:inline-block}
+h1 .ln:nth-child(2) span{background:linear-gradient(95deg,#0F766E 0%,#0E7490 35%,#4F46E5 75%,#7C3AED 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (prefers-reduced-motion:no-preference){
+  h1 .ln span{animation:rise .9s var(--ease) both}
+  h1 .ln:nth-child(2) span{animation-delay:.12s}
+  .hero-copy .sub,.hero-copy .cta{animation:fade .8s var(--ease) .35s both}
+  .hero-copy .cta{animation-delay:.48s}
+  .flow-wrap{animation:fade 1s var(--ease) .3s both}
+  @keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+.sub{color:var(--muted);font-size:1.15rem;max-width:34ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+/* animated pipeline */
+.flow-wrap{position:relative;border:1px solid var(--line);border-radius:28px;background:#fff;padding:18px 14px 10px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 40px 70px -40px rgba(15,23,42,.28)}
+.flow{display:block;width:100%;height:auto;overflow:visible}
+.col-head{fill:var(--faint);font:600 12px var(--body);text-anchor:middle;letter-spacing:.02em}
+.edge{fill:none;stroke:#D5DDE8;stroke-width:1.6}
+.node rect{fill:#fff;stroke:var(--c);stroke-width:2;transition:fill .25s,stroke-width .25s}
+.node .n-sym{fill:var(--c);font:700 17px var(--display);text-anchor:middle;letter-spacing:-.02em}
+.node .n-name{fill:var(--muted);font:600 12.5px var(--body);text-anchor:middle}
+.node.hit rect{fill:color-mix(in srgb,var(--c) 14%,#fff);stroke-width:3}
+.node:hover rect,.node:focus-visible rect{fill:var(--c)}
+.node:hover .n-sym,.node:focus-visible .n-sym{fill:#fff}
+.node:hover .n-name{fill:var(--text)}
+.packets circle{opacity:.9}
+.packets circle{r:4}
+.flow-note{display:flex;justify-content:space-between;color:var(--faint);font-size:.8rem;padding:6px 10px 2px}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:22px;background:#fff;overflow:hidden;box-shadow:var(--shadow)}
+.stat{padding:24px 26px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,3vw,2.4rem);letter-spacing:-.04em;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.92rem;font-weight:600}
+.stat:nth-child(1) b{color:var(--mint)}
+
+/* ---------- ticker ---------- */
+.ticker{padding:72px 0 24px;display:grid;gap:14px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;width:max-content;gap:14px}
+.tq{display:inline-flex;align-items:center;gap:12px;white-space:nowrap;padding:12px 18px 12px 12px;border-radius:16px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:.95rem;color:#334155;transition:border-color .2s,background .2s,color .2s;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.tq i{font:normal 700 .78rem var(--display);color:var(--on-c);background:var(--c);width:32px;height:32px;border-radius:9px;display:grid;place-items:center;letter-spacing:-.02em}
+.tq:hover{border-color:var(--c);background:#fff;color:var(--text)}
+@media (prefers-reduced-motion:no-preference){
+  .track{animation:slide 70s linear infinite}
+  .track.rev{animation-direction:reverse;animation-duration:80s}
+  .ticker:hover .track,.ticker:focus-within .track{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(-50%)}}
+}
+@media (prefers-reduced-motion:reduce){.ticker{overflow-x:auto}}
+
+/* ---------- modules ---------- */
+.mods{padding:72px 0 40px}
+.mods-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:26px}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);letter-spacing:-.04em;line-height:1.05}
+.search{position:relative;width:min(100%,360px)}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
+.search input{width:100%;height:48px;font:inherit;font-weight:500;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 44px}
+.search input::placeholder{color:var(--faint)}
+.search input:focus{outline:none;border-color:var(--mint);box-shadow:0 0 0 4px rgba(15,118,110,.14)}
+.search kbd{position:absolute;right:13px;top:50%;transform:translateY(-50%);font:700 .74rem var(--body);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+.search input:focus~kbd,.search input:not(:placeholder-shown)~kbd{display:none}
+.search input::-webkit-search-cancel-button{filter:grayscale(1)}
+
+.tabs{position:relative;display:flex;gap:2px;padding:5px;border:1px solid var(--line);border-radius:16px;background:var(--bg-2);overflow-x:auto;scrollbar-width:none;margin-bottom:26px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;z-index:1;flex:1 0 auto;justify-content:center;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 11px;border-radius:11px;color:var(--muted);font-weight:700;font-size:.92rem;transition:color .25s}
+.tab span{font-size:.75rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.tab:hover{color:var(--text)}
+.tab.is-on{color:#fff}
+.tab.is-on span{color:rgba(255,255,255,.75)}
+.ind{position:absolute;z-index:0;top:5px;height:40px;border-radius:11px;background:var(--ind,var(--text));transition:transform .45s var(--ease),width .45s var(--ease),background .3s}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{position:relative;display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:20px;border:1px solid var(--line);background:var(--surface);overflow:hidden;isolation:isolate;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:transform .3s var(--ease),border-color .3s,box-shadow .3s}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .3s;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--c) 12%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 45%,var(--line));box-shadow:0 20px 40px -20px color-mix(in srgb,var(--c) 45%,transparent)}
+.card:hover::before{opacity:1}
+.card-top{display:flex;align-items:center;justify-content:space-between}
+.sym{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:var(--c);color:var(--on-c);font:700 1.05rem var(--display);letter-spacing:-.03em;transition:transform .3s var(--ease)}
+.card:hover .sym{transform:rotate(-8deg) scale(1.06)}
+.stage-tag{font-size:.78rem;font-weight:700;color:var(--c)}
+.card-title{font-weight:700;font-size:1.08rem;margin-top:6px;line-height:1.3}
+.card-desc{color:var(--muted);font-size:.9rem;line-height:1.45;flex:1}
+.card-foot{display:flex;align-items:center;gap:12px;margin-top:6px}
+.bar{flex:1;height:5px;border-radius:5px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:var(--w);border-radius:5px;background:var(--c);transform-origin:left}
+.q{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.q b{color:var(--text);font-family:var(--display);font-size:.95rem;font-weight:700}
+.card.in{animation:cardIn .5s var(--ease) both;animation-delay:calc(var(--d,0) * 35ms)}
+.card.in .bar i{animation:barIn .9s var(--ease) both;animation-delay:calc(var(--d,0) * 35ms + 200ms)}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.card.in,.card.in .bar i{animation:none}}
+
+.soon{margin-top:34px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.soon h3{font-size:.95rem;font-weight:700;color:var(--muted);margin-right:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:12px;border:1px dashed #CBD5E1;background:rgba(255,255,255,.6);color:var(--faint);font-size:.86rem;font-weight:600}
+.chip i{font:normal 700 .68rem var(--display);width:24px;height:24px;border-radius:7px;display:grid;place-items:center;border:1.5px dashed var(--c);color:var(--c);opacity:.8}
+.empty{display:none;padding:40px 0;color:var(--muted)}
+.empty b{color:var(--text)}
+.empty button{margin-left:10px;color:var(--blue);font-weight:700;text-decoration:underline}
+.hide{display:none!important}
+
+/* ---------- closing band ---------- */
+.band{margin:56px 0 0;padding:44px;border-radius:28px;border:1px solid var(--line);background:radial-gradient(600px 240px at 85% 0%,rgba(79,70,229,.14),transparent 70%),radial-gradient(500px 240px at 0% 100%,rgba(15,118,110,.14),transparent 70%),#fff;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.band h2{font-size:clamp(1.5rem,2.8vw,2.1rem)}
+footer{padding:40px 0 48px;color:var(--faint);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px}
+
+/* ---------- reveal on scroll ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .rv.on{opacity:1;transform:none}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;min-height:0;padding-top:32px;gap:36px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  .nav-r a.lnk{display:none}
+  .flow-wrap{padding:12px 6px 6px;border-radius:22px}
+  .hero{padding-bottom:28px}
+  .node .n-name{display:none}
+  .flow-note{display:none}
+  .stat{padding:18px}
+  .ticker{padding-top:52px}
+  .tq{font-size:.88rem}
+  .band{padding:28px 22px}
+  .mods-head{align-items:stretch}
+  .search{width:100%}
+  .cta .btn{flex:1}
+  footer .wrap{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><i></i><i></i></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand" aria-label="Upvanta home">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="10" fill="#0F766E"/><path d="M10 10v8a7 7 0 0 0 14 0v-8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="24" cy="10" r="3.2" fill="#A5B4FC"/></svg>
+      Upvanta
+    </a>
+    <nav class="nav-r" aria-label="Main">
+      <a class="lnk" href="#questions">Questions</a>
+      <a class="lnk" href="#modules">Modules</a>
+      <a class="btn btn-main btn-sm" href="#modules">Start practising</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="wrap hero">
+  <div class="hero-copy">
+    <span class="live"><span class="pulse"></span><b>25 modules</b> live now</span>
+    <h1><span class="ln"><span>Crack your</span></span><span class="ln"><span>data interview</span></span></h1>
+    <p class="sub">Real questions, worked answers. SQL to Spark to Snowflake.</p>
+    <div class="cta">
+      <a class="btn btn-main" href="#modules">Start practising</a>
+      <button class="btn btn-line" type="button" id="surprise">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        Surprise me
+      </button>
+    </div>
+  </div>
+  <div class="flow-wrap">
+    <svg class="flow" viewBox="0 0 532 410" role="img" aria-label="Data moving from databases through Kafka and Spark into Snowflake">
+<defs><filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<text class="col-head" x="56" y="28">Store</text><text class="col-head" x="196" y="28">Move</text><text class="col-head" x="336" y="28">Process</text><text class="col-head" x="476" y="28">Serve</text><g class="edges"><path class="edge" data-from="0" data-to="3" d="M86 92 C126.0 92 126.0 92 166 92"/><path class="edge" data-from="0" data-to="4" d="M86 92 C126.0 92 126.0 212 166 212"/><path class="edge" data-from="1" data-to="3" d="M86 212 C126.0 212 126.0 92 166 92"/><path class="edge" data-from="1" data-to="5" d="M86 212 C126.0 212 126.0 332 166 332"/><path class="edge" data-from="2" data-to="4" d="M86 332 C126.0 332 126.0 212 166 212"/><path class="edge" data-from="2" data-to="5" d="M86 332 C126.0 332 126.0 332 166 332"/><path class="edge" data-from="3" data-to="6" d="M226 92 C266.0 92 266.0 92 306 92"/><path class="edge" data-from="3" data-to="7" d="M226 92 C266.0 92 266.0 212 306 212"/><path class="edge" data-from="4" data-to="7" d="M226 212 C266.0 212 266.0 212 306 212"/><path class="edge" data-from="4" data-to="8" d="M226 212 C266.0 212 266.0 332 306 332"/><path class="edge" data-from="5" data-to="6" d="M226 332 C266.0 332 266.0 92 306 92"/><path class="edge" data-from="5" data-to="8" d="M226 332 C266.0 332 266.0 332 306 332"/><path class="edge" data-from="6" data-to="9" d="M366 92 C406.0 92 406.0 92 446 92"/><path class="edge" data-from="6" data-to="10" d="M366 92 C406.0 92 406.0 212 446 212"/><path class="edge" data-from="7" data-to="9" d="M366 212 C406.0 212 406.0 92 446 92"/><path class="edge" data-from="7" data-to="11" d="M366 212 C406.0 212 406.0 332 446 332"/><path class="edge" data-from="8" data-to="10" d="M366 332 C406.0 332 406.0 212 446 212"/><path class="edge" data-from="8" data-to="11" d="M366 332 C406.0 332 406.0 332 446 332"/></g><g class="packets" filter="url(#glow)"></g><g class="nodes"><a href="rdbms.html" class="node" data-i="0" style="--c:#0369A1" aria-label="RDBMS Fundamentals">
+<rect x="26" y="62" width="60" height="60" rx="16"/>
+<text class="n-sym" x="56" y="99">Rd</text>
+<text class="n-name" x="56" y="142">RDBMS</text></a><a href="mysql.html" class="node" data-i="1" style="--c:#0369A1" aria-label="MySQL &amp; Advanced SQL">
+<rect x="26" y="182" width="60" height="60" rx="16"/>
+<text class="n-sym" x="56" y="219">My</text>
+<text class="n-name" x="56" y="262">MySQL</text></a><a href="mongodb.html" class="node" data-i="2" style="--c:#0369A1" aria-label="MongoDB">
+<rect x="26" y="302" width="60" height="60" rx="16"/>
+<text class="n-sym" x="56" y="339">Mo</text>
+<text class="n-name" x="56" y="382">MongoDB</text></a><a href="kafka.html" class="node" data-i="3" style="--c:#15803D" aria-label="Apache Kafka">
+<rect x="166" y="62" width="60" height="60" rx="16"/>
+<text class="n-sym" x="196" y="99">Kf</text>
+<text class="n-name" x="196" y="142">Kafka</text></a><a href="airflow.html" class="node" data-i="4" style="--c:#B45309" aria-label="Apache Airflow">
+<rect x="166" y="182" width="60" height="60" rx="16"/>
+<text class="n-sym" x="196" y="219">Af</text>
+<text class="n-name" x="196" y="262">Airflow</text></a><a href="etl.html" class="node" data-i="5" style="--c:#B45309" aria-label="ETL &amp; ELT">
+<rect x="166" y="302" width="60" height="60" rx="16"/>
+<text class="n-sym" x="196" y="339">El</text>
+<text class="n-name" x="196" y="382">ETL</text></a><a href="pyspark.html" class="node" data-i="6" style="--c:#0F766E" aria-label="Spark &amp; PySpark">
+<rect x="306" y="62" width="60" height="60" rx="16"/>
+<text class="n-sym" x="336" y="99">Sp</text>
+<text class="n-name" x="336" y="142">Spark</text></a><a href="databricks.html" class="node" data-i="7" style="--c:#0F766E" aria-label="Databricks">
+<rect x="306" y="182" width="60" height="60" rx="16"/>
+<text class="n-sym" x="336" y="219">Db</text>
+<text class="n-name" x="336" y="262">Databricks</text></a><a href="dbt.html" class="node" data-i="8" style="--c:#B45309" aria-label="dbt">
+<rect x="306" y="302" width="60" height="60" rx="16"/>
+<text class="n-sym" x="336" y="339">Dt</text>
+<text class="n-name" x="336" y="382">dbt</text></a><a href="snowflake.html" class="node" data-i="9" style="--c:#C2410C" aria-label="Snowflake">
+<rect x="446" y="62" width="60" height="60" rx="16"/>
+<text class="n-sym" x="476" y="99">Sf</text>
+<text class="n-name" x="476" y="142">Snowflake</text></a><a href="dw-fundamentals.html" class="node" data-i="10" style="--c:#C2410C" aria-label="Data Warehousing">
+<rect x="446" y="182" width="60" height="60" rx="16"/>
+<text class="n-sym" x="476" y="219">Dw</text>
+<text class="n-name" x="476" y="262">Warehouse</text></a><a href="matplotlib.html" class="node" data-i="11" style="--c:#BE185D" aria-label="Matplotlib &amp; Seaborn">
+<rect x="446" y="302" width="60" height="60" rx="16"/>
+<text class="n-sym" x="476" y="339">Mp</text>
+<text class="n-name" x="476" y="382">Matplotlib</text></a></g></svg>
+    <div class="flow-note"><span>Select any tool to open its module</span><span>Live pipeline</span></div>
+  </div>
+</section>
+
+<section class="wrap rv" aria-label="Upvanta in numbers">
+  <div class="stats">
+    <div class="stat"><b data-count="1211">1,211</b><span>Questions</span></div>
+    <div class="stat"><b data-count="25">25</b><span>Modules live</span></div>
+    <div class="stat"><b data-count="11">11</b><span>Stack stages</span></div>
+    <div class="stat"><b data-count="37">37</b><span>Coming soon</span></div>
+  </div>
+</section>
+
+<section class="ticker" id="questions" aria-label="Sample questions">
+  <div class="track"><a class="tq" href="rdbms.html" style="--c:#0369A1"><i>Rd</i>What is a Foreign Key and Referential Integrity?</a><a class="tq" href="kafka.html" style="--c:#15803D"><i>Kf</i>How do partitions work in Kafka?</a><a class="tq" href="mysql.html" style="--c:#0369A1"><i>My</i>What is the logical order of execution of a SELECT query?</a><a class="tq" href="pyspark.html" style="--c:#0F766E"><i>Sp</i>What is an RDD? How is it different from a DataFrame?</a><a class="tq" href="snowflake.html" style="--c:#C2410C"><i>Sf</i>What are micro-partitions?</a><a class="tq" href="airflow.html" style="--c:#B45309"><i>Af</i>What is a DAG? Why must it be acyclic?</a><a class="tq" href="python.html" style="--c:#4F46E5"><i>Py</i>What is the difference between &quot;is&quot; and &quot;==&quot;?</a><a class="tq" href="dw-fundamentals.html" style="--c:#C2410C"><i>Dw</i>What is the Inmon vs Kimball approach?</a><a class="tq" href="mongodb.html" style="--c:#0369A1"><i>Mo</i>Explain the CAP theorem. Where does MongoDB fit?</a><a class="tq" href="git.html" style="--c:#4F46E5"><i>Gt</i>What does git cherry-pick do and when should you use it?</a><a class="tq" href="statistics.html" style="--c:#4F46E5"><i>St</i>What is the central limit theorem and why is it so important?</a><a class="tq" href="hive.html" style="--c:#0F766E"><i>Hv</i>Hive vs Spark SQL vs Impala/Trino: when do you use which?</a><a class="tq" href="pandas.html" style="--c:#0F766E"><i>Pd</i>What is the difference between loc, iloc, at, iat and []?</a><a class="tq" href="dbt.html" style="--c:#B45309"><i>Dt</i>What is ref()? How does dbt build the DAG and lineage?</a><a class="tq" href="rdbms.html" style="--c:#0369A1"><i>Rd</i>What is a Foreign Key and Referential Integrity?</a><a class="tq" href="kafka.html" style="--c:#15803D"><i>Kf</i>How do partitions work in Kafka?</a><a class="tq" href="mysql.html" style="--c:#0369A1"><i>My</i>What is the logical order of execution of a SELECT query?</a><a class="tq" href="pyspark.html" style="--c:#0F766E"><i>Sp</i>What is an RDD? How is it different from a DataFrame?</a><a class="tq" href="snowflake.html" style="--c:#C2410C"><i>Sf</i>What are micro-partitions?</a><a class="tq" href="airflow.html" style="--c:#B45309"><i>Af</i>What is a DAG? Why must it be acyclic?</a><a class="tq" href="python.html" style="--c:#4F46E5"><i>Py</i>What is the difference between &quot;is&quot; and &quot;==&quot;?</a><a class="tq" href="dw-fundamentals.html" style="--c:#C2410C"><i>Dw</i>What is the Inmon vs Kimball approach?</a><a class="tq" href="mongodb.html" style="--c:#0369A1"><i>Mo</i>Explain the CAP theorem. Where does MongoDB fit?</a><a class="tq" href="git.html" style="--c:#4F46E5"><i>Gt</i>What does git cherry-pick do and when should you use it?</a><a class="tq" href="statistics.html" style="--c:#4F46E5"><i>St</i>What is the central limit theorem and why is it so important?</a><a class="tq" href="hive.html" style="--c:#0F766E"><i>Hv</i>Hive vs Spark SQL vs Impala/Trino: when do you use which?</a><a class="tq" href="pandas.html" style="--c:#0F766E"><i>Pd</i>What is the difference between loc, iloc, at, iat and []?</a><a class="tq" href="dbt.html" style="--c:#B45309"><i>Dt</i>What is ref()? How does dbt build the DAG and lineage?</a></div>
+  <div class="track rev"><a class="tq" href="cassandra.html" style="--c:#0369A1"><i>Ca</i>What does ALLOW FILTERING do? Why is it dangerous?</a><a class="tq" href="etl.html" style="--c:#B45309"><i>El</i>What is the difference between full and incremental extraction?</a><a class="tq" href="hadoop.html" style="--c:#0F766E"><i>Hd</i>What are the roles of the NameNode and DataNode?</a><a class="tq" href="linux.html" style="--c:#4F46E5"><i>Lx</i>What are SUID, SGID and the sticky bit?</a><a class="tq" href="numpy.html" style="--c:#0F766E"><i>Np</i>What is the difference between a view and a copy in NumPy?</a><a class="tq" href="sklearn.html" style="--c:#DC2626"><i>Sk</i>How do you handle imbalanced classes?</a><a class="tq" href="databricks.html" style="--c:#0F766E"><i>Db</i>What is schema enforcement and schema evolution in Delta Lake?</a><a class="tq" href="hbase.html" style="--c:#0369A1"><i>Hb</i>Is HBase CP or AP?</a><a class="tq" href="mysql.html" style="--c:#0369A1"><i>My</i>What is the difference between WHERE and HAVING?</a><a class="tq" href="kafka.html" style="--c:#15803D"><i>Kf</i>What is the role of ZooKeeper in Kafka? What is KRaft?</a><a class="tq" href="dw-fundamentals.html" style="--c:#C2410C"><i>Dw</i>What is the difference between OLTP and OLAP?</a><a class="tq" href="pyspark.html" style="--c:#0F766E"><i>Sp</i>What is a SparkSession? How do you create one?</a><a class="tq" href="python.html" style="--c:#4F46E5"><i>Py</i>What is the difference between mutable and immutable objects?</a><a class="tq" href="snowflake.html" style="--c:#C2410C"><i>Sf</i>How do auto-suspend and auto-resume work?</a><a class="tq" href="cassandra.html" style="--c:#0369A1"><i>Ca</i>What does ALLOW FILTERING do? Why is it dangerous?</a><a class="tq" href="etl.html" style="--c:#B45309"><i>El</i>What is the difference between full and incremental extraction?</a><a class="tq" href="hadoop.html" style="--c:#0F766E"><i>Hd</i>What are the roles of the NameNode and DataNode?</a><a class="tq" href="linux.html" style="--c:#4F46E5"><i>Lx</i>What are SUID, SGID and the sticky bit?</a><a class="tq" href="numpy.html" style="--c:#0F766E"><i>Np</i>What is the difference between a view and a copy in NumPy?</a><a class="tq" href="sklearn.html" style="--c:#DC2626"><i>Sk</i>How do you handle imbalanced classes?</a><a class="tq" href="databricks.html" style="--c:#0F766E"><i>Db</i>What is schema enforcement and schema evolution in Delta Lake?</a><a class="tq" href="hbase.html" style="--c:#0369A1"><i>Hb</i>Is HBase CP or AP?</a><a class="tq" href="mysql.html" style="--c:#0369A1"><i>My</i>What is the difference between WHERE and HAVING?</a><a class="tq" href="kafka.html" style="--c:#15803D"><i>Kf</i>What is the role of ZooKeeper in Kafka? What is KRaft?</a><a class="tq" href="dw-fundamentals.html" style="--c:#C2410C"><i>Dw</i>What is the difference between OLTP and OLAP?</a><a class="tq" href="pyspark.html" style="--c:#0F766E"><i>Sp</i>What is a SparkSession? How do you create one?</a><a class="tq" href="python.html" style="--c:#4F46E5"><i>Py</i>What is the difference between mutable and immutable objects?</a><a class="tq" href="snowflake.html" style="--c:#C2410C"><i>Sf</i>How do auto-suspend and auto-resume work?</a></div>
+</section>
+
+<section class="wrap mods" id="modules">
+  <div class="mods-head rv">
+    <h2>Pick a module</h2>
+    <label class="search">
+      <span class="sr-only">Search modules</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search modules" autocomplete="off">
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+  </div>
+  <div class="tabs rv" role="tablist" aria-label="Stages" id="tabs">
+    <span class="ind" id="ind" aria-hidden="true"></span>
+<button class="tab is-on" role="tab" aria-selected="true" data-tab="all">All</button>
+<button class="tab" role="tab" aria-selected="false" data-tab="foundations" style="--c:#4F46E5">Foundations<span>4</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="collect" style="--c:#7C3AED">Collect<span>0</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="store" style="--c:#0369A1">Store<span>6</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="process" style="--c:#0F766E">Process<span>7</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="stream" style="--c:#15803D">Stream<span>1</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="orchestrate" style="--c:#B45309">Orchestrate<span>3</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="warehouse" style="--c:#C2410C">Warehouse<span>2</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="cloud" style="--c:#475569">Cloud<span>0</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="visualise" style="--c:#BE185D">Visualise<span>1</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="learn" style="--c:#DC2626">Learn<span>1</span></button>
+<button class="tab" role="tab" aria-selected="false" data-tab="operate" style="--c:#4D7C0F">Operate<span>0</span></button>
+  </div>
+  <div class="grid" id="grid">
+<a class="card" href="python.html" data-stage="foundations" data-s="python fundamentals data types, oop, decorators, generators python oop decorators generators functions foundations" style="--c:#4F46E5">
+<span class="card-top"><span class="sym">Py</span><span class="stage-tag">Foundations</span></span>
+<span class="card-title">Python Fundamentals</span>
+<span class="card-desc">Data types, OOP, decorators, generators</span>
+<span class="card-foot"><span class="bar"><i style="--w:77%"></i></span><span class="q"><b>65</b> Qs</span></span>
+</a>
+<a class="card" href="linux.html" data-stage="foundations" data-s="linux &amp; shell permissions, processes, sed, awk, scripting linux shell bash commands scripting unix sed awk foundations" style="--c:#4F46E5">
+<span class="card-top"><span class="sym">Lx</span><span class="stage-tag">Foundations</span></span>
+<span class="card-title">Linux &amp; Shell</span>
+<span class="card-desc">Permissions, processes, sed, awk, scripting</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="git.html" data-stage="foundations" data-s="git &amp; github branching, merging, rebasing, pull requests git version control branching merging github rebase foundations" style="--c:#4F46E5">
+<span class="card-top"><span class="sym">Gt</span><span class="stage-tag">Foundations</span></span>
+<span class="card-title">Git &amp; GitHub</span>
+<span class="card-desc">Branching, merging, rebasing, pull requests</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="statistics.html" data-stage="foundations" data-s="statistics distributions, hypothesis tests, clt statistics probability hypothesis testing distributions foundations" style="--c:#4F46E5">
+<span class="card-top"><span class="sym">St</span><span class="stage-tag">Foundations</span></span>
+<span class="card-title">Statistics</span>
+<span class="card-desc">Distributions, hypothesis tests, CLT</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="rdbms.html" data-stage="store" data-s="rdbms fundamentals keys, normalization, acid, design database sql relational normalization acid keys store" style="--c:#0369A1">
+<span class="card-top"><span class="sym">Rd</span><span class="stage-tag">Store</span></span>
+<span class="card-title">RDBMS Fundamentals</span>
+<span class="card-desc">Keys, normalization, ACID, design</span>
+<span class="card-foot"><span class="bar"><i style="--w:72%"></i></span><span class="q"><b>57</b> Qs</span></span>
+</a>
+<a class="card" href="mysql.html" data-stage="store" data-s="mysql &amp; advanced sql joins, indexes, window functions, ctes mysql sql queries joins indexes window functions cte explain store" style="--c:#0369A1">
+<span class="card-top"><span class="sym">My</span><span class="stage-tag">Store</span></span>
+<span class="card-title">MySQL &amp; Advanced SQL</span>
+<span class="card-desc">Joins, indexes, window functions, CTEs</span>
+<span class="card-foot"><span class="bar"><i style="--w:70%"></i></span><span class="q"><b>55</b> Qs</span></span>
+</a>
+<a class="card" href="mongodb.html" data-stage="store" data-s="mongodb documents, aggregation, sharding mongodb nosql document database aggregation sharding store" style="--c:#0369A1">
+<span class="card-top"><span class="sym">Mo</span><span class="stage-tag">Store</span></span>
+<span class="card-title">MongoDB</span>
+<span class="card-desc">Documents, aggregation, sharding</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="cassandra.html" data-stage="store" data-s="apache cassandra partition keys, consistency, modelling cassandra distributed nosql wide-column consistency cql store" style="--c:#0369A1">
+<span class="card-top"><span class="sym">Ca</span><span class="stage-tag">Store</span></span>
+<span class="card-title">Apache Cassandra</span>
+<span class="card-desc">Partition keys, consistency, modelling</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="hbase.html" data-stage="store" data-s="apache hbase row keys, column families, regions hbase nosql hadoop column family region store" style="--c:#0369A1">
+<span class="card-top"><span class="sym">Hb</span><span class="stage-tag">Store</span></span>
+<span class="card-title">Apache HBase</span>
+<span class="card-desc">Row keys, column families, regions</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="redis.html" data-stage="store" data-s="redis data structures, caching, persistence redis cache in-memory data structures pubsub store" style="--c:#0369A1">
+<span class="card-top"><span class="sym">Re</span><span class="stage-tag">Store</span></span>
+<span class="card-title">Redis</span>
+<span class="card-desc">Data structures, caching, persistence</span>
+<span class="card-foot"><span class="bar"><i style="--w:95%"></i></span><span class="q"><b>100</b> Qs</span></span>
+</a>
+<a class="card" href="hadoop.html" data-stage="process" data-s="hadoop &amp; hdfs hdfs, mapreduce, yarn hadoop hdfs mapreduce yarn distributed process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Hd</span><span class="stage-tag">Process</span></span>
+<span class="card-title">Hadoop &amp; HDFS</span>
+<span class="card-desc">HDFS, MapReduce, YARN</span>
+<span class="card-foot"><span class="bar"><i style="--w:66%"></i></span><span class="q"><b>48</b> Qs</span></span>
+</a>
+<a class="card" href="hive.html" data-stage="process" data-s="apache hive hiveql, partitioning, bucketing hive hiveql partitioning bucketing sql hadoop process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Hv</span><span class="stage-tag">Process</span></span>
+<span class="card-title">Apache Hive</span>
+<span class="card-desc">HiveQL, partitioning, bucketing</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="pyspark.html" data-stage="process" data-s="spark &amp; pyspark rdds, dataframes, optimization spark pyspark rdd dataframe transformation action process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Sp</span><span class="stage-tag">Process</span></span>
+<span class="card-title">Spark &amp; PySpark</span>
+<span class="card-desc">RDDs, DataFrames, optimization</span>
+<span class="card-foot"><span class="bar"><i style="--w:63%"></i></span><span class="q"><b>44</b> Qs</span></span>
+</a>
+<a class="card" href="apache-pyspark.html" data-stage="process" data-s="pyspark question bank extended spark practice spark pyspark rdd dataframe extended bank process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Sx</span><span class="stage-tag">Process</span></span>
+<span class="card-title">PySpark Question Bank</span>
+<span class="card-desc">Extended Spark practice</span>
+<span class="card-foot"><span class="bar"><i style="--w:100%"></i></span><span class="q"><b>111</b> Qs</span></span>
+</a>
+<a class="card" href="databricks.html" data-stage="process" data-s="databricks delta lake, jobs, unity catalog databricks delta lake spark mlflow notebooks process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Db</span><span class="stage-tag">Process</span></span>
+<span class="card-title">Databricks</span>
+<span class="card-desc">Delta Lake, jobs, Unity Catalog</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="pandas.html" data-stage="process" data-s="pandas indexing, groupby, reshaping pandas dataframe python data cleaning groupby process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Pd</span><span class="stage-tag">Process</span></span>
+<span class="card-title">Pandas</span>
+<span class="card-desc">Indexing, groupby, reshaping</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="numpy.html" data-stage="process" data-s="numpy arrays, broadcasting, vectorization numpy arrays vectorization linear algebra process" style="--c:#0F766E">
+<span class="card-top"><span class="sym">Np</span><span class="stage-tag">Process</span></span>
+<span class="card-title">NumPy</span>
+<span class="card-desc">Arrays, broadcasting, vectorization</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="kafka.html" data-stage="stream" data-s="apache kafka topics, partitions, replication kafka streaming events producers consumers topics stream" style="--c:#15803D">
+<span class="card-top"><span class="sym">Kf</span><span class="stage-tag">Stream</span></span>
+<span class="card-title">Apache Kafka</span>
+<span class="card-desc">Topics, partitions, replication</span>
+<span class="card-foot"><span class="bar"><i style="--w:56%"></i></span><span class="q"><b>35</b> Qs</span></span>
+</a>
+<a class="card" href="airflow.html" data-stage="orchestrate" data-s="apache airflow dags, operators, scheduling airflow workflow orchestration dag scheduling orchestrate" style="--c:#B45309">
+<span class="card-top"><span class="sym">Af</span><span class="stage-tag">Orchestrate</span></span>
+<span class="card-title">Apache Airflow</span>
+<span class="card-desc">DAGs, operators, scheduling</span>
+<span class="card-foot"><span class="bar"><i style="--w:66%"></i></span><span class="q"><b>49</b> Qs</span></span>
+</a>
+<a class="card" href="dbt.html" data-stage="orchestrate" data-s="dbt models, tests, jinja, lineage dbt data build tool transformation testing orchestrate" style="--c:#B45309">
+<span class="card-top"><span class="sym">Dt</span><span class="stage-tag">Orchestrate</span></span>
+<span class="card-title">dbt</span>
+<span class="card-desc">Models, tests, Jinja, lineage</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="etl.html" data-stage="orchestrate" data-s="etl &amp; elt pipelines, cdc, data quality etl elt pipeline transformation cdc orchestrate" style="--c:#B45309">
+<span class="card-top"><span class="sym">El</span><span class="stage-tag">Orchestrate</span></span>
+<span class="card-title">ETL &amp; ELT</span>
+<span class="card-desc">Pipelines, CDC, data quality</span>
+<span class="card-foot"><span class="bar"><i style="--w:67%"></i></span><span class="q"><b>50</b> Qs</span></span>
+</a>
+<a class="card" href="dw-fundamentals.html" data-stage="warehouse" data-s="data warehousing star schema, facts, dimensions, scd data warehouse star schema dimension fact scd olap warehouse" style="--c:#C2410C">
+<span class="card-top"><span class="sym">Dw</span><span class="stage-tag">Warehouse</span></span>
+<span class="card-title">Data Warehousing</span>
+<span class="card-desc">Star schema, facts, dimensions, SCD</span>
+<span class="card-foot"><span class="bar"><i style="--w:58%"></i></span><span class="q"><b>37</b> Qs</span></span>
+</a>
+<a class="card" href="snowflake.html" data-stage="warehouse" data-s="snowflake warehouses, micro-partitions, time travel snowflake cloud warehouse virtual time travel warehouse" style="--c:#C2410C">
+<span class="card-top"><span class="sym">Sf</span><span class="stage-tag">Warehouse</span></span>
+<span class="card-title">Snowflake</span>
+<span class="card-desc">Warehouses, micro-partitions, time travel</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="matplotlib.html" data-stage="visualise" data-s="matplotlib &amp; seaborn charts, customisation, eda plots matplotlib seaborn python visualization plots charts visualise" style="--c:#BE185D">
+<span class="card-top"><span class="sym">Mp</span><span class="stage-tag">Visualise</span></span>
+<span class="card-title">Matplotlib &amp; Seaborn</span>
+<span class="card-desc">Charts, customisation, EDA plots</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+<a class="card" href="sklearn.html" data-stage="learn" data-s="scikit-learn pipelines, models, tuning scikit-learn sklearn machine learning model training learn" style="--c:#DC2626">
+<span class="card-top"><span class="sym">Sk</span><span class="stage-tag">Learn</span></span>
+<span class="card-title">scikit-learn</span>
+<span class="card-desc">Pipelines, models, tuning</span>
+<span class="card-foot"><span class="bar"><i style="--w:60%"></i></span><span class="q"><b>40</b> Qs</span></span>
+</a>
+  </div>
+  <p class="empty" id="empty">Nothing matches <b id="term"></b>.<button type="button" id="clear">Clear search</button></p>
+  <div class="soon" id="soon"><h3>Coming soon</h3><span class="chip" data-stage="foundations" data-s="scala scala functional programming jvm foundations" style="--c:#4F46E5"><i>Sc</i>Scala</span><span class="chip" data-stage="foundations" data-s="oop &amp; java java oop inheritance polymorphism foundations" style="--c:#4F46E5"><i>Jv</i>OOP &amp; Java</span><span class="chip" data-stage="foundations" data-s="cs fundamentals computer science algorithms data structures complexity foundations" style="--c:#4F46E5"><i>Cs</i>CS Fundamentals</span><span class="chip" data-stage="collect" data-s="web scraping web scraping beautifulsoup scrapy selenium collect" style="--c:#7C3AED"><i>Ws</i>Web Scraping</span><span class="chip" data-stage="collect" data-s="apis &amp; rest api rest http authentication json collect" style="--c:#7C3AED"><i>Ap</i>APIs &amp; REST</span><span class="chip" data-stage="collect" data-s="data formats data formats json xml parquet avro csv collect" style="--c:#7C3AED"><i>Df</i>Data Formats</span><span class="chip" data-stage="store" data-s="sql advanced sql advanced tuning execution plans store" style="--c:#0369A1"><i>Sq</i>SQL Advanced</span><span class="chip" data-stage="store" data-s="data modeling data modeling dimensional vault store" style="--c:#0369A1"><i>Dm</i>Data Modeling</span><span class="chip" data-stage="process" data-s="polars polars dataframe lazy process" style="--c:#0F766E"><i>Pl</i>Polars</span><span class="chip" data-stage="process" data-s="dask dask parallel distributed process" style="--c:#0F766E"><i>Dk</i>Dask</span><span class="chip" data-stage="stream" data-s="apache flink flink stream processing stateful stream" style="--c:#15803D"><i>Fl</i>Apache Flink</span><span class="chip" data-stage="stream" data-s="spark streaming spark streaming structured micro-batch stream" style="--c:#15803D"><i>Ss</i>Spark Streaming</span><span class="chip" data-stage="stream" data-s="real-time analytics real-time analytics lambda kappa stream" style="--c:#15803D"><i>Rt</i>Real-time Analytics</span><span class="chip" data-stage="orchestrate" data-s="apache beam apache beam pipeline orchestrate" style="--c:#B45309"><i>Bm</i>Apache Beam</span><span class="chip" data-stage="orchestrate" data-s="great expectations great expectations data quality orchestrate" style="--c:#B45309"><i>Ge</i>Great Expectations</span><span class="chip" data-stage="warehouse" data-s="amazon redshift redshift aws columnar warehouse" style="--c:#C2410C"><i>Rs</i>Amazon Redshift</span><span class="chip" data-stage="warehouse" data-s="google bigquery bigquery google serverless warehouse" style="--c:#C2410C"><i>Bq</i>Google BigQuery</span><span class="chip" data-stage="cloud" data-s="cloud basics cloud computing iaas paas saas cloud" style="--c:#475569"><i>Cb</i>Cloud Basics</span><span class="chip" data-stage="cloud" data-s="aws data services aws s3 glue athena emr cloud" style="--c:#475569"><i>Aw</i>AWS Data Services</span><span class="chip" data-stage="cloud" data-s="azure data services azure data factory synapse cloud" style="--c:#475569"><i>Az</i>Azure Data Services</span><span class="chip" data-stage="cloud" data-s="google cloud gcp dataflow dataproc pubsub cloud" style="--c:#475569"><i>Gc</i>Google Cloud</span><span class="chip" data-stage="visualise" data-s="tableau tableau dashboards visualise" style="--c:#BE185D"><i>Tb</i>Tableau</span><span class="chip" data-stage="visualise" data-s="power bi power bi dax visualise" style="--c:#BE185D"><i>Pb</i>Power BI</span><span class="chip" data-stage="learn" data-s="ml fundamentals machine learning supervised unsupervised learn" style="--c:#DC2626"><i>Ml</i>ML Fundamentals</span><span class="chip" data-stage="learn" data-s="feature engineering feature engineering encoding scaling learn" style="--c:#DC2626"><i>Fe</i>Feature Engineering</span><span class="chip" data-stage="learn" data-s="model evaluation model evaluation metrics cross-validation learn" style="--c:#DC2626"><i>Me</i>Model Evaluation</span><span class="chip" data-stage="learn" data-s="tensorflow &amp; keras tensorflow keras deep learning learn" style="--c:#DC2626"><i>Tf</i>TensorFlow &amp; Keras</span><span class="chip" data-stage="learn" data-s="pytorch pytorch deep learning learn" style="--c:#DC2626"><i>Pt</i>PyTorch</span><span class="chip" data-stage="learn" data-s="mlops mlops deployment monitoring learn" style="--c:#DC2626"><i>Mx</i>MLOps</span><span class="chip" data-stage="operate" data-s="docker docker containers operate" style="--c:#4D7C0F"><i>Dc</i>Docker</span><span class="chip" data-stage="operate" data-s="kubernetes kubernetes k8s pods operate" style="--c:#4D7C0F"><i>K8</i>Kubernetes</span><span class="chip" data-stage="operate" data-s="system design system design scalability cap operate" style="--c:#4D7C0F"><i>Sd</i>System Design</span><span class="chip" data-stage="operate" data-s="distributed systems distributed systems replication consistency operate" style="--c:#4D7C0F"><i>Ds</i>Distributed Systems</span><span class="chip" data-stage="operate" data-s="performance tuning optimization performance indexing caching operate" style="--c:#4D7C0F"><i>Po</i>Performance Tuning</span><span class="chip" data-stage="operate" data-s="testing &amp; ci/cd testing cicd operate" style="--c:#4D7C0F"><i>Tc</i>Testing &amp; CI/CD</span><span class="chip" data-stage="operate" data-s="data governance data governance lineage privacy operate" style="--c:#4D7C0F"><i>Dg</i>Data Governance</span><span class="chip" data-stage="operate" data-s="security security compliance encryption gdpr operate" style="--c:#4D7C0F"><i>Se</i>Security</span></div>
+
+  <div class="band rv">
+    <h2>Can't decide? Let Upvanta pick.</h2>
+    <button class="btn btn-main" type="button" id="surprise2">Surprise me</button>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>Upvanta</span><a href="#top" onclick="window.scrollTo({top:0});return false;">Back to top</a></div></footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PAGES = ["python.html", "linux.html", "git.html", "statistics.html", "rdbms.html", "mysql.html", "mongodb.html", "cassandra.html", "hbase.html", "redis.html", "hadoop.html", "hive.html", "pyspark.html", "apache-pyspark.html", "databricks.html", "pandas.html", "numpy.html", "kafka.html", "airflow.html", "dbt.html", "etl.html", "dw-fundamentals.html", "snowflake.html", "matplotlib.html", "sklearn.html"];
+
+  /* sticky nav */
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('is-stuck', window.scrollY > 10); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* surprise me */
+  function surprise(){ location.href = PAGES[Math.floor(Math.random() * PAGES.length)]; }
+  document.getElementById('surprise').addEventListener('click', surprise);
+  document.getElementById('surprise2').addEventListener('click', surprise);
+
+  /* reveal on scroll + count up */
+  function countUp(el){
+    var end = +el.getAttribute('data-count'), t0 = null, dur = 1400;
+    if (reduce) return;
+    function step(ts){
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1), v = Math.round(end * (1 - Math.pow(1 - p, 4)));
+      el.textContent = v.toLocaleString('en-IN');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        en.target.classList.add('on');
+        en.target.querySelectorAll('[data-count]').forEach(countUp);
+        io.unobserve(en.target);
+      });
+    }, {threshold:.15});
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); });
+  }
+
+  /* animated pipeline */
+  var svg = document.querySelector('.flow');
+  var edges = [].slice.call(svg.querySelectorAll('.edge')).map(function(p){
+    return {el:p, from:+p.getAttribute('data-from'), to:+p.getAttribute('data-to'), len:p.getTotalLength()};
+  });
+  var nodes = [].slice.call(svg.querySelectorAll('.node'));
+  var out = {}; edges.forEach(function(e){ (out[e.from] = out[e.from] || []).push(e); });
+  var starts = edges.filter(function(e){ return e.from < 3; });
+  var g = svg.querySelector('.packets'), NS = 'http://www.w3.org/2000/svg';
+  function colorOf(i){ return getComputedStyle(nodes[i]).getPropertyValue('--c').trim(); }
+  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+  var packets = [];
+  if (!reduce) {
+    for (var k = 0; k < 14; k++) {
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', '4'); g.appendChild(c);
+      var e0 = pick(starts);
+      packets.push({c:c, e:e0, t:Math.random(), v:70 + Math.random() * 50, col:colorOf(e0.from)});
+      c.setAttribute('fill', packets[k].col);
+    }
+    var last = null, visible = true;
+    new IntersectionObserver(function(en){ visible = en[0].isIntersecting; }).observe(svg);
+    function flash(i){ var n = nodes[i]; n.classList.add('hit'); clearTimeout(n._t); n._t = setTimeout(function(){ n.classList.remove('hit'); }, 260); }
+    function frame(ts){
+      var dt = last ? Math.min((ts - last) / 1000, .05) : 0; last = ts;
+      if (visible && !document.hidden) {
+        packets.forEach(function(p){
+          p.t += dt * p.v / p.e.len;
+          if (p.t >= 1) {
+            flash(p.e.to);
+            var nx = out[p.e.to];
+            if (nx) { p.e = pick(nx); p.col = colorOf(p.e.from); p.c.setAttribute('fill', p.col); }
+            else { p.e = pick(starts); p.col = colorOf(p.e.from); p.c.setAttribute('fill', p.col); flash(p.e.from); }
+            p.t = 0;
+          }
+          var pt = p.e.el.getPointAtLength(p.t * p.e.len);
+          p.c.setAttribute('cx', pt.x); p.c.setAttribute('cy', pt.y);
+        });
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* tabs + search */
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  var ind = document.getElementById('ind');
+  var cards = [].slice.call(document.querySelectorAll('.card'));
+  var chips = [].slice.call(document.querySelectorAll('.chip'));
+  var q = document.getElementById('q');
+  var current = 'all';
+
+  function moveInd(){
+    var on = tabs.filter(function(t){ return t.classList.contains('is-on'); })[0];
+    ind.style.width = on.offsetWidth + 'px';
+    ind.style.transform = 'translateX(' + (on.offsetLeft - 5) + 'px)';
+    ind.style.setProperty('--ind', on.style.getPropertyValue('--c') || '#0F172A');
+  }
+  function apply(animate){
+    var terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var shown = 0, d = 0;
+    function match(el){
+      var okTab = current === 'all' || el.getAttribute('data-stage') === current;
+      var s = el.getAttribute('data-s');
+      return okTab && terms.every(function(t){ return s.indexOf(t) !== -1; });
+    }
+    cards.forEach(function(c){
+      var ok = match(c);
+      c.classList.toggle('hide', !ok);
+      c.classList.remove('in');
+      if (ok) { shown++; c.style.setProperty('--d', d++); }
+    });
+    if (animate) { void document.body.offsetWidth; cards.forEach(function(c){ if (!c.classList.contains('hide')) c.classList.add('in'); }); }
+    var soonShown = 0;
+    chips.forEach(function(c){ var ok = match(c); c.classList.toggle('hide', !ok); if (ok) soonShown++; });
+    document.getElementById('soon').classList.toggle('hide', soonShown === 0);
+    document.getElementById('empty').style.display = (shown === 0 && soonShown === 0) ? 'block' : 'none';
+    document.getElementById('term').textContent = '“' + q.value.trim() + '”';
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('is-on'); x.setAttribute('aria-selected', 'false'); });
+      t.classList.add('is-on'); t.setAttribute('aria-selected', 'true');
+      current = t.getAttribute('data-tab');
+      t.scrollIntoView({block:'nearest', inline:'nearest', behavior: reduce ? 'auto' : 'smooth'});
+      moveInd(); apply(true);
+    });
+  });
+  q.addEventListener('input', function(){
+    if (current !== 'all' && q.value.trim()) { tabs[0].click(); return; }
+    apply(false);
+  });
+  document.getElementById('clear').addEventListener('click', function(){ q.value = ''; apply(true); q.focus(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === '/' && !/input|textarea/i.test(document.activeElement.tagName)) {
+      e.preventDefault(); document.getElementById('modules').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'}); q.focus({preventScroll:true});
+    } else if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; apply(false); }
+  });
+  window.addEventListener('resize', moveInd);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveInd);
+  moveInd();
+
+  /* cards: glow follows the cursor */
+  cards.forEach(function(c){
+    c.addEventListener('pointermove', function(e){
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  /* first reveal of the grid */
+  if ('IntersectionObserver' in window && !reduce) {
+    var gio = new IntersectionObserver(function(en){ if (en[0].isIntersecting) { apply(true); gio.disconnect(); } }, {threshold:.05});
+    gio.observe(document.getElementById('grid'));
+  }
+})();
+</script>
+</body>
+</html>

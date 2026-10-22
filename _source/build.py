@@ -623,7 +623,8 @@ def build(module):
     out = ROOT / 'out'
     out.mkdir(exist_ok=True)
     target = out / meta.FILENAME
-    target.write_text(page)
+    from apply_theme import inject_theme  # Upvanta light theme (theme_light.css)
+    target.write_text(inject_theme(page))
     print(f'{target}: {total} questions in {len(sections)} sections, {len(page)//1024} KB')
 
 

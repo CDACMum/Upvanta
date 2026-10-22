@@ -1,0 +1,118 @@
+/* Upvanta light theme for redis.html (older hand-made page with its own layout).
+   Same palette as index.html and the other modules. Its SVG diagrams and code were drawn for a
+   dark background, so they sit on a dark panel; inline neon colours in text are remapped. */
+:root {
+    --primary-color: #0F766E;
+    --secondary-color: #4F46E5;
+    --accent-color: #4F46E5;
+    --bg-dark: #F7F9FC;
+    --bg-card: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --border-color: #E2E8F0;
+    --success-color: #047857;
+    --warning-color: #B45309;
+    --code-bg: #0F172A;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 30px -14px rgba(15, 23, 42, 0.14);
+    color-scheme: light;
+}
+html { background: #F7F9FC; }
+body { font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif; background: #F7F9FC; color: #0F172A; -webkit-font-smoothing: antialiased; }
+body::before { display: none; }
+::selection { background: rgba(79, 70, 229, 0.18); }
+
+/* sidebar */
+.sidebar { background: #fff; backdrop-filter: none; border-right: 1px solid var(--border-color); }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: #CBD5E1; }
+.logo { text-align: left; padding: 4px 0 18px; }
+.logo h1 {
+    font-family: 'Unbounded', 'Manrope', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.03em;
+    background: none; -webkit-text-fill-color: #0F172A; color: #0F172A;
+}
+.logo p { text-transform: none; letter-spacing: 0; font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.back-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 5px 12px 5px 5px;
+    border: 1px solid var(--border-color); border-radius: 12px; background: #fff; box-shadow: var(--shadow-sm);
+    color: #0F172A; font-weight: 700; font-size: 14px; text-decoration: none;
+}
+.back-link::before {
+    content: ""; width: 28px; height: 28px; border-radius: 8px;
+    background: #0F766E url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M10 10v8a7 7 0 0 0 14 0v-8' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='10' r='3.2' fill='%23A5B4FC'/%3E%3C/svg%3E") center / 100% no-repeat;
+}
+.back-link:hover { border-color: #0F766E; color: #0F766E; }
+.search-box input { background: #F1F5F9; border-color: transparent; border-radius: 12px; font-family: inherit; font-weight: 500; color: #0F172A; }
+.search-box input:focus { background: #fff; border-color: #0F766E; box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.14); }
+.progress-tracker { background: #F8FAFC; border-color: var(--border-color); border-radius: 14px; }
+.progress-tracker h3 { color: #0F172A; font-weight: 700; }
+.progress-bar { background: #E2E8F0; }
+.progress-fill { background: linear-gradient(90deg, #0F766E, #4F46E5); }
+.section-title { text-transform: none; letter-spacing: 0; color: #0F172A; background: #F1F5F9; border-left-color: #0F766E; font-weight: 700; border-radius: 10px; }
+.question-item { background: transparent; color: #475569; font-weight: 500; }
+.question-item:hover { background: rgba(15, 118, 110, 0.06); color: #0F172A; transform: none; }
+.question-item.active { background: rgba(15, 118, 110, 0.10); color: #0F766E; font-weight: 700; }
+.question-number { color: #0F766E; }
+
+/* question */
+.question-header { border-bottom: 1px solid var(--border-color); }
+.meta-badge { background: #F1F5F9; border-color: transparent; color: #475569; font-weight: 600; border-radius: 10px; }
+.question-title { font-family: 'Unbounded', 'Manrope', sans-serif; font-weight: 600; letter-spacing: -0.035em; color: #0F172A; font-size: 30px; }
+.question-subtitle { color: #475569; }
+.content-section { background: #fff; backdrop-filter: none; border: 1px solid var(--border-color); border-radius: 20px; box-shadow: var(--shadow-sm); }
+.content-section:hover { border-color: #CBD5E1; box-shadow: var(--shadow-md); }
+.section-header { border-bottom-color: var(--border-color); }
+.section-label { font-family: 'Unbounded', 'Manrope', sans-serif; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; color: #0F172A; }
+.content-section p, .content-section li { color: #334155; }
+.content-section strong { color: #0F172A; }
+
+/* code and diagrams keep a dark panel */
+.code-block { background: #0F172A; border-color: #1E293B; border-radius: 16px; box-shadow: var(--shadow-md); }
+.code-header { border-bottom-color: #1E293B; }
+.code-lang { color: #5EEAD4; font-weight: 700; }
+.copy-btn { background: #1E293B; border-color: #334155; color: #CBD5E1; font-family: inherit; font-weight: 600; }
+.copy-btn:hover { background: #0F766E; border-color: #0F766E; color: #fff; }
+.diagram-container { background: #0F172A; border-color: #1E293B; border-radius: 16px; }
+.diagram-title { color: #CBD5E1; font-weight: 600; }
+
+/* boxes */
+.takeaway-item { background: #F8FAFC; border-left-color: #0F766E; border-radius: 10px; color: #334155; }
+.keyword-tag { background: rgba(15, 118, 110, 0.07); border-color: rgba(15, 118, 110, 0.22); color: #0F766E; font-weight: 700; border-radius: 10px; }
+.keyword-tag:hover { background: rgba(15, 118, 110, 0.12); color: #0F766E; }
+.quiz-container { background: #F8FAFC; border-color: var(--border-color); border-radius: 16px; }
+.quiz-question { color: #0F172A; }
+.quiz-option { background: #fff; border-color: var(--border-color); color: #334155; }
+.quiz-option:hover { background: rgba(15, 118, 110, 0.05); border-color: #0F766E; }
+.quiz-option.correct { background: #ECFDF5; border-color: #10B981; color: #065F46; }
+.quiz-option.incorrect { background: #FEF2F2; border-color: #EF4444; color: #991B1B; }
+.navigation-buttons { border-top-color: var(--border-color); }
+.nav-btn { background: #fff; border-color: var(--border-color); color: #0F172A; font-family: inherit; font-weight: 700; border-radius: 14px; box-shadow: var(--shadow-sm); }
+.nav-btn:hover { background: #0F766E; border-color: #0F766E; color: #fff; box-shadow: 0 8px 22px -10px rgba(15, 118, 110, 0.7); }
+.highlight { background: #FEF08A; }
+
+/* inline colours written for a black page: remap backgrounds to light tints */
+[style*="rgba(220, 20, 60"], [style*="rgba(220,20,60"] { background: rgba(15, 118, 110, 0.06) !important; }
+[style*="background: rgba(255, 69, 0"], [style*="background: rgba(255, 87, 34"], [style*="background: rgba(255, 165, 0"], [style*="background: rgba(255, 235, 59"] { background: #FFFBEB !important; border-color: #FCD34D !important; }
+[style*="background: rgba(0, 255, 136"], [style*="background: rgba(0,255,136"] { background: #ECFDF5 !important; }
+[style*="solid #00FF88"] { border-color: #10B981 !important; }
+[style*="background: rgba(33, 150, 243"], [style*="background: rgba(103, 58, 183"], [style*="background: rgba(156, 39, 176"] { background: #EEF2FF !important; }
+[style*="background: rgba(255, 0, 0"] { background: #FEF2F2 !important; }
+[style*="background: rgba(255, 255, 255, 0.0"], [style*="background: rgba(255, 255, 255, 0.1"] { background: #F8FAFC !important; }
+[style*="background: rgba(0,0,0,0.3)"] { background: #0F172A !important; color: #E2E8F0 !important; }
+/* inline text colours: neon on white is unreadable, use deeper shades */
+[style*="color: #00FF88"], [style*="color:#00FF88"], [style*="color: #50fa7b"] { color: #047857 !important; }
+[style*="color: #FFA500"], [style*="color: #FFEB3B"], [style*="color: #FF5722"] { color: #B45309 !important; }
+[style*="color: #2196F3"] { color: #1D4ED8 !important; }
+[style*="color: #9C27B0"], [style*="color: #673AB7"] { color: #6D28D9 !important; }
+[style*="color: #ff0000"] { color: #DC2626 !important; }
+[style*="color: #888"] { color: #64748B !important; }
+[style*="color: #fff"] { color: #0F172A !important; }
+/* …but keep the original bright colours where the background is still dark */
+.code-block [style*="color"], .diagram-container [style*="color"], [style*="rgba(0,0,0,0.3)"] [style*="color"] { color: inherit; }
+.code-block [style*="color: #00FF88"], .diagram-container [style*="color: #00FF88"] { color: #34D399 !important; }
+.code-block [style*="color: #fff"], .diagram-container [style*="color: #fff"] { color: #fff !important; }
+
+@media (max-width: 768px) {
+    .question-title { font-size: 21px; }
+    .content-section { padding: 20px; border-radius: 16px; }
+}

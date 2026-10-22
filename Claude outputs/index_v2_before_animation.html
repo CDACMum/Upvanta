@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upvanta | Data Engineering Interview Prep</title>
+<meta name="description" content="Interview question banks with worked answers for every layer of the data stack: SQL, NoSQL, Spark, Kafka, Airflow, dbt, warehousing, cloud and machine learning.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E1B2C'/%3E%3Cpolyline points='6,23 13,17 19,20 26,9' fill='none' stroke='%232EC4B6' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='26' cy='9' r='3' fill='%23E8D25A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1B2C;
+  --ink-2:#132438;
+  --panel:#16293F;
+  --rule:#233C56;
+  --text:#E8EEF4;
+  --muted:#8FA5BA;
+  --faint:#5F7891;
+  --teal:#2EC4B6;
+  --amber:#F0B44C;
+  --display:'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  --body:'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --wrap:1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  font-family:var(--body);font-size:16px;line-height:1.55;color:var(--text);
+  background:var(--ink);
+  background-image:
+    linear-gradient(var(--ink-2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ink-2) 1px, transparent 1px);
+  background-size:48px 48px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- nav ---------- */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:700;font-size:1.4rem;letter-spacing:-.01em}
+.brand svg{width:34px;height:34px;flex:none}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem}
+.nav-links a:hover{color:var(--text)}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 28px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:end}
+.hero h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.6rem,6.2vw,5.4rem);line-height:.98;letter-spacing:-.035em;
+  font-variation-settings:"opsz" 96;max-width:13ch;text-wrap:balance;
+}
+.hero-side{padding-bottom:8px}
+.hero-side p{color:var(--muted);font-size:1.08rem;max-width:44ch}
+.hero-side .tally{color:var(--text);margin-top:14px;font-size:1rem}
+.tally b{font-weight:600;color:var(--teal);font-variant-numeric:tabular-nums}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:10px;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid var(--rule)}
+.btn-primary{background:var(--teal);color:#06231F;border-color:var(--teal)}
+.btn-primary:hover{background:#4AD6C9}
+.btn-ghost:hover{border-color:var(--muted)}
+
+/* ---------- pipeline map (signature) ---------- */
+.map{margin:44px 0 0;padding:28px 0 8px;border-top:1px solid var(--rule)}
+.map-caption{color:var(--muted);font-size:.92rem;margin-bottom:22px}
+.line{list-style:none;display:grid;grid-template-columns:repeat(11,minmax(106px,1fr));overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+.station{scroll-snap-align:start}
+.station a{display:grid;grid-template-rows:22px auto auto;text-decoration:none;position:relative;padding-right:10px;border-radius:8px}
+.track{position:absolute;left:0;right:0;top:8px;height:6px;background:var(--c);transform-origin:left center}
+.station:last-child .track{right:auto;width:22px;border-radius:0 3px 3px 0}
+.dot{position:relative;width:22px;height:22px;border-radius:50%;background:var(--ink);border:5px solid var(--c);z-index:1}
+.dot.is-empty{border-width:3px;width:22px}
+.st-name{margin-top:12px;font-family:var(--display);font-weight:700;font-size:.96rem;letter-spacing:-.01em;white-space:nowrap}
+.st-count{color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums}
+.station a:hover .st-name{color:var(--c)}
+.station a:hover .dot{background:var(--c)}
+
+@media (prefers-reduced-motion:no-preference){
+  .track{animation:draw .5s cubic-bezier(.6,0,.3,1) both;animation-delay:calc(var(--i) * 90ms + 150ms)}
+  .dot,.st-name,.st-count{animation:pop .35s ease-out both;animation-delay:calc(var(--i) * 90ms + 120ms)}
+  @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+}
+
+/* ---------- toolbar ---------- */
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(14,27,44,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);margin-top:36px}
+.toolbar .wrap{display:flex;align-items:center;gap:20px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.search{position:relative;flex:1 1 340px;max-width:560px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+.search input{width:100%;font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:11px 44px 11px 42px}
+.search input::-webkit-search-cancel-button{filter:grayscale(1) brightness(1.6);cursor:pointer}
+.search input::placeholder{color:var(--faint)}
+.search input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(46,196,182,.18)}
+.search kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%);font:600 .75rem var(--body);color:var(--muted);border:1px solid var(--rule);border-radius:5px;padding:1px 7px}
+.search input:focus + kbd{display:none}
+.toggle{display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--muted);font-size:.95rem;user-select:none}
+.toggle input{appearance:none;width:38px;height:22px;border-radius:11px;background:var(--rule);position:relative;cursor:pointer;transition:background .2s}
+.toggle input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--text);transition:transform .2s}
+.toggle input:checked{background:var(--teal)}
+.toggle input:checked::after{transform:translateX(16px);background:#06231F}
+.toggle input:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.count{margin-left:auto;color:var(--muted);font-size:.92rem;font-variant-numeric:tabular-nums}
+
+/* ---------- catalogue ---------- */
+.catalogue{padding:20px 0 40px}
+.stage{display:grid;grid-template-columns:250px minmax(0,1fr);gap:40px;padding:40px 0;border-bottom:1px solid var(--rule)}
+.stage:last-of-type{border-bottom:0}
+.stage-head{position:sticky;top:100px;align-self:start;display:flex;gap:14px}
+.stage-no{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:3px solid var(--c);font-family:var(--display);font-weight:700;font-size:.95rem;color:var(--c)}
+.stage-head h2{font-family:var(--display);font-size:1.7rem;font-weight:750;letter-spacing:-.02em;line-height:1.1;margin-top:2px}
+.stage-head p{color:var(--muted);font-size:.92rem;margin-top:8px;max-width:30ch}
+.stage-head .stage-ready{color:var(--text);font-size:.85rem;margin-top:12px}
+
+.mods{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 24px;border-left:3px solid var(--c);padding-left:20px}
+.mod-link{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 12px;margin:0 -12px;border-radius:12px;text-decoration:none}
+a.mod-link:hover{background:var(--panel)}
+a.mod-link:hover .mod-title{color:var(--c)}
+.tile{display:grid;place-items:center;width:44px;height:44px;border-radius:9px;background:var(--c);color:#0B1622;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:-.02em}
+.mod-body{display:flex;flex-direction:column;min-width:0}
+.mod-title{font-weight:600;font-size:1.02rem;line-height:1.3}
+.mod-desc{color:var(--muted);font-size:.88rem;line-height:1.45;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mod-meta{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.qcount{font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1;font-variant-numeric:tabular-nums}
+.qlabel{color:var(--faint);font-size:.75rem;margin-top:3px}
+.is-prep .tile{background:transparent;border:2px dashed var(--c);color:var(--c);opacity:.75}
+.is-prep .mod-title{color:var(--muted)}
+.is-prep .mod-desc{color:var(--faint)}
+.prep{font-size:.78rem;color:var(--amber);border:1px solid rgba(240,180,76,.35);border-radius:20px;padding:2px 10px;white-space:nowrap}
+
+.empty{display:none;padding:64px 0;max-width:52ch}
+.empty h2{font-family:var(--display);font-size:1.6rem;letter-spacing:-.02em}
+.empty p{color:var(--muted);margin-top:8px}
+.empty button{margin-top:18px;font:inherit;font-weight:600;color:var(--text);background:none;border:1px solid var(--rule);border-radius:10px;padding:10px 18px;cursor:pointer}
+.empty button:hover{border-color:var(--muted)}
+.hide{display:none!important}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);padding:28px 0 40px;color:var(--faint);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .mods{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:20px;padding-top:28px}
+  .stage{grid-template-columns:1fr;gap:20px;padding:32px 0}
+  .stage-head{position:static}
+  .stage-head p{max-width:none}
+  .count{margin-left:0;width:100%}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .nav-links{gap:18px}
+  .nav-links li:last-child{display:none}
+  .mods{padding-left:14px}
+  .mod-link{grid-template-columns:38px minmax(0,1fr) auto;gap:12px}
+  .tile{width:38px;height:38px;font-size:.95rem}
+  .prep{font-size:.72rem;padding:2px 8px}
+  .toggle span{font-size:.9rem}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="brand" aria-label="Upvanta home">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="#16293F"/><polyline points="6,25 13,18 20,21 28,9" fill="none" stroke="#2EC4B6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="18" r="2.6" fill="#0E1B2C" stroke="#4FC3F7" stroke-width="2"/><circle cx="20" cy="21" r="2.6" fill="#0E1B2C" stroke="#E8D25A" stroke-width="2"/><circle cx="28" cy="9" r="3.2" fill="#E8D25A"/></svg>
+      Upvanta
+    </a>
+    <ul class="nav-links">
+      <li><a href="#path">Learning path</a></li>
+      <li><a href="#catalogue">All modules</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <h1>Interview prep for every layer of the data stack</h1>
+    <div class="hero-side">
+      <p>Question banks with clear, worked answers, from SQL fundamentals to streaming, warehousing and machine learning. Follow the line below, or jump straight to the tool you're being interviewed on.</p>
+      <p class="tally"><b>1,395</b> questions across <b>25</b> modules, with 37 more in preparation.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="rdbms.html">Start with RDBMS</a>
+        <a class="btn btn-ghost" href="#catalogue">Browse all modules</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="map" id="path" aria-labelledby="path-title">
+    <h2 class="sr-only" id="path-title">Learning path</h2>
+    <p class="map-caption">The data lifecycle, stage by stage. Select a stage to see its modules.</p>
+    <ol class="line">
+<li class="station" style="--c:#9AA9FF;--i:0"><a href="#foundations">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Foundations</span><span class="st-count">4 of 7 ready</span></a></li>
+<li class="station" style="--c:#B48CFF;--i:1"><a href="#collect">
+<span class="track"></span><span class="dot is-empty"></span>
+<span class="st-name">Collect</span><span class="st-count">0 of 3 ready</span></a></li>
+<li class="station" style="--c:#4FC3F7;--i:2"><a href="#store">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Store</span><span class="st-count">6 of 8 ready</span></a></li>
+<li class="station" style="--c:#2EC4B6;--i:3"><a href="#process">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Process</span><span class="st-count">7 of 9 ready</span></a></li>
+<li class="station" style="--c:#78D27E;--i:4"><a href="#stream">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Stream</span><span class="st-count">1 of 4 ready</span></a></li>
+<li class="station" style="--c:#E8D25A;--i:5"><a href="#orchestrate">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Orchestrate</span><span class="st-count">3 of 5 ready</span></a></li>
+<li class="station" style="--c:#F29A4A;--i:6"><a href="#warehouse">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Warehouse</span><span class="st-count">2 of 4 ready</span></a></li>
+<li class="station" style="--c:#AEBBD0;--i:7"><a href="#cloud">
+<span class="track"></span><span class="dot is-empty"></span>
+<span class="st-name">Cloud</span><span class="st-count">0 of 4 ready</span></a></li>
+<li class="station" style="--c:#FF8FB1;--i:8"><a href="#visualise">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Visualise</span><span class="st-count">1 of 3 ready</span></a></li>
+<li class="station" style="--c:#FF6F61;--i:9"><a href="#learn">
+<span class="track"></span><span class="dot"></span>
+<span class="st-name">Learn</span><span class="st-count">1 of 7 ready</span></a></li>
+<li class="station" style="--c:#B8E05A;--i:10"><a href="#operate">
+<span class="track"></span><span class="dot is-empty"></span>
+<span class="st-name">Operate</span><span class="st-count">0 of 8 ready</span></a></li>
+    </ol>
+  </section>
+</div>
+
+<div class="toolbar" id="catalogue">
+  <div class="wrap">
+    <label class="search">
+      <span class="sr-only">Search modules</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search a tool or topic, like joins, Kafka or SCD" autocomplete="off">
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+    <label class="toggle"><input type="checkbox" id="readyOnly"><span>Ready to practise only</span></label>
+    <p class="count" id="count" aria-live="polite">Showing all 62 modules</p>
+  </div>
+</div>
+
+<main class="wrap catalogue">
+<section class="stage" id="foundations" style="--c:#9AA9FF" data-stage>
+<header class="stage-head"><span class="stage-no">1</span><div><h2>Foundations</h2><p>The language, shell, versioning and maths every data role is tested on.</p>
+<p class="stage-ready"><span class="js-ready">4</span> of <span class="js-total">7</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="python fundamentals data types, functions, oop, decorators, generators, error handling python oop decorators generators functions" data-ready="1"><a href="python.html" class="mod-link">
+<span class="tile" aria-hidden="true">Py</span>
+<span class="mod-body"><span class="mod-title">Python Fundamentals</span><span class="mod-desc">Data types, functions, OOP, decorators, generators, error handling</span></span>
+<span class="mod-meta"><span class="qcount">65</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="linux &amp; shell scripting commands, permissions, processes, bash scripting, cron jobs linux shell bash commands scripting unix" data-ready="1"><a href="linux.html" class="mod-link">
+<span class="tile" aria-hidden="true">Lx</span>
+<span class="mod-body"><span class="mod-title">Linux &amp; Shell Scripting</span><span class="mod-desc">Commands, permissions, processes, bash scripting, cron jobs</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="git &amp; version control branching, merging, pull requests, collaboration workflows git version control branching merging github" data-ready="1"><a href="git.html" class="mod-link">
+<span class="tile" aria-hidden="true">Gt</span>
+<span class="mod-body"><span class="mod-title">Git &amp; Version Control</span><span class="mod-desc">Branching, merging, pull requests, collaboration workflows</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="statistics &amp; probability hypothesis testing, distributions, a/b testing, statistical inference statistics probability hypothesis testing distributions" data-ready="1"><a href="statistics.html" class="mod-link">
+<span class="tile" aria-hidden="true">St</span>
+<span class="mod-body"><span class="mod-title">Statistics &amp; Probability</span><span class="mod-desc">Hypothesis testing, distributions, A/B testing, statistical inference</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="scala functional programming, case classes, pattern matching, collections scala functional programming pattern matching collections jvm" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Sc</span>
+<span class="mod-body"><span class="mod-title">Scala</span><span class="mod-desc">Functional programming, case classes, pattern matching, collections</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="oop &amp; java object-oriented principles, inheritance, polymorphism, collections java oop inheritance polymorphism collections" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Jv</span>
+<span class="mod-body"><span class="mod-title">OOP &amp; Java</span><span class="mod-desc">Object-oriented principles, inheritance, polymorphism, collections</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="computer science fundamentals data structures, algorithms, complexity analysis, design patterns computer science algorithms data structures complexity" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Cs</span>
+<span class="mod-body"><span class="mod-title">Computer Science Fundamentals</span><span class="mod-desc">Data structures, algorithms, complexity analysis, design patterns</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="collect" style="--c:#B48CFF" data-stage>
+<header class="stage-head"><span class="stage-no">2</span><div><h2>Collect</h2><p>Getting data in: scraping, APIs and the formats it arrives in.</p>
+<p class="stage-ready"><span class="js-ready">0</span> of <span class="js-total">3</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod is-prep" data-s="web scraping beautifulsoup, scrapy, selenium, requests, data extraction web scraping beautifulsoup scrapy selenium api" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Ws</span>
+<span class="mod-body"><span class="mod-title">Web Scraping</span><span class="mod-desc">BeautifulSoup, Scrapy, Selenium, requests, data extraction</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="apis &amp; rest http methods, authentication, rate limiting, json and xml parsing api rest http authentication json xml" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Ap</span>
+<span class="mod-body"><span class="mod-title">APIs &amp; REST</span><span class="mod-desc">HTTP methods, authentication, rate limiting, JSON and XML parsing</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="data formats json, xml, parquet, avro, csv, protocol buffers data formats json xml parquet avro csv protobuf" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Df</span>
+<span class="mod-body"><span class="mod-title">Data Formats</span><span class="mod-desc">JSON, XML, Parquet, Avro, CSV, protocol buffers</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="store" style="--c:#4FC3F7" data-stage>
+<header class="stage-head"><span class="stage-no">3</span><div><h2>Store</h2><p>Relational and NoSQL databases, and how to model data inside them.</p>
+<p class="stage-ready"><span class="js-ready">6</span> of <span class="js-total">8</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="rdbms fundamentals normalization, keys, relationships, acid properties, database design database sql relational normalization acid keys" data-ready="1"><a href="rdbms.html" class="mod-link">
+<span class="tile" aria-hidden="true">Rd</span>
+<span class="mod-body"><span class="mod-title">RDBMS Fundamentals</span><span class="mod-desc">Normalization, keys, relationships, ACID properties, database design</span></span>
+<span class="mod-meta"><span class="qcount">126</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="mysql &amp; advanced sql queries, joins, indexes, window functions, ctes, explain mysql sql queries joins indexes optimization window functions cte explain" data-ready="1"><a href="mysql.html" class="mod-link">
+<span class="tile" aria-hidden="true">My</span>
+<span class="mod-body"><span class="mod-title">MySQL &amp; Advanced SQL</span><span class="mod-desc">Queries, JOINs, indexes, window functions, CTEs, EXPLAIN</span></span>
+<span class="mod-meta"><span class="qcount">55</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="mongodb documents, crud, aggregation pipeline, indexing, sharding mongodb nosql document database aggregation sharding" data-ready="1"><a href="mongodb.html" class="mod-link">
+<span class="tile" aria-hidden="true">Mo</span>
+<span class="mod-body"><span class="mod-title">MongoDB</span><span class="mod-desc">Documents, CRUD, aggregation pipeline, indexing, sharding</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="apache cassandra wide-column model, distribution, consistency levels, query-first modelling cassandra distributed nosql wide-column consistency cql" data-ready="1"><a href="cassandra.html" class="mod-link">
+<span class="tile" aria-hidden="true">Ca</span>
+<span class="mod-body"><span class="mod-title">Apache Cassandra</span><span class="mod-desc">Wide-column model, distribution, consistency levels, query-first modelling</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="apache hbase row keys, column families, regions, reads and writes on hdfs hbase nosql hadoop column family region" data-ready="1"><a href="hbase.html" class="mod-link">
+<span class="tile" aria-hidden="true">Hb</span>
+<span class="mod-body"><span class="mod-title">Apache HBase</span><span class="mod-desc">Row keys, column families, regions, reads and writes on HDFS</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="redis in-memory data structures, caching strategies, pub/sub, persistence redis cache in-memory data structures pubsub" data-ready="1"><a href="redis.html" class="mod-link">
+<span class="tile" aria-hidden="true">Re</span>
+<span class="mod-body"><span class="mod-title">Redis</span><span class="mod-desc">In-memory data structures, caching strategies, pub/sub, persistence</span></span>
+<span class="mod-meta"><span class="qcount">100</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="sql advanced complex queries, performance tuning, execution plans, stored procedures sql advanced queries optimization performance tuning" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Sq</span>
+<span class="mod-body"><span class="mod-title">SQL Advanced</span><span class="mod-desc">Complex queries, performance tuning, execution plans, stored procedures</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="data modeling dimensional modelling, data vault, normalization vs denormalization data modeling dimensional vault normalization denormalization" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Dm</span>
+<span class="mod-body"><span class="mod-title">Data Modeling</span><span class="mod-desc">Dimensional modelling, data vault, normalization vs denormalization</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="process" style="--c:#2EC4B6" data-stage>
+<header class="stage-head"><span class="stage-no">4</span><div><h2>Process</h2><p>Batch processing at every scale, from a DataFrame to a cluster.</p>
+<p class="stage-ready"><span class="js-ready">7</span> of <span class="js-total">9</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="hadoop &amp; hdfs hdfs architecture, mapreduce, yarn, replication, fault tolerance hadoop hdfs mapreduce yarn distributed" data-ready="1"><a href="hadoop.html" class="mod-link">
+<span class="tile" aria-hidden="true">Hd</span>
+<span class="mod-body"><span class="mod-title">Hadoop &amp; HDFS</span><span class="mod-desc">HDFS architecture, MapReduce, YARN, replication, fault tolerance</span></span>
+<span class="mod-meta"><span class="qcount">48</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="apache hive hiveql, partitioning, bucketing, file formats, external tables hive hiveql partitioning bucketing sql hadoop" data-ready="1"><a href="hive.html" class="mod-link">
+<span class="tile" aria-hidden="true">Hv</span>
+<span class="mod-body"><span class="mod-title">Apache Hive</span><span class="mod-desc">HiveQL, partitioning, bucketing, file formats, external tables</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="apache spark &amp; pyspark rdds, dataframes, transformations, lazy evaluation, optimization spark pyspark rdd dataframe transformation action" data-ready="1"><a href="pyspark.html" class="mod-link">
+<span class="tile" aria-hidden="true">Sp</span>
+<span class="mod-body"><span class="mod-title">Apache Spark &amp; PySpark</span><span class="mod-desc">RDDs, DataFrames, transformations, lazy evaluation, optimization</span></span>
+<span class="mod-meta"><span class="qcount">44</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="pyspark question bank an extended bank of spark questions for deeper practice spark pyspark rdd dataframe extended bank" data-ready="1"><a href="apache-pyspark.html" class="mod-link">
+<span class="tile" aria-hidden="true">Sx</span>
+<span class="mod-body"><span class="mod-title">PySpark Question Bank</span><span class="mod-desc">An extended bank of Spark questions for deeper practice</span></span>
+<span class="mod-meta"><span class="qcount">226</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="databricks delta lake, notebooks, jobs, unity catalog, mlflow databricks delta lake spark mlflow notebooks" data-ready="1"><a href="databricks.html" class="mod-link">
+<span class="tile" aria-hidden="true">Db</span>
+<span class="mod-body"><span class="mod-title">Databricks</span><span class="mod-desc">Delta Lake, notebooks, jobs, Unity Catalog, MLflow</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="pandas dataframes, cleaning, merging, groupby, time series, reshaping pandas dataframe python data cleaning groupby" data-ready="1"><a href="pandas.html" class="mod-link">
+<span class="tile" aria-hidden="true">Pd</span>
+<span class="mod-body"><span class="mod-title">Pandas</span><span class="mod-desc">DataFrames, cleaning, merging, groupby, time series, reshaping</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="numpy arrays, vectorization, broadcasting, linear algebra numpy arrays vectorization linear algebra statistics" data-ready="1"><a href="numpy.html" class="mod-link">
+<span class="tile" aria-hidden="true">Np</span>
+<span class="mod-body"><span class="mod-title">NumPy</span><span class="mod-desc">Arrays, vectorization, broadcasting, linear algebra</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="polars fast dataframes, lazy evaluation, parallel execution polars dataframe lazy evaluation parallel processing" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Pl</span>
+<span class="mod-body"><span class="mod-title">Polars</span><span class="mod-desc">Fast DataFrames, lazy evaluation, parallel execution</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="dask parallel computing, distributed dataframes, scalable analytics dask parallel distributed dataframe scalable" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Dk</span>
+<span class="mod-body"><span class="mod-title">Dask</span><span class="mod-desc">Parallel computing, distributed DataFrames, scalable analytics</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="stream" style="--c:#78D27E" data-stage>
+<header class="stage-head"><span class="stage-no">5</span><div><h2>Stream</h2><p>Events, real-time pipelines and the guarantees behind them.</p>
+<p class="stage-ready"><span class="js-ready">1</span> of <span class="js-total">4</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="apache kafka producers, consumers, topics, partitions, delivery guarantees kafka streaming events producers consumers topics" data-ready="1"><a href="kafka.html" class="mod-link">
+<span class="tile" aria-hidden="true">Kf</span>
+<span class="mod-body"><span class="mod-title">Apache Kafka</span><span class="mod-desc">Producers, consumers, topics, partitions, delivery guarantees</span></span>
+<span class="mod-meta"><span class="qcount">35</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="apache flink stateful stream processing, event time, windows flink stream processing stateful event time" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Fl</span>
+<span class="mod-body"><span class="mod-title">Apache Flink</span><span class="mod-desc">Stateful stream processing, event time, windows</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="spark structured streaming micro-batches, watermarks, checkpointing spark streaming structured micro-batch watermarks" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Ss</span>
+<span class="mod-body"><span class="mod-title">Spark Structured Streaming</span><span class="mod-desc">Micro-batches, watermarks, checkpointing</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="real-time analytics lambda and kappa architectures, real-time pipelines real-time analytics lambda kappa architecture" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Rt</span>
+<span class="mod-body"><span class="mod-title">Real-time Analytics</span><span class="mod-desc">Lambda and Kappa architectures, real-time pipelines</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="orchestrate" style="--c:#E8D25A" data-stage>
+<header class="stage-head"><span class="stage-no">6</span><div><h2>Orchestrate</h2><p>Scheduling, transforming and testing the pipelines themselves.</p>
+<p class="stage-ready"><span class="js-ready">3</span> of <span class="js-total">5</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="apache airflow dags, scheduling, operators, sensors, executors airflow workflow orchestration dag scheduling" data-ready="1"><a href="airflow.html" class="mod-link">
+<span class="tile" aria-hidden="true">Af</span>
+<span class="mod-body"><span class="mod-title">Apache Airflow</span><span class="mod-desc">DAGs, scheduling, operators, sensors, executors</span></span>
+<span class="mod-meta"><span class="qcount">49</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="dbt models, materializations, tests, jinja, documentation dbt data build tool transformation testing documentation" data-ready="1"><a href="dbt.html" class="mod-link">
+<span class="tile" aria-hidden="true">Dt</span>
+<span class="mod-body"><span class="mod-title">dbt</span><span class="mod-desc">Models, materializations, tests, Jinja, documentation</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="etl &amp; elt concepts extraction, transformation patterns, loading, cdc, data quality etl elt pipeline transformation cdc" data-ready="1"><a href="etl.html" class="mod-link">
+<span class="tile" aria-hidden="true">El</span>
+<span class="mod-body"><span class="mod-title">ETL &amp; ELT Concepts</span><span class="mod-desc">Extraction, transformation patterns, loading, CDC, data quality</span></span>
+<span class="mod-meta"><span class="qcount">50</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="apache beam unified batch and stream pipelines, portability apache beam pipeline batch stream processing" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Bm</span>
+<span class="mod-body"><span class="mod-title">Apache Beam</span><span class="mod-desc">Unified batch and stream pipelines, portability</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="great expectations data validation, quality checks, automated testing great expectations data quality validation testing" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Ge</span>
+<span class="mod-body"><span class="mod-title">Great Expectations</span><span class="mod-desc">Data validation, quality checks, automated testing</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="warehouse" style="--c:#F29A4A" data-stage>
+<header class="stage-head"><span class="stage-no">7</span><div><h2>Warehouse</h2><p>Dimensional modelling and the cloud warehouses that serve analytics.</p>
+<p class="stage-ready"><span class="js-ready">2</span> of <span class="js-total">4</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="data warehouse fundamentals star and snowflake schemas, facts, dimensions, scds data warehouse star schema dimension fact scd" data-ready="1"><a href="dw-fundamentals.html" class="mod-link">
+<span class="tile" aria-hidden="true">Dw</span>
+<span class="mod-body"><span class="mod-title">Data Warehouse Fundamentals</span><span class="mod-desc">Star and snowflake schemas, facts, dimensions, SCDs</span></span>
+<span class="mod-meta"><span class="qcount">37</span><span class="qlabel">questions</span></span></a></li><li class="mod" data-s="snowflake virtual warehouses, micro-partitions, time travel, data sharing snowflake cloud warehouse virtual time travel" data-ready="1"><a href="snowflake.html" class="mod-link">
+<span class="tile" aria-hidden="true">Sf</span>
+<span class="mod-body"><span class="mod-title">Snowflake</span><span class="mod-desc">Virtual warehouses, micro-partitions, time travel, data sharing</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="amazon redshift columnar storage, distribution styles, compression, tuning redshift aws columnar distribution compression" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Rs</span>
+<span class="mod-body"><span class="mod-title">Amazon Redshift</span><span class="mod-desc">Columnar storage, distribution styles, compression, tuning</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="google bigquery serverless warehouse, partitioning, clustering, nested data bigquery google serverless partitioning clustering" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Bq</span>
+<span class="mod-body"><span class="mod-title">Google BigQuery</span><span class="mod-desc">Serverless warehouse, partitioning, clustering, nested data</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="cloud" style="--c:#AEBBD0" data-stage>
+<header class="stage-head"><span class="stage-no">8</span><div><h2>Cloud</h2><p>The managed data services on AWS, Azure and Google Cloud.</p>
+<p class="stage-ready"><span class="js-ready">0</span> of <span class="js-total">4</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod is-prep" data-s="cloud computing basics iaas, paas, saas, deployment models, scalability, cost cloud computing iaas paas saas deployment" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Cb</span>
+<span class="mod-body"><span class="mod-title">Cloud Computing Basics</span><span class="mod-desc">IaaS, PaaS, SaaS, deployment models, scalability, cost</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="aws data services s3, glue, athena, emr, lambda, kinesis, dynamodb aws ec2 s3 lambda glue athena emr kinesis" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Aw</span>
+<span class="mod-body"><span class="mod-title">AWS Data Services</span><span class="mod-desc">S3, Glue, Athena, EMR, Lambda, Kinesis, DynamoDB</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="azure data services data factory, synapse, data lake, blob storage azure data factory synapse databricks blob storage" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Az</span>
+<span class="mod-body"><span class="mod-title">Azure Data Services</span><span class="mod-desc">Data Factory, Synapse, Data Lake, Blob Storage</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="google cloud platform dataflow, dataproc, cloud storage, pub/sub, composer gcp google dataflow dataproc pubsub composer" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Gc</span>
+<span class="mod-body"><span class="mod-title">Google Cloud Platform</span><span class="mod-desc">Dataflow, Dataproc, Cloud Storage, Pub/Sub, Composer</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="visualise" style="--c:#FF8FB1" data-stage>
+<header class="stage-head"><span class="stage-no">9</span><div><h2>Visualise</h2><p>Turning results into charts, dashboards and reports.</p>
+<p class="stage-ready"><span class="js-ready">1</span> of <span class="js-total">3</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="matplotlib &amp; seaborn plot types, customisation, statistical charts in python matplotlib seaborn python visualization plots charts" data-ready="1"><a href="matplotlib.html" class="mod-link">
+<span class="tile" aria-hidden="true">Mp</span>
+<span class="mod-body"><span class="mod-title">Matplotlib &amp; Seaborn</span><span class="mod-desc">Plot types, customisation, statistical charts in Python</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="tableau dashboards, calculated fields, parameters, data blending tableau dashboards visualization bi analytics" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Tb</span>
+<span class="mod-body"><span class="mod-title">Tableau</span><span class="mod-desc">Dashboards, calculated fields, parameters, data blending</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="power bi dax, power query, data modelling, report design power bi dax query modeling visualization" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Pb</span>
+<span class="mod-body"><span class="mod-title">Power BI</span><span class="mod-desc">DAX, Power Query, data modelling, report design</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="learn" style="--c:#FF6F61" data-stage>
+<header class="stage-head"><span class="stage-no">10</span><div><h2>Learn</h2><p>Machine learning, from fundamentals to models in production.</p>
+<p class="stage-ready"><span class="js-ready">1</span> of <span class="js-total">7</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod" data-s="scikit-learn preprocessing, pipelines, model training, hyperparameter tuning scikit-learn sklearn model training preprocessing pipeline machine learning" data-ready="1"><a href="sklearn.html" class="mod-link">
+<span class="tile" aria-hidden="true">Sk</span>
+<span class="mod-body"><span class="mod-title">scikit-learn</span><span class="mod-desc">Preprocessing, pipelines, model training, hyperparameter tuning</span></span>
+<span class="mod-meta"><span class="qcount">40</span><span class="qlabel">questions</span></span></a></li><li class="mod is-prep" data-s="ml fundamentals supervised and unsupervised learning, regression, classification, clustering machine learning supervised unsupervised regression classification" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Ml</span>
+<span class="mod-body"><span class="mod-title">ML Fundamentals</span><span class="mod-desc">Supervised and unsupervised learning, regression, classification, clustering</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="feature engineering selection, encoding, scaling, transformation techniques feature engineering selection encoding scaling transformation" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Fe</span>
+<span class="mod-body"><span class="mod-title">Feature Engineering</span><span class="mod-desc">Selection, encoding, scaling, transformation techniques</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="model evaluation metrics, cross-validation, bias-variance trade-off model evaluation metrics cross-validation bias variance" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Me</span>
+<span class="mod-body"><span class="mod-title">Model Evaluation</span><span class="mod-desc">Metrics, cross-validation, bias-variance trade-off</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="tensorflow &amp; keras neural networks, deep learning, model deployment tensorflow keras neural networks deep learning" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Tf</span>
+<span class="mod-body"><span class="mod-title">TensorFlow &amp; Keras</span><span class="mod-desc">Neural networks, deep learning, model deployment</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="pytorch computation graphs, model building, training loops pytorch deep learning neural networks training" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Pt</span>
+<span class="mod-body"><span class="mod-title">PyTorch</span><span class="mod-desc">Computation graphs, model building, training loops</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="mlops deployment, monitoring, versioning, ci/cd for ml mlops deployment monitoring versioning cicd" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Mx</span>
+<span class="mod-body"><span class="mod-title">MLOps</span><span class="mod-desc">Deployment, monitoring, versioning, CI/CD for ML</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+<section class="stage" id="operate" style="--c:#B8E05A" data-stage>
+<header class="stage-head"><span class="stage-no">11</span><div><h2>Operate</h2><p>Containers, architecture, governance and keeping it all reliable.</p>
+<p class="stage-ready"><span class="js-ready">0</span> of <span class="js-total">8</span> ready to practise</p></div></header>
+<ul class="mods"><li class="mod is-prep" data-s="docker images, dockerfiles, containers, networking docker containers containerization dockerfile images devops" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Dc</span>
+<span class="mod-body"><span class="mod-title">Docker</span><span class="mod-desc">Images, Dockerfiles, containers, networking</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="kubernetes pods, services, deployments, orchestration kubernetes k8s pods services deployments orchestration" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">K8</span>
+<span class="mod-body"><span class="mod-title">Kubernetes</span><span class="mod-desc">Pods, services, deployments, orchestration</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="data system design scalability, availability, cap theorem, trade-offs system design scalability availability cap theorem" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Sd</span>
+<span class="mod-body"><span class="mod-title">Data System Design</span><span class="mod-desc">Scalability, availability, CAP theorem, trade-offs</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="distributed systems partitioning, replication, consistency models, fault tolerance distributed systems partitioning replication consistency" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Ds</span>
+<span class="mod-body"><span class="mod-title">Distributed Systems</span><span class="mod-desc">Partitioning, replication, consistency models, fault tolerance</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="performance optimization query tuning, indexing strategies, caching, partitioning optimization performance query indexing caching" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Po</span>
+<span class="mod-body"><span class="mod-title">Performance Optimization</span><span class="mod-desc">Query tuning, indexing strategies, caching, partitioning</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="testing &amp; ci/cd unit and integration tests, automated pipelines testing cicd unit integration automated pipelines" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Tc</span>
+<span class="mod-body"><span class="mod-title">Testing &amp; CI/CD</span><span class="mod-desc">Unit and integration tests, automated pipelines</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="data governance data quality, metadata, lineage, privacy data governance quality metadata lineage privacy" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Dg</span>
+<span class="mod-body"><span class="mod-title">Data Governance</span><span class="mod-desc">Data quality, metadata, lineage, privacy</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li><li class="mod is-prep" data-s="security &amp; compliance encryption, access control, gdpr, data masking security compliance encryption gdpr data masking" data-ready="0"><div class="mod-link">
+<span class="tile" aria-hidden="true">Se</span>
+<span class="mod-body"><span class="mod-title">Security &amp; Compliance</span><span class="mod-desc">Encryption, access control, GDPR, data masking</span></span>
+<span class="mod-meta"><span class="prep">In preparation</span></span></div></li></ul></section>
+  <div class="empty" id="empty">
+    <h2>No modules match “<span id="emptyTerm"></span>”</h2>
+    <p>Try the name of a tool, like Spark or Snowflake, or a topic, like normalization or window functions.</p>
+    <button type="button" id="clear">Clear search</button>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Upvanta. Interview question banks for data engineering and analytics.</span>
+    <a href="#path">Back to the learning path</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var q = document.getElementById('q');
+  var readyOnly = document.getElementById('readyOnly');
+  var count = document.getElementById('count');
+  var empty = document.getElementById('empty');
+  var stages = Array.prototype.slice.call(document.querySelectorAll('[data-stage]'));
+  var mods = Array.prototype.slice.call(document.querySelectorAll('.mod'));
+  var total = mods.length;
+
+  try { readyOnly.checked = localStorage.getItem('upvanta.readyOnly') === '1'; } catch (e) {}
+
+  function apply(){
+    var terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var onlyReady = readyOnly.checked;
+    var shown = 0;
+    mods.forEach(function(m){
+      var text = m.getAttribute('data-s');
+      var ok = (!onlyReady || m.getAttribute('data-ready') === '1') &&
+               terms.every(function(t){ return text.indexOf(t) !== -1; });
+      m.classList.toggle('hide', !ok);
+      if (ok) shown++;
+    });
+    stages.forEach(function(s){
+      var visible = s.querySelectorAll('.mod:not(.hide)').length;
+      s.classList.toggle('hide', visible === 0);
+    });
+    empty.style.display = shown === 0 ? 'block' : 'none';
+    document.getElementById('emptyTerm').textContent = q.value.trim();
+    var filtered = terms.length || onlyReady;
+    count.textContent = filtered ? ('Showing ' + shown + ' of ' + total + ' modules') : ('Showing all ' + total + ' modules');
+  }
+
+  var toolbar = document.getElementById('catalogue');
+  q.addEventListener('input', function(){
+    apply();
+    if (toolbar.getBoundingClientRect().top > 1) {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({top: toolbar.offsetTop, behavior: reduce ? 'auto' : 'smooth'});
+    }
+  });
+  readyOnly.addEventListener('change', function(){
+    try { localStorage.setItem('upvanta.readyOnly', readyOnly.checked ? '1' : '0'); } catch (e) {}
+    apply();
+  });
+  document.getElementById('clear').addEventListener('click', function(){ q.value = ''; apply(); q.focus(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === '/' && document.activeElement !== q && !/input|textarea/i.test(document.activeElement.tagName)) {
+      e.preventDefault(); q.focus();
+    } else if (e.key === 'Escape' && document.activeElement === q) {
+      q.value = ''; apply();
+    }
+  });
+  if (readyOnly.checked) apply();
+})();
+</script>
+</body>
+</html>
